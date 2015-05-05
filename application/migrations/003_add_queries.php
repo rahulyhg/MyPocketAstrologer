@@ -17,6 +17,11 @@ class Migration_Add_queries extends CI_Migration {
 				'type' => 'int',
 			),
 
+			'device_id' => array(
+				'type' => 'varchar',
+				'constraint' => '256',
+			),
+
 			'query' => array(
 				'type' => 'varchar',				
 				'constraint'=>'500'

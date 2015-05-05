@@ -77,6 +77,10 @@ class Migration_Add_users extends CI_Migration {
 				'constraint' => 256,
 				'null' =>true,
 			),
+
+			'queries_count' => array(
+				'type' => 'int',
+			),
 			
 			'active' => array(
 				'type' => 'boolean',

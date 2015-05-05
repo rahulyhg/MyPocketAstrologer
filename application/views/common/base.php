@@ -38,10 +38,12 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="/MyPocketAstrologer">Home</a></li>
-                   
+                    <li class="active"><a href="/MyPocketAstrologer/astrologers">Astrologers</a></li>
+                    <li class="active"><a href="/MyPocketAstrologer/list_users">Users</a></li>
+                    <li class="active"><a href="/MyPocketAstrologer/all_queries">Queries</a></li>
                     <li><a href="<?php echo base_url('auth/logout');?>">Sign Out</a></li>
                 </ul>
-                <div style="color:white;text-align:right;padding-top:7px;">Welcome <?php echo $this->session->userdata('user_name');?>!</div>
+                <div style="color:white;text-align:right;padding-top:7px;">Welcome <?php echo $this->session->userdata('first_name');?>!</div>
                 <div id="datetime" style="text-align:right;padding-top:1px;"></div>
             </div><!-- /.nav-collapse -->
         </div><!--/.container -->

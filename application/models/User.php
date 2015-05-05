@@ -6,6 +6,42 @@ class User extends BaseModel {
 
 	static $table_name = 'users';
 
+	static $has_many = array(
+
+		array(
+            'login_device',
+            'class_name' => 'LoginDevice',
+            'foreign_key' => 'user_id',
+        ),
+
+        array(
+            'payment',
+            'class_name' => 'Payment',
+            'foreign_key' => 'user_id',
+        ),
+
+        array(
+            'puja',
+            'class_name' => 'Puja',
+            'foreign_key' => 'user_id'
+        ),
+
+        array(
+            'query',
+            'class_name' => 'Query',
+            'foreign_key' => 'user_id'
+        ),
+	);
+
+	static $has_one = array(
+
+		array(
+            'natal_chart',
+            'class_name' => 'NatalChart',
+            'foreign_key' => 'user_id'
+        ),
+	);
+
 	/* Public functions - Setters */
 
     private function is_email_available($email) {
@@ -17,6 +53,14 @@ class User extends BaseModel {
 			}
     	}
     }
+
+    public function increment_queries_count() {
+		$this->queries_count += 1;
+	}
+
+	public function decrement_queries_count() {
+		$this->queries_count -= 1;
+	}
 
     public function set_first_name($first_name) {
 
@@ -161,6 +205,10 @@ class User extends BaseModel {
 
 	public function get_right_palm() {
 		return $this->read_attribute('right_palm');
+	}
+
+	public function get_queries_count() {
+		return $this->read_attribute('queries_count');
 	}
 
 

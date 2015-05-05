@@ -17,6 +17,10 @@ class Migration_Add_user_gemstones extends CI_Migration {
 				'type' => 'int',
 			),
 
+			'gemstone_id' => array(
+				'type' => 'int',
+				),
+
 			'details' => array(
 				'type' => 'varchar',
 				'constraint' => '250',

@@ -9,9 +9,19 @@ class User_Create extends REST_Controller {
 	}
 
 	public function index_post() {
-
-		$params = json_decode(file_get_contents('php://input'),true);
-		$params['user_type'] = 2;
+		
+		$params = array(
+					'first_name' => $this->post('first_name'),
+					'last_name' => $this->post('last_name'),
+					'email' => $this->post('email'),
+					'password' => $this->post('password'),
+					'confirm_password' => $this->post('confirm_password'),
+					'gender' => $this->post('gender'),
+					'date_of_birth' => $this->post('date_of_birth')." ".$this->post('time_of_birth'),
+					'is_accurate' => $this->post('is_accurate'),
+					'place_of_birth' => $this->post('place_of_birth'),
+					'user_type' => 2,
+					);
 
 		try {
 
@@ -29,7 +39,6 @@ class User_Create extends REST_Controller {
 			$new_user = new User();
 			$user = $new_user->create($params);
 
-			echo $user->id;
 			mkdir('C:/xampp/htdocs/MyPocketAstrologer/public/user_images/'.$user->id.'-uploads');
 
 			if(isset($_FILES['profile_pic'])) {
@@ -49,7 +58,7 @@ class User_Create extends REST_Controller {
 
 					$info = pathinfo($_FILES['left_palm']['name']);
 	 				$ext = $info['extension'];
-					move_uploaded_file($_FILES['left_palm']['tmp_name'], "./public/user_images/".$user->id."-uploads".$params['first_name'].'-left_palm-'.$user->id.'.'.$ext);
+					move_uploaded_file($_FILES['left_palm']['tmp_name'], "./public/user_images/".$user->id."-uploads/".$params['first_name'].'-left_palm-'.$user->id.'.'.$ext);
 					$user->left_palm = "public/user_images/".$user->id."-uploads".$params['first_name'].'-left_palm-'.$user->id.'.'.$ext;
 				}
 			}
@@ -60,7 +69,7 @@ class User_Create extends REST_Controller {
 
 					$info = pathinfo($_FILES['right_palm']['name']);
 	 				$ext = $info['extension'];
-					move_uploaded_file($_FILES['profile']['tmp_name'], "./public/user_images/".$user->id."-uploads".$params['first_name'].'-right_palm-'.$user->id.'.'.$ext);
+					move_uploaded_file($_FILES['right_palm']['tmp_name'], "./public/user_images/".$user->id."-uploads/".$params['first_name'].'-right_palm-'.$user->id.'.'.$ext);
 					$user->right_palm = "public/user_images/".$user->id."-uploads".$params['first_name'].'-right_palm-'.$user->id.'.'.$ext;
 				}
 			}
@@ -69,15 +78,24 @@ class User_Create extends REST_Controller {
 
 			$response = $this->response(array(
 							'status'	=>	'SUCCESS',
+							'message'=>'Sign Up Successfully Completed',
 							'user'=> $params['first_name'],
-							'message'=>'Sign Up Successfully Completed'
+							'data' => null
 							));
 			
-			$this->response($response, HTTP_OK);
+			$this->response($response);
 		}
 
 		catch(Exception $e) {
-			$this->response($e->getMessage());
+
+			$response = $this->response(array(
+							'status' =>	'ERROR',
+							'message' => $e->getMessage(),
+							'user' => null,
+							'data' => null
+							));
+			
+			$this->response($response);
 		}
 	}
 }

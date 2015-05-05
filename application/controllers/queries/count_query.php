@@ -2,29 +2,25 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class User_Login extends REST_Controller {
+class Count_query extends REST_Controller {
 
 	public function index_get() {
 
 	}
 
 	public function index_post() {
-		
+
 		$params = json_decode(file_get_contents('php://input'),true);
 
 		try {
-			
-			$user = User::find_valid_by_email_and_user_type($params['email'],2);
-			$user->login($params['password']);
 
-			$params['user'] = $user;
-			$login_device = LoginDevice::create($params);
+			$current_user = User::find_by_id($params['current_user_id']);
 
 			$response = $this->response(array(
-							'status'	=>	'SUCCESS',
-							'message'=>'Logged in Successfully'
-							'user'=> $user->first_name,
-							'data' => $user,
+							'status' =>	'SUCCESS',
+							'message' => 'Count of previous queries from user',
+							'queries_count' => $current_user->queries_count,
+							'data' => null,
 							));
 			
 			$this->response($response);
@@ -38,7 +34,7 @@ class User_Login extends REST_Controller {
 							'user' => null,
 							'data' => null
 							));
-
+			
 			$this->response($response);
 		}
 	}

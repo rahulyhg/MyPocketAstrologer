@@ -87,7 +87,12 @@ class Users extends CI_Controller {
 		
 		$result = json_decode($curl_response);
 
-		if($result && $result->status == "SUCCESS"){
+		if($result && $result->status == "SUCCESS") {
+
+				$this->session->set_userdata(array(
+	                'user_id' => $result->data->id,
+	                'device_id' => $this->post('device_id'),
+	            ));
 
 			$this->message->set('Success:'.$result->message, 'success',TRUE,'feedback');
 			redirect('users/users');
