@@ -22,7 +22,7 @@ class Auth extends BaseController {
 
         try {
 
-            $user = User::find_valid_by_email($this->input->post('email'));
+            $user = User::find_valid_by_email_and_user_type($this->input->post('email'),1);
 
             $user->login(
                 $this->input->post('password')

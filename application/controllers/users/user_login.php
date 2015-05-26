@@ -10,8 +10,11 @@ class User_Login extends REST_Controller {
 
 	public function index_post() {
 		
-		$params = json_decode(file_get_contents('php://input'),true);
-
+		$params = array(
+						'email' => $this->post('email'),
+						'password' => $this->post('password'),
+						'device_id' => $this->post('device_id'),
+						);
 		try {
 			
 			$user = User::find_valid_by_email_and_user_type($params['email'],2);
@@ -22,7 +25,7 @@ class User_Login extends REST_Controller {
 
 			$response = $this->response(array(
 							'status'	=>	'SUCCESS',
-							'message'=>'Logged in Successfully'
+							'message'=>'Logged in Successfully',
 							'user'=> $user->first_name,
 							'data' => $user,
 							));
@@ -32,14 +35,14 @@ class User_Login extends REST_Controller {
 
 		catch(Exception $e) {
 
-			$response = $this->response(array(
+			$response = json_encode(array(
 							'status' =>	'ERROR',
 							'message' => $e->getMessage(),
-							'user' => null,
-							'data' => null
 							));
+			
+			header('HTTP/1.1 400 Bad Request', true, 400);
 
-			$this->response($response);
+			echo $response;
 		}
 	}
 }

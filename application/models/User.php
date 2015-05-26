@@ -9,25 +9,25 @@ class User extends BaseModel {
 	static $has_many = array(
 
 		array(
-            'login_device',
+            'login_devices',
             'class_name' => 'LoginDevice',
             'foreign_key' => 'user_id',
         ),
 
         array(
-            'payment',
+            'payments',
             'class_name' => 'Payment',
             'foreign_key' => 'user_id',
         ),
 
         array(
-            'puja',
+            'pujas',
             'class_name' => 'Puja',
             'foreign_key' => 'user_id'
         ),
 
         array(
-            'query',
+            'queries',
             'class_name' => 'Query',
             'foreign_key' => 'user_id'
         ),
@@ -288,7 +288,7 @@ class User extends BaseModel {
 	private static function check_user_is_valid($user) {
 
 		if(!$user instanceOf User) {
-			throw new Exception('The username entered does not exist');
+			throw new Exception('Invalid credentials');
 		}
 	}
 }

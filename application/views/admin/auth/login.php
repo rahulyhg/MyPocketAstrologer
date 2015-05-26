@@ -10,9 +10,6 @@
       <input name='email' type="text" class="form-control" placeholder="Email Address" required autofocus>
       <br>
       <input name='password' type="password" class="form-control" placeholder="Password" required>
-      <label class="checkbox">
-        <input type="checkbox" value="remember-me"> Remember me
-      </label>
       <br>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     </form>

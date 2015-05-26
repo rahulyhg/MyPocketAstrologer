@@ -33,9 +33,7 @@ class Users extends CI_Controller {
         $curl = curl_init();
 
 		curl_setopt($curl, CURLOPT_URL,'http://127.0.0.1/MyPocketAstrologer/users/user_create');
-		curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-		curl_setopt($curl, CURLOPT_HTTPHEADER, array('X-API-KEY:123456789', 'Content-Type: application/json'));
-		curl_setopt($curl, CURLOPT_USERPWD, 'author:1234567890987654321');
+		curl_setopt($curl, CURLOPT_HTTPHEADER, 'Content-Type: application/json');
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER,1);
 		curl_setopt($curl, CURLOPT_POST, true);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_post_data);
@@ -75,9 +73,7 @@ class Users extends CI_Controller {
         $curl = curl_init();
 
 		curl_setopt($curl, CURLOPT_URL,'http://127.0.0.1/MyPocketAstrologer/users/user_login');
-		curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-		curl_setopt($curl, CURLOPT_HTTPHEADER, array('X-API-KEY:123456789', 'Content-Type: application/json'));
-		curl_setopt($curl, CURLOPT_USERPWD, 'author:1234567890987654321');
+		curl_setopt($curl, CURLOPT_HTTPHEADER, 'Content-Type: application/json');
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER,1);
 		curl_setopt($curl, CURLOPT_POST, true);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_post_data);

@@ -30,6 +30,7 @@ class Migration_Add_queries extends CI_Migration {
 			'answer' => array(
 				'type' => 'varchar',
 				'constraint' => '500',
+				'null' => true,
 			),
 			
 			'active' => array(

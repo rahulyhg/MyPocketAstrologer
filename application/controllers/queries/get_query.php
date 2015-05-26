@@ -2,29 +2,14 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class New_query extends REST_Controller {
+class Get_query extends REST_Controller {
 
 	public function index_get() {
 
-	}
-
-	public function index_post() {
-		
-		$params = array(
-					'query' => $this->post('query'),
-					'device_id' => $this->post('device_id'),
-					'current_user_id' => $this->post('current_user_id'),
-					);
+		$current_user_id = $this->get('current_user_id');
 
 		try {
-
-			$user = User::find_by_id($params['current_user_id']);
-			if(!$user)
-				throw new Exception("Invalid User Request");
-				
-
-			$params['user'] = $user;
-
+			
 			if(empty($this->input->server('PHP_AUTH_USER') || empty($this->input->server('PHP_AUTH_PW')))) {
 
 	        	$this->message->set('Access Forbidden', 'error',TRUE,'feedback');
@@ -35,15 +20,27 @@ class New_query extends REST_Controller {
 	        
 	        if(!$api) 
 	        	throw new Exception("Access Forbidden");
-			
-			$new_query = new Query();
-			$query = $new_query->create($params);
+
+			$current_user = User::find_by_id($current_user_id);
+
+			if(!$current_user)
+				throw new Exception("Invalid User Request");
+				
+			$all_queries = $current_user->queries;
+			$queries = array();
+
+			foreach($all_queries as $query) {
+
+				$queries[$query->id]['query'] = $query->query;
+				$queries[$query->id]['answer'] = $query->answer;
+				$queries[$query->id]['date'] = date("Y-m-d H:i:s", strtotime($query->created_at));
+			}
 
 			$response = $this->response(array(
-							'status'	=>	'SUCCESS',
-							'message'=>'Your Query is sent to our astrologers. Please wait for the answer.',
-							'user'=> $user->first_name,
-							'data' => null
+							'status' =>	'SUCCESS',
+							'message' => 'Previous queries from user',
+							'queries_count' => $current_user->queries_count,
+							'data' => $queries,
 							));
 			
 			$this->response($response);
@@ -60,5 +57,9 @@ class New_query extends REST_Controller {
 
 			echo $response;
 		}
+	}
+
+	public function index_post() {
+
 	}
 }

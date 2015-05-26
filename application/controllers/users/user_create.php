@@ -24,17 +24,6 @@ class User_Create extends REST_Controller {
 					);
 
 		try {
-
-			if(empty($this->input->server('PHP_AUTH_USER') || empty($this->input->server('PHP_AUTH_PW')))) {
-
-	        	$this->message->set('Access Forbidden', 'error',TRUE,'feedback');
-				redirect('users/users');
-	        }
-
-	        $api = ApiAuthentication::find_by_user_and_authentication_key($this->input->server('PHP_AUTH_USER'), $this->input->server('PHP_AUTH_PW'));
-	        
-	        if(!$api) 
-	        	throw new Exception("Access Forbidden");
 			
 			$new_user = new User();
 			$user = $new_user->create($params);
@@ -88,14 +77,14 @@ class User_Create extends REST_Controller {
 
 		catch(Exception $e) {
 
-			$response = $this->response(array(
+			$response = json_encode(array(
 							'status' =>	'ERROR',
 							'message' => $e->getMessage(),
-							'user' => null,
-							'data' => null
 							));
 			
-			$this->response($response);
+			header('HTTP/1.1 400 Bad Request', true, 400);
+
+			echo $response;
 		}
 	}
 }
