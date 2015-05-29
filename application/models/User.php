@@ -62,6 +62,11 @@ class User extends BaseModel {
 		$this->queries_count -= 1;
 	}
 
+	public function get_full_name()
+    {
+        return $this->first_name.' '.$this->last_name;
+    }
+
     public function set_first_name($first_name) {
 
     	if($first_name == '') {

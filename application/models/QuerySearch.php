@@ -1,6 +1,6 @@
 <?php
 
-class UserSearch extends Search {
+class QuerySearch extends Search {
 
 	public function __construct() {
 
@@ -9,25 +9,29 @@ class UserSearch extends Search {
 
 	protected function build_joins() {
 
-		return array();
+		return array('user');
 	}
 
 	protected function build_conditions($options) {
 
-		$conditions = parent::build_conditions($options, User::$table_name);
+		$conditions = parent::build_conditions($options, Query::$table_name);
 
 		$condition_string = $conditions[0];
 
 		if(isset($options->search) && $options->search !== '') {
 
 			$condition_string .= "and (
-				".User::$table_name.".email LIKE ?
+				".Query::$table_name.".query LIKE ?
+					or ".Query::$table_name.".answer LIKE ?
 					or ".User::$table_name.".first_name LIKE ?
 					or ".User::$table_name.".last_name LIKE ?
+					or ".User::$table_name.".email LIKE ?
 					or ".User::$table_name.".place_of_birth LIKE ?
 			)";
 			
 			array_push($conditions, '%'.$options->search.'%');
+        	array_push($conditions, '%'.$options->search.'%');
+        	array_push($conditions, '%'.$options->search.'%');
         	array_push($conditions, '%'.$options->search.'%');
         	array_push($conditions, '%'.$options->search.'%');
         	array_push($conditions, '%'.$options->search.'%');
@@ -58,6 +62,6 @@ class UserSearch extends Search {
 			'offset' => $this->build_offset(),
 		);
 
-		parent::execute(new User, $query);
+		parent::execute(new Query, $query);
 	}
 }

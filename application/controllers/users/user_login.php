@@ -27,7 +27,7 @@ class User_Login extends REST_Controller {
 							'status'	=>	'SUCCESS',
 							'message'=>'Logged in Successfully',
 							'user'=> $user->first_name,
-							'data' => $user,
+							'data' => null,
 							));
 			
 			$this->response($response);

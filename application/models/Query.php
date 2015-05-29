@@ -71,7 +71,7 @@ class Query extends BaseModel {
 
 		$query = new Query;
 
-		$query->check_if_exists($params['user'], $params['query']);
+		$query->check_if_exists($params['user'], $params['query'], $params['device_id']);
 
 		$query->user_id = array_key_exists('user', $params) ? $params['user'] : null;
 		$query->device_id = array_key_exists('device_id', $params) ? $params['device_id'] : null;
@@ -86,9 +86,9 @@ class Query extends BaseModel {
 		return $query;
 	}
 
-	private function check_if_exists($user, $query) {
+	private function check_if_exists($user, $query, $device) {
 
-		if(self::exists(array('user_id' => $user->id, 'query' => $query))) { 
+		if(self::exists(array('user_id' => $user->id, 'query' => $query, 'device_id' => $device))) { 
 				throw new Exception('Query already exists'); 
 			}
 	}

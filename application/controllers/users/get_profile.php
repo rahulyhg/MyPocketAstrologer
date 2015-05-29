@@ -2,7 +2,7 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class Get_query extends REST_Controller {
+class Get_profile extends REST_Controller {
 
 	public function index_get() {
 
@@ -13,7 +13,7 @@ class Get_query extends REST_Controller {
 			if(empty($this->input->server('PHP_AUTH_USER') || empty($this->input->server('PHP_AUTH_PW')))) {
 
 	        	$this->message->set('Access Forbidden', 'error',TRUE,'feedback');
-				redirect('queries/queries');
+				redirect('users/users');
 	        }
 
 	        $api = ApiAuthentication::find_by_user_and_authentication_key($this->input->server('PHP_AUTH_USER'), $this->input->server('PHP_AUTH_PW'));
@@ -26,24 +26,22 @@ class Get_query extends REST_Controller {
 			if(!$current_user)
 				throw new Exception("Invalid User Request");
 				
-			$all_queries = $current_user->queries;
-			$queries = array();
-			$i = 1;
-
-			foreach($all_queries as $query) {
-
-				$queries[$i]['query'] = $query->query;
-				$queries[$i]['answer'] = $query->answer;
-				$queries[$i]['date'] = date("Y-m-d H:i:s", strtotime($query->created_at));
-
-				$i++;
-			}
+			$user = array(
+						'first_name' => $current_user->first_name,
+						'last_name' => $current_user->last_name,
+						'email' => $current_user->email,
+						'gender' => $current_user->gender,
+						'date_of_birth' => date('Y-m-d', strtotime($current_user->date_of_birth)),
+						'time_of_birth' => date('H:i:s', strtotime($current_user->date_of_birth)),
+						'is_accurate' => $current_user->is_accurate,
+						'place_of_birth' => $current_user->place_of_birth,
+						);
 
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',
-							'message' => 'Previous queries from user',
-							'queries_count' => $current_user->queries_count,
-							'data' => $queries,
+							'message' => 'User profile',
+							'user_name' => $current_user->first_name,
+							'data' => $user,
 							));
 			
 			$this->response($response);

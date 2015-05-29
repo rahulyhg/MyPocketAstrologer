@@ -32,15 +32,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="/MyPocketAstrologer">MyPocketAstrologer</a>
+              <a class="navbar-brand" href="<?php echo base_url();?>">MyPocketAstrologer</a>
             </div>
 
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/MyPocketAstrologer">Home</a></li>
-                    <li class="active"><a href="/MyPocketAstrologer/astrologers">Astrologers</a></li>
-                    <li class="active"><a href="/MyPocketAstrologer/list_users">Users</a></li>
-                    <li class="active"><a href="/MyPocketAstrologer/all_queries">Queries</a></li>
+                    <li class="active"><a href="<?php echo base_url();?>">Home</a></li>
+                    <li><a href="<?php echo base_url('#');?>">Astrologers</a></li>
+                    <li><a href="<?php echo base_url('admin/users');?>">Users</a></li>
+                    <li><a href="<?php echo base_url('admin/queries');?>">Queries</a></li>
                     <li><a href="<?php echo base_url('auth/logout');?>">Sign Out</a></li>
                 </ul>
                 <div style="color:white;text-align:right;padding-top:7px;">Welcome <?php echo $this->session->userdata('first_name');?>!</div>
