@@ -9,12 +9,8 @@ class New_query extends REST_Controller {
 	}
 
 	public function index_post() {
-		
-		$params = array(
-					'query' => $this->post('query'),
-					'device_id' => $this->post('device_id'),
-					'current_user_id' => $this->post('current_user_id'),
-					);
+
+		$params = json_decode(file_get_contents('php://input'),true);
 
 		try {
 

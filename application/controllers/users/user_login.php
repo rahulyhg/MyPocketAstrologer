@@ -9,12 +9,9 @@ class User_Login extends REST_Controller {
 	}
 
 	public function index_post() {
-		
-		$params = array(
-						'email' => $this->post('email'),
-						'password' => $this->post('password'),
-						'device_id' => $this->post('device_id'),
-						);
+
+		$params = json_decode(file_get_contents('php://input'),true);
+
 		try {
 			
 			$user = User::find_valid_by_email_and_user_type($params['email'],2);
