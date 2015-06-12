@@ -20,6 +20,11 @@ class Migration_Add_natal_charts extends CI_Migration {
 			'natal_chart' => array(
 				'type' => 'varchar',
 				'constraint' => '250',
+				'null' => true,
+			),
+
+			'status' => array(
+				'type' => 'int',
 			),
 			
 			'active' => array(

@@ -122,13 +122,16 @@ class Users extends CI_Controller {
 		if($result && $result->status == "SUCCESS"){
 
 			$this->message->set('Success:'.$result->message, 'success',TRUE,'feedback');
-			redirect('queries/queries');
+			redirect('users/users');
 
 		} else {
 			$this->message->set('Error:'.$result->errorDescription, 'error',TRUE,'feedback');
-			redirect('queries/queries');
+			redirect('users/users');
 		}
 	}
+
+	
+
 
     public function logout() {
 

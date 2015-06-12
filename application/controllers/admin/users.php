@@ -4,53 +4,206 @@ class Users extends BaseController {
 
 	public function index() {
 
-		if(array_key_exists('page', $_GET)) {
+        try {
 
-            $cur_page = $_GET['page'];
-        }
-        else {
-            $cur_page = 1;
-        }
+            $users = User::find('all', array(
+                                            'conditions' => array(
+                                                'deleted = ?',
+                                                0
+                                                ),
+                                            'order' => 'created_at desc'
+                                            ));
 
-        $page = new Page();
-        $page->set_current_page_number($cur_page);
-        $page->set_per_page(20);
-
-        if(array_key_exists('order_by_field', $_GET)) {
-
-            $order_by_field = $_GET['order_by_field'];
-        }
-        else {
-            $order_by_field = 'created_at';
+    		return $this->load_view('admin/user/index', array('users' => $users));
         }
 
-        if(array_key_exists('order_by_direction', $_GET)) {
+        catch(Exception $e) {
 
-            $order_by_direction = $_GET['order_by_direction'];
+            $this->session->set_flashdata('alert_error', $e->getMessage());
+
+            redirect('dashboard');
         }
-        else {
-            $order_by_direction = 'desc';
-        }
-
-        if(array_key_exists('search', $_GET)) {
-
-            $search = $_GET['search'];
-        }
-        else {
-            $search = null;
-        }
-
-        $user_search = new UserSearch();
-        $user_search ->set_order($order_by_field, $order_by_direction)
-                     ->set_page($page)
-                     ->set_search_term(urldecode($search))
-                     ->execute();
-
-		$data['users'] = $user_search;
-
-
-		return $this->load_view('admin/user/index',$data);
 	}
+
+    public function view($user_id) {
+
+        try {
+
+            $user = User::find_by_id($user_id);
+
+            if(!$user)
+                throw new Exception("User not found");
+            
+            return $this->load_view('admin/user/view', array('user' => $user));
+        }
+
+        catch(Exception $e) {
+
+            $this->session->set_flashdata('alert_error', $e->getMessage());
+
+            redirect('admin/users');
+        }
+    }
+
+    public function edit($user_id) {
+
+        try {
+
+            $user = User::find_by_id($user_id);
+
+            if(!$user) {
+                throw new Exception("Invalid User!");                
+            }
+
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                return $this->load_view('admin/user/edit', array('user' => $user));
+            }
+
+            $user->first_name = $this->input->post('first_name');
+            $user->last_name = $this->input->post('last_name');
+            $user->date_of_birth = $this->input->post('date_of_birth').' '.$this->input->post('time_of_birth');
+            $user->place_of_birth = $this->input->post('place_of_birth');
+            $user->gender = $this->input->post('gender');
+            $user->email = $this->input->post('email');
+
+            $user->save();
+
+            $this->session->set_flashdata(
+                'alert_success', 
+                "User profile edited successfully."
+            );
+
+            redirect('/admin/users');
+        }
+
+        catch(Exception $e) {
+
+            $this->session->set_flashdata('alert_error', $e->getMessage());
+            redirect('/admin/users');
+        }
+    }
+
+    public function queries($user_id) {
+
+        try {
+
+            $user = User::find_by_id($user_id);
+
+            if(!$user)
+                throw new Exception("User not found");
+            
+            $queries = Query::find('all', array(
+                                            'conditions' => array(
+                                                'deleted = ?
+                                                and user_id = ?',
+                                                0,
+                                                $user->id
+                                                ),
+                                            'order' => 'created_at desc'
+                                            )
+                                    );
+
+            $data = array(
+                        'queries' => $queries,
+                        'user_id' => $user->id,
+                        'user' => $user,
+                        );
+
+            return $this->load_view('admin/user/queries',$data);
+        }
+
+        catch(Exception $e) {
+
+            $this->session->set_flashdata('alert_error', $e->getMessage());
+
+            redirect('admin/users');
+        }
+    }
+
+    public function activate($user_id) {
+
+        try {
+
+            $user = User::find_by_id($user_id);
+
+            if(!$user)
+                throw new Exception("User not found");
+
+            if($user->active)
+                throw new Exception("User is already active");
+
+            $user->activate();
+
+            $this->session->set_flashdata('alert_success', "User activated successfully");
+
+            redirect('admin/users');
+
+        }
+
+        catch(Exception $e) {
+
+            $this->session->set_flashdata('alert_error', $e->getMessage());
+
+            redirect('admin/users');
+        }
+
+    }
+
+    public function deactivate($user_id) {
+
+        try {
+
+            $user = User::find_by_id($user_id);
+
+            if(!$user)
+                throw new Exception("User not found");
+
+            if(!$user->active)
+                throw new Exception("User already deactivated");
+
+            $user->deactivate();
+
+            $this->session->set_flashdata('alert_success', "User deactivated successfully");
+
+            redirect('admin/users');
+
+        }
+
+        catch(Exception $e) {
+
+            $this->session->set_flashdata('alert_error', $e->getMessage());
+
+            redirect('admin/users');
+        }
+    }
+
+    public function delete($user_id) {
+
+        try {
+
+            $user = User::find_by_id($user_id);
+
+            if(!$user)
+                throw new Exception("User not found");
+
+            if($user->deleted)
+                throw new Exception("User already deleted");
+
+            $user->delete();
+
+            $this->session->set_flashdata('alert_success', "User deleted successfully");
+
+            redirect('admin/users');
+
+        }
+
+        catch(Exception $e) {
+
+            $this->session->set_flashdata('alert_error', $e->getMessage());
+
+            redirect('admin/users');
+        }
+    }
 }
 
 ?>

@@ -86,6 +86,14 @@ class Query extends BaseModel {
 		return $query;
 	}
 
+	public function delete() {
+
+		parent::delete();
+
+		$this->user->decrement_queries_count();
+		$this->user->save();
+	}
+
 	private function check_if_exists($user, $query, $device) {
 
 		if(self::exists(array('user_id' => $user->id, 'query' => $query, 'device_id' => $device))) { 

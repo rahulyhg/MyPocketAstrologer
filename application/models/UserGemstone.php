@@ -1,6 +1,6 @@
 <?php
 
-class UserGemstome extends BaseModel {
+class UserGemstone extends BaseModel {
 
 	/* Table Name */
 

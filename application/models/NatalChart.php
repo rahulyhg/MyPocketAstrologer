@@ -18,6 +18,10 @@ class NatalChart extends BaseModel {
 		$this->assign_attribute('natal_chart', $natal_chart);	
 	}
 
+	public function set_status($status) {
+		$this->assign_attribute('status', $status);	
+	}
+
 	/* Public functions - Getters */
 
 	public function get_user() {
@@ -28,6 +32,10 @@ class NatalChart extends BaseModel {
 		return $this->read_attribute('natal_chart');
 	}
 
+	public function get_status() {
+		return $this->read_attribute('status');
+	}
+
 	/* Public static functions */
 
 	public static function create($params) {
@@ -36,6 +44,7 @@ class NatalChart extends BaseModel {
 
 		$natal_chart->user = array_key_exists('user', $params) ? $params['user'] : null;
 		$natal_chart->natal_chart = array_key_exists('natal_chart', $params) ? $params['natal_chart'] : null;
+		$natal_chart->status = array_key_exists('status', $params) ? $params['status'] : null;
 		
 		$natal_chart->save();
 

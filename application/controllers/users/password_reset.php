@@ -2,29 +2,31 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class User_Login extends REST_Controller {
+class Password_reset extends REST_Controller {
 
 	public function index_get() {
 
 	}
 
 	public function index_post() {
-
-		$params = json_decode(file_get_contents('php://input'),true);
-
+		
 		try {
 			
-			$user = User::find_valid_by_email_and_user_type($params['email'],2);
-			$user->login($params['password']);
+			$user = User::find_by_id($this->post('current_user_id'));
 
-			$params['user'] = $user;
-			$login_device = LoginDevice::create($params);
+			if(!$user)
+				throw new Exception("Invalid User Request");
+
+			$user->reset_password($this->post('password'), $this->post('confirm_password'));
+			$user->password = $this->post('password');
+
+			$user->save();
 
 			$response = $this->response(array(
 							'status'	=>	'SUCCESS',
-							'message'=>'Logged in Successfully',
-							'user'=> $user->first_name,
-							'data' => array('user_id' => $user->id, 'email' => $user->email),
+							'message'=>'Password Reset Successfully',
+							'user'=> $params['first_name'],
+							'data' => null
 							));
 			
 			$this->response($response);

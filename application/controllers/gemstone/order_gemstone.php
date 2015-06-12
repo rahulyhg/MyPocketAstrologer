@@ -2,7 +2,7 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class Get_profile extends REST_Controller {
+class Order_gemstone extends REST_Controller {
 
 	public function index_get() {
 
@@ -21,30 +21,21 @@ class Get_profile extends REST_Controller {
 	        if(!$api) 
 	        	throw new Exception("Access Forbidden");
 
-			$current_user = User::find_by_id($current_user_id);
+			$current_user = User::find_valid_by_id($current_user_id);
 
 			if(!$current_user)
 				throw new Exception("Invalid User Request");
 				
-			$user = array(
-						'first_name' => $current_user->first_name,
-						'last_name' => $current_user->last_name,
-						'email' => $current_user->email,
-						'gender' => $current_user->gender,
-						'date_of_birth' => date('Y-m-d', strtotime($current_user->date_of_birth)),
-						'time_of_birth' => date('H:i:s', strtotime($current_user->date_of_birth)),
-						'is_accurate' => $current_user->is_accurate,
-						'place_of_birth' => $current_user->place_of_birth,
-						'profile_pic' => $current_user->profile_pic,
-						'left_palm' => $current_user->left_palm,
-						'right_palm' => $current_user->right_palm,
-						);
+			$gemstone = UserGemstone::find_valid_by_user_id($current_user_id);
+
+			if(!$gemstone)
+				throw new Exception("Gemstone not found");			
 
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',
-							'message' => 'User profile',
+							'message' => 'Gemstone is ordered for shipping',
 							'user_name' => $current_user->first_name,
-							'data' => $user,
+							'data' => null,
 							));
 			
 			$this->response($response);

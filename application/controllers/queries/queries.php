@@ -34,7 +34,7 @@ class Queries extends CI_Controller {
 		
 		$result = json_decode($curl_response);
 
-		if($result && $result->status == "SUCCESS"){
+		if($result && $result->status == "SUCCESS") {
 
 			$this->message->set('Success:'.$result->message, 'success',TRUE,'feedback');
 			redirect('queries/queries');

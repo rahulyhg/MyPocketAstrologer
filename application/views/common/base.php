@@ -43,8 +43,6 @@
                     <li><a href="<?php echo base_url('admin/queries');?>">Queries</a></li>
                     <li><a href="<?php echo base_url('auth/logout');?>">Sign Out</a></li>
                 </ul>
-                <div style="color:white;text-align:right;padding-top:7px;">Welcome <?php echo $this->session->userdata('first_name');?>!</div>
-                <div id="datetime" style="text-align:right;padding-top:1px;"></div>
             </div><!-- /.nav-collapse -->
         </div><!--/.container -->
     </div><!-- /.navbar -->
@@ -79,23 +77,3 @@
 
   </body>
 </html>
-
-<script type="text/javascript">
-
-  display_ct(); 
-
-  function display_c(){
-    var refresh=1000; // Refresh rate in milli seconds
-    mytime=setTimeout('display_ct()',refresh);
-  }
-
-  function display_ct() {
-    var strcount;
-    var x = new Date();
-    var d = x.toString();
-    document.getElementById('datetime').innerHTML = d.substring(0,24);
-    document.getElementById('datetime').style.color ="White";
-    tt=display_c();
-  }
-  
-</script> 

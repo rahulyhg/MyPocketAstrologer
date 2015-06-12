@@ -28,7 +28,7 @@ class Get_query extends REST_Controller {
 				
 			$all_queries = $current_user->queries;
 			$queries = array();
-			$i = 1;
+			$i = 0;
 
 			foreach($all_queries as $query) {
 

@@ -2,29 +2,6 @@
 
 <?php startblock('content') ?>
 
-<?php
-
-$config = array(
-    'headers' => (object) array(
-    	'Name' => 'first_name',
-    	'Email' => 'email',
-    	'Query' => 'query',
-    	'Answer' => 'answer',
-    	'Asked On' => 'created_at',
-    ),
-    'cur_page' => $queries->get_current_page(),
-    'base_url' => '/MyPocketAstrologer/admin/queries/index',
-    'order_by_field' => $queries->get_field(),
-    'order_by_direction' => $queries->get_direction(),
-    'search' => $queries->get_search_term(),
-    'total_rows' => $queries->get_total_rows(),
-    'per_page' => $queries->get_page_size(),
-);
-
-$this->bspaginator->config($config);
-
-?>
-
 <div class="container">
 
 	<div class="row-fluid">
@@ -32,11 +9,6 @@ $this->bspaginator->config($config);
 
 			<div class="pull-left">
 				<h2>Listing Queries</h2>
-				<h5 style="margin-left:5px;">Showing result<?php echo ($queries->get_total_rows() == 1) ? '' : 's';?> <?php echo ($queries->get_page_size() > $queries->get_total_rows()) ? $queries->get_total_rows() : ($queries->get_page_size() * ($queries->get_current_page() - 1) + 1) .' - '. ($queries->get_page_size() * ($queries->get_current_page() - 1) + $queries->get_row_per_current_page());?> of <?php echo number_format($queries->get_total_rows());?></h5>
-			</div>
-
-			<div class="pager pull-right" style="margin-top: 5px;">
-				<?php echo $this->bspaginator->pagination_links();?>
 			</div>
 
 			<br/>
@@ -49,33 +21,20 @@ $this->bspaginator->config($config);
 
 		<div class="span12">
 			<div class="row-fluid">
-
-				<form name="search-query" action="<?php echo base_url('admin/queries/index');?>">
-					<div class="row-fluid">
-						<div class="col-lg-12" style="margin-bottom:2%;margin-top:20px%;">
-							<div class="col-lg-3">
-								<label for="Search Term">Search Term</label>
-								<input style="" class="form-control" name="search" type="text" value="<?php echo $queries->get_search_term() ? $queries->get_search_term() : '';?>" placeholder="Type search term..." autofocus>
-							</div>
-
-							<div class="">
-								<label for="search"></label>
-								<button type="submit" class="btn btn-success" style="margin-top:2.3%;"><i class="icon-search"></i>Filter</button>
-							</div>
-
-						</div>
-					</div>
-					<br>
-
-				</form>
-					<hr>
 					<div class="span9">
-						<?php if($queries->get_total_rows() > 0){ ?>
+						<?php if(count($queries) > 0) { ?>
 
 						<div class="table-container">
 							<table class="table table-striped table-bordered" style="margin-bottom:85px;">
 
-								<?php echo $this->bspaginator->table_header();?>
+								<tr>
+								    <th>Name</th>
+								    <th>Email</th> 
+								    <th>Query</th>							    
+								    <th>Answer</th> 
+								    <th>Asked On</th>
+								    <th></th>
+								</tr>
 
 								<tbody>
 									<?php foreach ($queries as $query){ ?>
@@ -96,6 +55,7 @@ $this->bspaginator->config($config);
 													<li><a href="<?php echo base_url('admin/queries/answer/'.$query->id);?>">Answer query</a></li>
 													<?php } ?>
 													<li><a href="<?php echo base_url('admin/queries/edit/'.$query->id);?>">Edit</a></li>
+													<li><a href="<?php echo base_url('admin/queries/delete/'.$query->id);?>" onclick="return confirm_delete();">Delete</a></li>
 												</ul>
 											</div>
 											</td>
@@ -107,7 +67,6 @@ $this->bspaginator->config($config);
 						<?php } else { ?>
 							<div class="well" style="text-align:center; padding:100px 0;">
 								<p style="font-size:24px;">No Queries found.</p>
-								<p style="font-size:14px;">Your search query has not returned any valid results.</p>
 							</div>
 						<?php } ?>
 					</div>
@@ -121,3 +80,11 @@ $this->bspaginator->config($config);
 <?php endblock() ?>
 
 <?php end_extend() ?>
+
+<script type="text/javascript">
+
+	function confirm_delete() {
+		return confirm('Are you sure you want to Delete the query?');
+	}
+
+</script>
