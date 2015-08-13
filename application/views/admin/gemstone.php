@@ -11,6 +11,7 @@
 				<h2>Showing Gemstone for <?php echo $user->get_full_name();?></h2>
 			</div>
 	</div>
+	<hr>
 
  ---------------- Gemstone ---------------------
 

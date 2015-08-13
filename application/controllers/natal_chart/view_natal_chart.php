@@ -10,7 +10,7 @@ class View_natal_chart extends REST_Controller {
 
 		try {
 			
-			if(empty($this->input->server('PHP_AUTH_USER') || empty($this->input->server('PHP_AUTH_PW')))) {
+			if(empty($this->input->server('PHP_AUTH_USER')) || empty($this->input->server('PHP_AUTH_PW'))) {
 
 	        	$this->message->set('Access Forbidden', 'error',TRUE,'feedback');
 				redirect('users/users');

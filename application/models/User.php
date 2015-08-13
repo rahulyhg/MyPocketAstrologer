@@ -6,6 +6,15 @@ class User extends BaseModel {
 
 	static $table_name = 'users';
 
+	static $belongs_to = array(
+		
+		array(
+            'zodiac',
+            'class_name' => 'Zodiac',
+            'foreign_key' => 'zodiac_id'
+        ),
+	);
+
 	static $has_many = array(
 
 		array(
@@ -162,6 +171,15 @@ class User extends BaseModel {
 		$this->assign_attribute('right_palm', $right_palm);	
     }
 
+    public function set_ring_size($ring_size) {
+		$this->assign_attribute('ring_size', $ring_size);	
+    }
+
+    public function set_zodiac($zodiac) {
+    	if($zodiac instanceOf Zodiac)
+    		$this->assign_attribute('zodiac_id', $zodiac->id);
+    }
+
 	/* Public functions - Getters */
 
 	public function get_first_name() {
@@ -214,6 +232,14 @@ class User extends BaseModel {
 
 	public function get_queries_count() {
 		return $this->read_attribute('queries_count');
+	}
+
+	public function get_ring_size() {
+		return $this->read_attribute('ring_size');
+	}
+
+	public function get_zodiac() {
+		return $this->read_attribute('zodiac_id');
 	}
 
 
@@ -269,6 +295,8 @@ class User extends BaseModel {
 
 		$user->password = $params['password'];
 		$user->user_type = array_key_exists('user_type', $params) ? $params['user_type'] : null;
+		$user->ring_size = array_key_exists('ring_size', $params) ? $params['ring_size'] : 0;
+		$user->zodiac = array_key_exists('zodiac', $params) ? $params['zodiac'] : null;
 
 		$user->save();
 		return $user;

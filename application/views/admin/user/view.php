@@ -24,7 +24,10 @@
 			<div class="well" style="margin-left=2px;">
 				<p style="font-size:14px;">Name: <?php echo $user->get_full_name();?></p>
 				<p style="font-size:14px;">Email: <?php echo $user->email;?></p>
-				<p style="font-size:14px;">Gender: <?php echo $user->gender;?></p>
+				<p style="font-size:14px;">Gender: <?php if($user->gender == 0)
+															echo "Male";
+														 else
+															echo "Female";?></p>
 				<p style="font-size:14px;">Birth Place: <?php echo $user->place_of_birth;?></p>
 				<p style="font-size:14px;">Date of Birth: <?php echo date('M d, Y', strtotime($user->date_of_birth));?></p>
 				<p style="font-size:14px;">Time of Birth: <?php echo date('H:i:s', strtotime($user->date_of_birth));?></p>			

@@ -28,7 +28,7 @@ class User_Create extends REST_Controller {
 			$new_user = new User();
 			$user = $new_user->create($params);
 
-			mkdir('C:/xampp/htdocs/MyPocketAstrologer/public/user_images/'.$user->id.'-uploads');
+			mkdir(base_url('public/user_images/'.$user->id.'-uploads'));
 
 			$allowed_extension = array('jpg','png','gif','JPG','PNG','GIF');
 
@@ -39,9 +39,12 @@ class User_Create extends REST_Controller {
 					$info = pathinfo($_FILES['profile_pic']['name']);
 	 				$ext = $info['extension'];
 
-	 				if(!in_array($ext, $allowed_extension) || $_FILES['profile_pic']['size'] > 2097152)
-	 					throw new Exception("Invalid file format.");
+	 				if(!in_array($ext, $allowed_extension))
+	 					throw new Exception("User signup successful but invalid file uploaded for profile picture");
 
+	 				if($_FILES['profile_pic']['size'] > 2097152)
+	 					throw new Exception("User signup successful but file sized greater than 2MB uploaded for profile picture");
+	 					
 					move_uploaded_file($_FILES['profile_pic']['tmp_name'], "./public/user_images/".$user->id."-uploads/".$params['first_name'].'-profile-'.$user->id.'.'.$ext);
 					$user->profile_pic = "public/user_images/".$user->id."-uploads/".$params['first_name'].'-profile-'.$user->id.'.'.$ext;
 				}
@@ -55,7 +58,10 @@ class User_Create extends REST_Controller {
 	 				$ext = $info['extension'];
 
 	 				if(!in_array($ext, $allowed_extension))
-	 					throw new Exception("Invalid file format.");
+	 					throw new Exception("User signup successful but invalid file uploaded for left palm");
+
+	 				if($_FILES['left_palm']['size'] > 2097152)
+	 					throw new Exception("User signup successful but file sized greater than 2MB uploaded for left palm");
 
 					move_uploaded_file($_FILES['left_palm']['tmp_name'], "./public/user_images/".$user->id."-uploads/".$params['first_name'].'-left_palm-'.$user->id.'.'.$ext);
 					$user->left_palm = "public/user_images/".$user->id."-uploads".$params['first_name'].'-left_palm-'.$user->id.'.'.$ext;
@@ -70,7 +76,10 @@ class User_Create extends REST_Controller {
 	 				$ext = $info['extension'];
 
 	 				if(!in_array($ext, $allowed_extension))
-	 					throw new Exception("Invalid file format.");
+	 					throw new Exception("User signup successful but invalid file uploaded for right palm");
+
+	 				if($_FILES['right_palm']['size'] > 2097152)
+	 					throw new Exception("User signup successful but file sized greater than 2MB uploaded for right palm");
 	 				
 					move_uploaded_file($_FILES['right_palm']['tmp_name'], "./public/user_images/".$user->id."-uploads/".$params['first_name'].'-right_palm-'.$user->id.'.'.$ext);
 					$user->right_palm = "public/user_images/".$user->id."-uploads".$params['first_name'].'-right_palm-'.$user->id.'.'.$ext;

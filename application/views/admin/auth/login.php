@@ -1,4 +1,3 @@
-
 <?php extend('admin/base') ?>
 
 <?php startblock('content') ?>

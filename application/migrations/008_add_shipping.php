@@ -20,11 +20,18 @@ class Migration_Add_shipping extends CI_Migration {
 			'details' => array(
 				'type' => 'varchar',
 				'constraint' => '500',
+				'null' => true,
 			),
 
 			'country' => array(
 				'type' => 'varchar',
 				'constraint' => '250',
+			),
+
+			'state' => array(
+				'type' => 'varchar',
+				'constraint' => '250',
+				'null' => true,
 			),
 
 			'city' => array(
@@ -37,12 +44,13 @@ class Migration_Add_shipping extends CI_Migration {
 				'constraint' => '250',
 			),
 
-			'house' => array(
+			'apt_no' => array(
 				'type' => 'varchar',
 				'constraint' => '250',
+				'null' => true,
 			),
 
-			'zip_code' => array(
+			'postal_code' => array(
 				'type' => 'varchar',
 				'constraint' => '250',
 			),
@@ -52,14 +60,13 @@ class Migration_Add_shipping extends CI_Migration {
 				'constraint' => '250',
 			),
 
-			'date' => array(
-				'type' => 'datetime',
-				'null' => 'true',
+			'device_id' => array(
+				'type' => 'varchar',
+				'constraint' => '250',
 			),
 
-			'is_delivered' => array(
-				'type' => 'boolean',
-				'default' => 0,
+			'type' => array(
+				'type' => 'int',
 			),
 			
 			'active' => array(
@@ -70,6 +77,10 @@ class Migration_Add_shipping extends CI_Migration {
 			'deleted' => array(
 				'type'=>'boolean',
 				'default'=> 0,
+			),
+
+			'created_at' => array(
+				'type' => 'timestamp',
 			),
 		);
 

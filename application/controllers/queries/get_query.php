@@ -10,10 +10,9 @@ class Get_query extends REST_Controller {
 
 		try {
 			
-			if(empty($this->input->server('PHP_AUTH_USER') || empty($this->input->server('PHP_AUTH_PW')))) {
+			if(!$this->input->server('PHP_AUTH_USER') || !$this->input->server('PHP_AUTH_PW')) {
 
-	        	$this->message->set('Access Forbidden', 'error',TRUE,'feedback');
-				redirect('queries/queries');
+	        	throw new Exception("Access Forbidden!!");
 	        }
 
 	        $api = ApiAuthentication::find_by_user_and_authentication_key($this->input->server('PHP_AUTH_USER'), $this->input->server('PHP_AUTH_PW'));
@@ -32,6 +31,7 @@ class Get_query extends REST_Controller {
 
 			foreach($all_queries as $query) {
 
+				$queries[$i]['id'] = $query->id;
 				$queries[$i]['query'] = $query->query;
 				$queries[$i]['answer'] = $query->answer;
 				$queries[$i]['date'] = date("Y-m-d H:i:s", strtotime($query->created_at));

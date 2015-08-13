@@ -37,7 +37,7 @@ class Migration_Add_users extends CI_Migration {
 
 			'password' => array(
 				'type' => 'varchar',
-				'constraint' => 128,
+				'constraint' => '250',
 				'null' => False,
 			),
 
@@ -58,7 +58,7 @@ class Migration_Add_users extends CI_Migration {
 
 			'place_of_birth' => array(
 				'type' => 'varchar',
-				'constraint' => 128,
+				'constraint' => '250',
 				'null' => False,
 			),
 
@@ -68,18 +68,28 @@ class Migration_Add_users extends CI_Migration {
 
 			'left_palm' => array(
 				'type' => 'varchar',
-				'constraint' => 256,
+				'constraint' => '250',
 				'null' => true,
 			),
 
 			'right_palm' => array(
 				'type' => 'varchar',
-				'constraint' => 256,
+				'constraint' => '250',
 				'null' =>true,
 			),
 
 			'queries_count' => array(
 				'type' => 'int',
+			),
+
+			'ring_size' => array(
+				'type' => 'int',
+				'default' => 0,
+			),
+
+			'zodiac_id' => array(
+				'type' => 'int',
+				'default' => 0,
 			),
 			
 			'active' => array(
@@ -112,9 +122,9 @@ class Migration_Add_users extends CI_Migration {
 					'id'=>1,
 					'first_name' => 'admin',
 					'last_name' => 'admin',
-					'email' => 'admin@yodha.com',
-					'password'=> sha1('password'),
-					'date_of_birth' => '1980-01-10',
+					'email' => 'admin@astroveda.com',
+					'password'=> sha1('pocketastro'),
+					'date_of_birth' => '1990-01-10',
 					'place_of_birth' => 'Nepal',
 					'user_type' => '1',
 				);

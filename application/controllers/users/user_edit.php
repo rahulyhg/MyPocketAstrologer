@@ -11,6 +11,16 @@ class User_Edit extends REST_Controller {
 	public function index_post() {
 
 		try {
+
+			if(!$this->input->server('PHP_AUTH_USER') || !$this->input->server('PHP_AUTH_PW')) {
+
+	        	throw new Exception("Access Forbidden!!");
+	        }
+
+	        $api = ApiAuthentication::find_by_user_and_authentication_key($this->input->server('PHP_AUTH_USER'), $this->input->server('PHP_AUTH_PW'));
+	        
+	        if(!$api) 
+	        	throw new Exception("Access Forbidden");
 			
 			$user = User::find_valid_by_id($this->post('current_user_id'));
 
@@ -19,18 +29,13 @@ class User_Edit extends REST_Controller {
 
 			$user->first_name = $this->post('first_name');
 			$user->last_name = $this->post('last_name');
-			$user->email = $this->post('email');
-			$user->gender = $this->post('gender');
-			$user->date_of_birth = $this->post('date_of_birth')." ".$this->post('time_of_birth');
-			$user->is_accurate = $this->post('is_accurate');
-			$user->place_of_birth = $this->post('place_of_birth');
 
 			$user->save();
 
 			$response = $this->response(array(
 							'status'	=>	'SUCCESS',
 							'message'=>'Profile Edited Successfully',
-							'user'=> $params['first_name'],
+							'user'=> $user->first_name,
 							'data' => null
 							));
 			

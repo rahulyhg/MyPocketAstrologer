@@ -54,7 +54,7 @@ class Queries extends CI_Controller {
         $curl = curl_init();
 
 		curl_setopt($curl, CURLOPT_URL,'http://127.0.0.1/MyPocketAstrologer/queries/count_query');
-		curl_setopt($curl, CURLOPT_HTTPHEADER, array('X-API-KEY:123456789', 'Content-Type: application/json');
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array('X-API-KEY:123456789', 'Content-Type: application/json'));
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER,1);
 		curl_setopt($curl, CURLOPT_USERPWD, 'author:1234567890987654321');
 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
@@ -85,7 +85,7 @@ class Queries extends CI_Controller {
         $curl = curl_init();
 
 		curl_setopt($curl, CURLOPT_URL,'http://127.0.0.1/MyPocketAstrologer/queries/get_query');
-		curl_setopt($curl, CURLOPT_HTTPHEADER, array('X-API-KEY:123456789', 'Content-Type: application/json');
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array('X-API-KEY:123456789', 'Content-Type: application/json'));
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER,1);
 		curl_setopt($curl, CURLOPT_USERPWD, 'author:1234567890987654321');
 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');

@@ -38,7 +38,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="<?php echo base_url();?>">Home</a></li>
-                    <li><a href="<?php echo base_url('#');?>">Astrologers</a></li>
+                    <!-- <li><a href="<?php echo base_url('#');?>">Astrologers</a></li> -->
                     <li><a href="<?php echo base_url('admin/users');?>">Users</a></li>
                     <li><a href="<?php echo base_url('admin/queries');?>">Queries</a></li>
                     <li><a href="<?php echo base_url('auth/logout');?>">Sign Out</a></li>

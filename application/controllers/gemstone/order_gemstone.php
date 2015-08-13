@@ -10,7 +10,7 @@ class Order_gemstone extends REST_Controller {
 
 		try {
 			
-			if(empty($this->input->server('PHP_AUTH_USER') || empty($this->input->server('PHP_AUTH_PW')))) {
+			if(empty($this->input->server('PHP_AUTH_USER')) || empty($this->input->server('PHP_AUTH_PW'))) {
 
 	        	$this->message->set('Access Forbidden', 'error',TRUE,'feedback');
 				redirect('users/users');
@@ -26,7 +26,7 @@ class Order_gemstone extends REST_Controller {
 			if(!$current_user)
 				throw new Exception("Invalid User Request");
 				
-			$gemstone = UserGemstone::find_valid_by_user_id($current_user_id);
+			$gemstone = UserGemstone::find_by_user_id($current_user_id);
 
 			if(!$gemstone)
 				throw new Exception("Gemstone not found");			

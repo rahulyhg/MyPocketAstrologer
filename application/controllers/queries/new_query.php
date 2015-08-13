@@ -21,10 +21,9 @@ class New_query extends REST_Controller {
 
 			$params['user'] = $user;
 
-			if(empty($this->input->server('PHP_AUTH_USER') || empty($this->input->server('PHP_AUTH_PW')))) {
+			if(!$this->input->server('PHP_AUTH_USER') || !$this->input->server('PHP_AUTH_PW')) {
 
-	        	$this->message->set('Access Forbidden', 'error',TRUE,'feedback');
-				redirect('queries/queries');
+	        	throw new Exception("Access Forbidden!!");
 	        }
 
 	        $api = ApiAuthentication::find_by_user_and_authentication_key($this->input->server('PHP_AUTH_USER'), $this->input->server('PHP_AUTH_PW'));
@@ -34,12 +33,13 @@ class New_query extends REST_Controller {
 			
 			$new_query = new Query();
 			$query = $new_query->create($params);
+			$data = array('id' => $query->id, 'query' => $query->query);
 
 			$response = $this->response(array(
 							'status'	=>	'SUCCESS',
 							'message'=>'Your Query is sent to our astrologers. Please wait for the answer.',
 							'user'=> $user->first_name,
-							'data' => null
+							'data' => $data
 							));
 			
 			$this->response($response);

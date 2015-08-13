@@ -36,6 +36,7 @@ class CI_Controller {
 	 */
 	public function __construct()
 	{
+		ob_start();
 		self::$instance =& $this;
 
 		// Assign all the class objects that were instantiated by the

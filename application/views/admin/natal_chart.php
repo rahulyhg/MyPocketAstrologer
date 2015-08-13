@@ -18,9 +18,9 @@
 			<div class="row-fluid">
  
 			<?php if($natal_chart && $natal_chart->natal_chart && $natal_chart->status == 2) { ?>
-		 	<div class="row featurette">
+		 	<div class="row">
 		        <div class="col-md-10 col-md-push-1">
-		          <img class="featurette-image img-responsive center-block" src="<?php $natal_chart->natal_chart?>" alt="Generic placeholder image">
+		          <img class="img-responsive center-block" src="<?php echo base_url($natal_chart->natal_chart)?>">
 		        </div>
 		      </div>
 

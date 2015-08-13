@@ -32,8 +32,8 @@ class Migration_Add_payments extends CI_Migration {
 				'constraint' => '250',
 			),
 
-			'is_complete' => array(
-				'type' => 'boolean',
+			'type' => array(
+				'type' => 'int',
 				'default' => 0,
 			),
 			

@@ -24,12 +24,12 @@
 
 					<div class="form-group" style="width:80%;">
 					    <label for="email">Email</label>
-					    <input type="email" name="email" value="<?php echo $user->email;?>" class="form-control" required>
+					    <input type="email" name="email" value="<?php echo $user->email;?>" class="form-control" readonly>
 					</div>
 
 					<div class="form-group" style="width:80%;">
 						<label for="Gender">Gender</label>
-				        <select name="gender" id="gender" class="form-control" required>
+				        <select name="gender" id="gender" class="form-control" readonly>
 				        	<option value="">Please Select One</option>
 				        	<option value="0" <?php if($user->gender == 0) { ?> selected <?php } ?>>Male</option>
 				        	<option value="1" <?php if($user->gender == 1) { ?> selected <?php } ?>>Female</option>
@@ -38,17 +38,17 @@
 
 					<div class="form-group" style="width:80%;">
 					    <label for="place_of_birth">Birth Place</label>
-					    <input type="text" name="place_of_birth" value="<?php echo $user->place_of_birth;?>" class="form-control" required>
+					    <input type="text" name="place_of_birth" value="<?php echo $user->place_of_birth;?>" class="form-control" readonly>
 					</div>
 
 					<div class="form-group" style="width:80%;">
 					    <label for="date_of_birth">Date of Birth</label>
-					    <input type="date" name="date_of_birth" value="<?php echo date('Y-m-d', strtotime($user->date_of_birth));?>" class="form-control" required>
+					    <input type="date" name="date_of_birth" value="<?php echo date('Y-m-d', strtotime($user->date_of_birth));?>" class="form-control" readonly>
 					</div>
 
 					<div class="form-group" style="width:80%;">
 					    <label for="time_of_birth">Time of Birth</label>
-					    <input type="text" name="time_of_birth" value="<?php echo date('H:i:s', strtotime($user->date_of_birth));?>" class="form-control" placeholder="HH:mm:ss" required>
+					    <input type="text" name="time_of_birth" value="<?php echo date('H:i:s', strtotime($user->date_of_birth));?>" class="form-control" placeholder="HH:mm:ss" readonly>
 					</div>
 				</div>
 			</div>

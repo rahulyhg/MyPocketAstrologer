@@ -47,8 +47,8 @@ class Payment extends BaseModel {
 		$this->assign_attribute('amount', $amount);	
 	}
 
-	public function set_is_complete($is_complete) {
-		$this->assign_attribute('is_complete', $is_complete);	
+	public function set_type($type) {
+		$this->assign_attribute('type', $type);	
 	}
 
 	/* Public functions - Getters */
@@ -69,8 +69,8 @@ class Payment extends BaseModel {
 		return $this->read_attribute('amount');
 	}
 
-	public function get_is_complete() {
-		return $this->read_attribute('is_complete');
+	public function get_type() {
+		return $this->read_attribute('type');
 	}	
 
 	/* Public static functions */
@@ -83,7 +83,7 @@ class Payment extends BaseModel {
 		$payment->details = array_key_exists('details', $params) ? $params['details'] : null;
 		$payment->date = array_key_exists('date', $params) ? $params['date'] : null;
 		$payment->amount = array_key_exists('amount', $params) ? $params['amount'] : null;
-		$payment->is_complete = array_key_exists('is_complete', $params) ? $params['is_complete'] : null;
+		$payment->type = array_key_exists('type', $params) ? $params['type'] : null;
 
 		$payment->save();
 

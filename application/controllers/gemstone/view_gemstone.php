@@ -10,10 +10,9 @@ class View_gemstone extends REST_Controller {
 
 		try {
 			
-			if(empty($this->input->server('PHP_AUTH_USER') || empty($this->input->server('PHP_AUTH_PW')))) {
+			if(!$this->input->server('PHP_AUTH_USER') || !$this->input->server('PHP_AUTH_PW')) {
 
-	        	$this->message->set('Access Forbidden', 'error',TRUE,'feedback');
-				redirect('users/users');
+	        	throw new Exception("Access Forbidden!!");
 	        }
 
 	        $api = ApiAuthentication::find_by_user_and_authentication_key($this->input->server('PHP_AUTH_USER'), $this->input->server('PHP_AUTH_PW'));
@@ -26,20 +25,30 @@ class View_gemstone extends REST_Controller {
 			if(!$current_user)
 				throw new Exception("Invalid User Request");
 				
-			$gemstone = UserGemstone::find_valid_by_user_id($current_user_id);
-
-			if(!$gemstone)
-				throw new Exception("Gemstone not found");
+			$gemstone = UserGemstone::find_by_user_id($current_user_id);
 
 			$data = array(
 						'first_name' => $current_user->first_name,
 						'last_name' => $current_user->last_name,
-						'email' => $current_user->email,
-						'name' => $gemstone->gemstone->name,
-						'color' => $gemstone->gemstone->color,
-						'gem_details' => $gemstone->gemstone->details,
-						'details' => $gemstone->details,
 						);
+
+			if(!$gemstone) {
+
+				$zodiac = Zodiac::find_by_id($current_user->zodiac_id);
+
+				if(!$zodiac)
+					throw new Exception("Gemstone not found");
+
+				$data['gemstone'] = $zodiac->gemstone;
+				$data['color'] = $zodiac->color;
+			}
+
+			else {
+
+				$data['gemstone'] = $gemstone->gemstone->name;
+				$data['color'] = $gemstone->gemstone->color;
+				$data['details'] = $gemstone->gemstone->details;
+			}
 
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',
