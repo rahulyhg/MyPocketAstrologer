@@ -204,6 +204,43 @@ class Users extends BaseController {
             redirect('admin/users');
         }
     }
+
+    public function assign_zodiac($user_id) {
+
+        try {
+
+            $user = User::find_by_id($user_id);
+
+            if(!$user) {
+                throw new Exception("Invalid User!");                
+            }
+
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+
+                $zodiac_signs = Zodiac::find('all');
+                return $this->load_view('admin/user/zodiac', array('user' => $user, 'zodiac_signs' => $zodiac_signs));
+            }
+
+            $zodiac = Zodiac::find_by_id($this->input->post('zodiac_id'));
+            if(!$zodiac)
+                throw new Exception("Please select a valid zodiac sign");
+                
+            $user->zodiac = $zodiac;
+            $user->save();
+
+            $this->session->set_flashdata('alert_success', "Zodiac sign assigned to the user successfully");
+
+            redirect('admin/users');
+
+        }
+
+        catch(Exception $e) {
+
+            $this->session->set_flashdata('alert_error', $e->getMessage());
+
+            redirect('admin/users');
+        }
+    }
 }
 
 ?>

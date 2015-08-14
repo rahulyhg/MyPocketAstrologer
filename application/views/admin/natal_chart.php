@@ -24,7 +24,7 @@
 		        </div>
 		      </div>
 
-		      <form class="form" action="<?php echo base_url('admin/natal_chart/add/'.$user->id);?>" method="post" enctype="multipart/form-data">
+		      <form class="form" action="<?php echo base_url('admin/natal_charts/add/'.$user->id);?>" method="post" enctype="multipart/form-data">
 			        
 			    	<div class="form-group" style="width:80%;">
 			        	<input type="file" name="natal_chart">

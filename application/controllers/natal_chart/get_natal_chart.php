@@ -10,10 +10,9 @@ class Get_natal_chart extends REST_Controller {
 
 		try {
 			
-			if(empty($this->input->server('PHP_AUTH_USER')) || empty($this->input->server('PHP_AUTH_PW'))) {
+			if(!$this->input->server('PHP_AUTH_USER') || !$this->input->server('PHP_AUTH_PW')) {
 
-	        	$this->message->set('Access Forbidden', 'error',TRUE,'feedback');
-				redirect('users/users');
+	        	throw new Exception("Access Forbidden!!");
 	        }
 
 	        $api = ApiAuthentication::find_by_user_and_authentication_key($this->input->server('PHP_AUTH_USER'), $this->input->server('PHP_AUTH_PW'));
@@ -26,7 +25,7 @@ class Get_natal_chart extends REST_Controller {
 			if(!$current_user)
 				throw new Exception("Invalid User Request");
 			
-			$natal_chart = NatalChart::find_valid_by_user_id($current_user_id);
+			$natal_chart = NatalChart::find_by_user_id($current_user_id);
 
 			if($natal_chart)
 				throw new Exception("Natal Chart already available");				
@@ -34,7 +33,7 @@ class Get_natal_chart extends REST_Controller {
 			$params = array('user' => $current_user,
 							'status' => 1,
 						);
-
+			
 			$natal_chart = new NatalChart();
 			$natal_chart->create($params);
 			$natal_chart->save();

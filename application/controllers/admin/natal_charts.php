@@ -70,7 +70,7 @@ class Natal_charts extends BaseController {
             $natal_chart->status = 2;
             $natal_chart->save();
 
-            redirect('admin/users/natal_charts/index/'.$user_id);
+            redirect('admin/natal_charts/index/'.$user_id);
 		}
 
 		catch(Exception $e) {

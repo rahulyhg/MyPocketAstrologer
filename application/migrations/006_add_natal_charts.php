@@ -15,6 +15,7 @@ class Migration_Add_natal_charts extends CI_Migration {
 
 			'user_id' => array(
 				'type' => 'int',
+				'default' => 0,
 			),
 
 			'natal_chart' => array(
@@ -25,6 +26,7 @@ class Migration_Add_natal_charts extends CI_Migration {
 
 			'status' => array(
 				'type' => 'int',
+				'default' => 0,
 			),
 			
 			'active' => array(

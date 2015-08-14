@@ -39,9 +39,12 @@ class Change_profile_pic extends REST_Controller {
 	 				if(!in_array($ext, $allowed_extension))
 	 					throw new Exception("Invalid file uploaded for profile picture");
 	 					
-					move_uploaded_file($_FILES['profile_pic']['tmp_name'], "./public/user_images/".$user->id."-uploads/".$params['first_name'].'-profile-'.$user->id.'.-'.rand(100, 999).'.'.$ext);
+	 				$filename = $params['first_name'].'-profile-'.$user->id.'.-'.rand(100, 999).'.'.$ext;
+
+					if(!move_uploaded_file($_FILES['profile_pic']['tmp_name'], "./public/user_images/".$user->id."-uploads/".$filename))
+						throw new Exception("Error in Upload");
 					
-					$user->profile_pic = "public/user_images/".$user->id."-uploads/".$params['first_name'].'-profile-'.$user->id.'.-'.rand(100, 999).'.'.$ext;
+					$user->profile_pic = "public/user_images/".$user->id."-uploads/".$filename;
 					$user->save();
 				}
 			}

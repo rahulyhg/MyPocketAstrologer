@@ -26,15 +26,10 @@ class View_gemstone extends REST_Controller {
 				throw new Exception("Invalid User Request");
 				
 			$gemstone = UserGemstone::find_by_user_id($current_user_id);
-
-			$data = array(
-						'first_name' => $current_user->first_name,
-						'last_name' => $current_user->last_name,
-						);
+			$zodiac = Zodiac::find_by_id($current_user->zodiac_id);
+			$data = array();
 
 			if(!$gemstone) {
-
-				$zodiac = Zodiac::find_by_id($current_user->zodiac_id);
 
 				if(!$zodiac)
 					throw new Exception("Gemstone not found");
@@ -49,6 +44,10 @@ class View_gemstone extends REST_Controller {
 				$data['color'] = $gemstone->gemstone->color;
 				$data['details'] = $gemstone->gemstone->details;
 			}
+
+			$data['first_name'] = $current_user->first_name;
+			$data['last_name'] = $current_user->last_name;
+			$data['zodiac'] = $zodiac->zodiac;
 
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',

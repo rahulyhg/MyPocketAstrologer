@@ -10,6 +10,8 @@ class User_Edit extends REST_Controller {
 
 	public function index_post() {
 
+		$params = json_decode(file_get_contents('php://input'),true);
+
 		try {
 
 			if(!$this->input->server('PHP_AUTH_USER') || !$this->input->server('PHP_AUTH_PW')) {
@@ -22,13 +24,13 @@ class User_Edit extends REST_Controller {
 	        if(!$api) 
 	        	throw new Exception("Access Forbidden");
 			
-			$user = User::find_valid_by_id($this->post('current_user_id'));
+			$user = User::find_valid_by_id($params['current_user_id']);
 
 			if(!$user)
 				throw new Exception("Invalid User Request");
 
-			$user->first_name = $this->post('first_name');
-			$user->last_name = $this->post('last_name');
+			$user->first_name = $params['first_name'];
+			$user->last_name = $params['last_name'];
 
 			$user->save();
 

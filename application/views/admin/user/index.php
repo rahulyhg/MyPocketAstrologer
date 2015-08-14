@@ -59,6 +59,9 @@
 										<ul class="dropdown-menu" style="text-align:left;">	
 											<li><a href="<?php echo base_url('admin/users/view/'.$user->id);?>">View Profile</a></li>
 											<li><a href="<?php echo base_url('admin/users/edit/'.$user->id);?>">Edit Profile</a></li>
+											<?php if(!$user->zodiac) { ?>
+											<li><a href="<?php echo base_url('admin/users/assign_zodiac/'.$user->id);?>">Assign Zodiac Sign</a></li>
+											<?php } ?>
 											<li><a href="<?php echo base_url('admin/users/queries/'.$user->id);?>">View Queries</a></li>
 											<li><a href="<?php echo base_url('admin/gemstones/index/'.$user->id);?>">View Gemstone</a></li>
 											<li><a href="<?php echo base_url('admin/natal_charts/index/'.$user->id);?>">View Natal Chart</a></li>
