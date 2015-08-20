@@ -10,10 +10,9 @@ class Count_query extends REST_Controller {
 
 		try {
 
-			if(empty($this->input->server('PHP_AUTH_USER')) || empty($this->input->server('PHP_AUTH_PW'))) {
+			if(!$this->input->server('PHP_AUTH_USER') || !$this->input->server('PHP_AUTH_PW')) {
 
-	        	$this->message->set('Access Forbidden', 'error',TRUE,'feedback');
-				redirect('queries/queries');
+	        	throw new Exception("Access Forbidden!!");
 	        }
 
 	        $api = ApiAuthentication::find_by_user_and_authentication_key($this->input->server('PHP_AUTH_USER'), $this->input->server('PHP_AUTH_PW'));

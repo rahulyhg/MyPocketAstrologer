@@ -37,7 +37,7 @@ class Shipping_order extends REST_Controller {
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',
 							'message' => 'Shipping order saved successfully',
-							'user_name' => $current_user->first_name,
+							'user' => $current_user->first_name,
 							'data' => null,
 							));
 			
