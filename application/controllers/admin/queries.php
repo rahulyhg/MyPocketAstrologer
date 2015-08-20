@@ -70,6 +70,24 @@ class Queries extends BaseController {
 
             $query->save();
 
+            $registration_ids = array();
+            $gcm_users = $query->user->gcm_users;
+
+            $this->gcm->setMessage($this->input->post('answer'));
+
+            foreach ($gcm_users as $gcm_user) {
+                $this->gcm->addRecepient($gcm_user->gcm_regd_id);
+            }
+
+            // set additional data
+            $this->gcm->setData(array(
+                'stat' => 'OK'
+            ));
+
+            $this->gcm->setTtl(false);
+            $this->gcm->setGroup(false);
+            $this->gcm->send();
+
             $this->session->set_flashdata(
                 'alert_success', 
                 "Answer added to the query successfully."

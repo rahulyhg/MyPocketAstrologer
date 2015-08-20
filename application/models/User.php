@@ -40,6 +40,12 @@ class User extends BaseModel {
             'class_name' => 'Query',
             'foreign_key' => 'user_id'
         ),
+
+        array(
+            'gcm_users',
+            'class_name' => 'GcmUser',
+            'foreign_key' => 'user_id'
+        ),
 	);
 
 	static $has_one = array(
@@ -237,11 +243,6 @@ class User extends BaseModel {
 	public function get_ring_size() {
 		return $this->read_attribute('ring_size');
 	}
-
-	public function get_zodiac() {
-		return $this->read_attribute('zodiac_id');
-	}
-
 
 	/* Public functions - General */
 

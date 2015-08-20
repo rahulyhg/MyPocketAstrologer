@@ -19,7 +19,7 @@ class Query extends BaseModel {
 
 	/* Public functions - Setters */
 
-	public function set_user_id(User $user) {
+	public function set_user(User $user) {
 
 		$user->check_is_valid();
 		$this->assign_attribute('user_id', $user->id);
@@ -49,10 +49,6 @@ class Query extends BaseModel {
 
 	/* Public functions - Getters */
 
-	public function get_user_id() {
-		return $this->read_attribute('user_id');
-	}
-
 	public function get_device_id() {
 		return $this->read_attribute('device_id');
 	}
@@ -73,7 +69,7 @@ class Query extends BaseModel {
 
 		$query->check_if_exists($params['user'], $params['query'], $params['device_id']);
 
-		$query->user_id = array_key_exists('user', $params) ? $params['user'] : null;
+		$query->user = array_key_exists('user', $params) ? $params['user'] : null;
 		$query->device_id = array_key_exists('device_id', $params) ? $params['device_id'] : null;
 		$query->query = array_key_exists('query', $params) ? $params['query'] : null;
 		$query->answer = array_key_exists('answer', $params) ? $params['answer'] : null;

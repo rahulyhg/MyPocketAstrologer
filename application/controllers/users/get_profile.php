@@ -39,6 +39,22 @@ class Get_profile extends REST_Controller {
 						'right_palm' => $current_user->right_palm,
 						);
 
+			$zodiac = $current_user->zodiac;
+
+			if($zodiac) {
+
+				$user['zodiac'] = $zodiac->zodiac;
+				$user['gemstone'] = $zodiac->gemstone;
+				$user['color'] = $zodiac->color;				
+			}
+
+			else {
+
+				$user['zodiac'] = null;
+				$user['gemstone'] = null;
+				$user['color'] = null;
+			}
+
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',
 							'message' => 'User profile',
