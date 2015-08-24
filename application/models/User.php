@@ -63,9 +63,23 @@ class User extends BaseModel {
 
     	if($this->is_new_record()) {
 
-			if(self::exists(array('email' => $email))) { 
+			if(self::exists(array('email' => $email, 'deleted' => 0))) { 
 				throw new Exception('The email entered already exists.'); 
 			}
+    	}
+
+    	elseif(!$this->is_new_record()) {
+
+			if(self::exists(array(
+				'conditions' => array(
+					'email = ? and id != ? and deleted = 0', 
+					$email, 
+					$this->id
+				)
+			))) { 
+				throw new Exception('The email address chosen already exists.'); 
+			}
+
     	}
     }
 

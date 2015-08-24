@@ -52,7 +52,7 @@ class View_gemstone extends REST_Controller {
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',
 							'message' => 'User profile',
-							'user_name' => $current_user->first_name,
+							'user' => $current_user->first_name,
 							'data' => $data,
 							));
 			

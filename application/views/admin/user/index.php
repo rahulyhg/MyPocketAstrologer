@@ -22,7 +22,7 @@
 					<div class="span9">
 						<?php if(count($users) > 0){ ?>
 
-						<div class="table-container">
+						<div class="table-container" style="padding-bottom:200px;">
 							<table class="table table-striped table-bordered" style="margin-bottom:85px;">
 
 								<tr>
