@@ -88,6 +88,26 @@ class Queries extends BaseController {
             $this->gcm->setGroup(false);
             $this->gcm->send();
 
+            $curl_data = json_encode(array(
+                            'type' => 5,
+                            'data' => array(
+                                        'query_id' => $query->id,
+                                        'query' => $query->query,
+                                        'answer' => $query->answer,
+                                    )
+                            ));        
+
+            $curl = curl_init();
+
+            curl_setopt($curl, CURLOPT_URL,'http://mypocketastrologer.com/admin/queries/answer');
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array('X-API-KEY:123456789', 'Content-Type: application/json'));
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER,1);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_data);
+            $curl_response = curl_exec($curl);
+
+            curl_close($curl);
+
             $this->session->set_flashdata(
                 'alert_success', 
                 "Answer added to the query successfully."

@@ -108,7 +108,7 @@ class Users extends CI_Controller {
         $curl = curl_init();
 
 		curl_setopt($curl, CURLOPT_URL,'http://127.0.0.1/MyPocketAstrologer/users/get_profile');
-		curl_setopt($curl, CURLOPT_HTTPHEADER, array('X-API-KEY:123456789', 'Content-Type: application/json');
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array('X-API-KEY:123456789', 'Content-Type: application/json'));
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER,1);
 		curl_setopt($curl, CURLOPT_USERPWD, 'author:1234567890987654321');
 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
