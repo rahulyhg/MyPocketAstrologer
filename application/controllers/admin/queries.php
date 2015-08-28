@@ -73,7 +73,16 @@ class Queries extends BaseController {
             $registration_ids = array();
             $gcm_users = $query->user->gcm_users;
 
-            $this->gcm->setMessage($this->input->post('answer'));
+            $message = json_encode(array(
+                            'type' => "5",
+                            'data' => array(
+                                        'query_id' => $query->id,
+                                        'query' => $query->query,
+                                        'answer' => $query->answer,
+                                    )
+                            ));  
+
+            $this->gcm->setMessage($message);
 
             foreach ($gcm_users as $gcm_user) {
                 $this->gcm->addRecepient($gcm_user->gcm_regd_id);
@@ -87,26 +96,6 @@ class Queries extends BaseController {
             $this->gcm->setTtl(false);
             $this->gcm->setGroup(false);
             $this->gcm->send();
-
-            $curl_data = json_encode(array(
-                            'type' => 5,
-                            'data' => array(
-                                        'query_id' => $query->id,
-                                        'query' => $query->query,
-                                        'answer' => $query->answer,
-                                    )
-                            ));        
-
-            $curl = curl_init();
-
-            curl_setopt($curl, CURLOPT_URL,'http://mypocketastrologer.com/admin/queries/answer');
-            curl_setopt($curl, CURLOPT_HTTPHEADER, array('X-API-KEY:123456789', 'Content-Type: application/json'));
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER,1);
-            curl_setopt($curl, CURLOPT_POST, true);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_data);
-            $curl_response = curl_exec($curl);
-
-            curl_close($curl);
 
             $this->session->set_flashdata(
                 'alert_success', 

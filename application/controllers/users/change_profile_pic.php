@@ -11,7 +11,7 @@ class Change_profile_pic extends REST_Controller {
 	public function index_post() {
 
 		try {
-
+			
 			if(!$this->input->server('PHP_AUTH_USER') || !$this->input->server('PHP_AUTH_PW')) {
 
 	        	throw new Exception("Access Forbidden!!");
@@ -34,7 +34,7 @@ class Change_profile_pic extends REST_Controller {
 				if(is_uploaded_file($_FILES['profile_pic']['tmp_name'])) {
 				
 					$info = pathinfo($_FILES['profile_pic']['name']);
-	 				$ext = $info['extension'];
+					$ext = $info['extension'];
 
 	 				if(!in_array($ext, $allowed_extension))
 	 					throw new Exception("Invalid file uploaded for profile picture");

@@ -29,7 +29,7 @@ class Change_date_of_birth extends REST_Controller {
 			if(!$user)
 				throw new Exception("Invalid User Request");
 
-			$tob = date('H:i:s', strtotime($user->date_of_birth)),
+			$tob = date('H:i:s', strtotime($user->date_of_birth));
 			$user->date_of_birth = $params['date_of_birth'].' '.$tob;
 
 			$user->save();

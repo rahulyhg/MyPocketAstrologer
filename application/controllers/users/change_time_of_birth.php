@@ -11,7 +11,7 @@ class Change_time_of_birth extends REST_Controller {
 	public function index_post() {
 
 		$params = json_decode(file_get_contents('php://input'),true);
-
+		
 		try {
 
 			if(!$this->input->server('PHP_AUTH_USER') || !$this->input->server('PHP_AUTH_PW')) {
