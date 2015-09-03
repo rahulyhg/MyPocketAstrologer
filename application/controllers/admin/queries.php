@@ -76,10 +76,11 @@ class Queries extends BaseController {
             $message = json_encode(array(
                             'type' => "5",
                             'data' => array(
-                                        'query_id' => $query->id,
+                                        'id' => $query->id,
                                         'query' => $query->query,
                                         'answer' => $query->answer,
-                                    )
+                                        'date' =>  date("Y-m-d H:i:s", strtotime($query->created_at)),
+                                    ),
                             ));  
 
             $this->gcm->setMessage($message);
