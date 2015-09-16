@@ -7,6 +7,7 @@ class Order_puja extends REST_Controller {
 	public function index_get() {
 
 		$current_user_id = $this->get('current_user_id');
+		$puja_id = $this->get('puja_id');
 
 		try {
 			
@@ -23,7 +24,15 @@ class Order_puja extends REST_Controller {
 			$current_user = User::find_valid_by_id($current_user_id);
 
 			if(!$current_user)
-				throw new Exception("Invalid User Request");		
+				throw new Exception("Invalid User Request");
+
+			$puja = Puja::find_by_id_and_status($puja_id, 1);
+
+			if(!$puja)
+				throw new Exception("Invalid Puja Request");
+
+			$puja->status = 2;
+			$puja->save();
 
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',

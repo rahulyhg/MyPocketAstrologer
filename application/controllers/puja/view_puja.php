@@ -25,22 +25,26 @@ class View_puja extends REST_Controller {
 			if(!$current_user)
 				throw new Exception("Invalid User Request");
 				
-			$puja = Puja::find_valid_by_user_id($current_user_id);
+			$all_pujas = $current_user->pujas;
 
-			if(!$puja)
-				throw new Exception("No puja done yet");
+			$pujas = array();
+			$i = 0;
 
-			$data = array(
-						'puja' => $puja->name,
-						'details' => $puja->details,
-						'date' => date('Y-m-d', strtotime($puja->date)),
-					);
+			foreach($all_pujas as $puja) {
+
+				$pujas[$i]['id'] = $puja->id;
+				$pujas[$i]['name'] = $puja->name;
+				$pujas[$i]['details'] = $puja->details;
+				$pujas[$i]['date'] = date("Y-m-d H:i:s", strtotime($puja->date));
+
+				$i++;
+			}
 
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',
 							'message' => 'User profile',
 							'user_name' => $current_user->first_name,
-							'data' => $data,
+							'data' => $pujas,
 							));
 			
 			$this->response($response);

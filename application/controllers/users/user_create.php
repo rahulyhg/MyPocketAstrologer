@@ -28,7 +28,7 @@ class User_Create extends REST_Controller {
 			$new_user = new User();
 			$user = $new_user->create($params);
 
-			mkdir(base_url('public/user_images/'.$user->id.'-uploads'));
+			mkdir('public/user_images/'.$user->id.'-uploads', 0777);
 
 			$allowed_extension = array('jpg','png','gif','JPG','PNG','GIF');
 

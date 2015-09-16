@@ -46,9 +46,6 @@ class User extends BaseModel {
             'class_name' => 'GcmUser',
             'foreign_key' => 'user_id'
         ),
-	);
-
-	static $has_one = array(
 
 		array(
             'natal_chart',

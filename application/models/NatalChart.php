@@ -6,6 +6,17 @@ class NatalChart extends BaseModel {
 
 	static $table_name = 'natal_charts';
 
+	/*Associations*/
+
+	static $belongs_to = array(
+		
+		array(
+            'user',
+            'class_name' => 'User',
+            'foreign_key' => 'user_id'
+        ),
+	);
+
 	/* Public functions - Setters */
 
 	public function set_user(User $user) {
@@ -24,10 +35,6 @@ class NatalChart extends BaseModel {
 
 	/* Public functions - Getters */
 
-	public function get_user() {
-		return $this->read_attribute('user_id');
-	}
-
 	public function get_natal_chart() {
 		return $this->read_attribute('natal_chart');
 	}
@@ -35,6 +42,13 @@ class NatalChart extends BaseModel {
 	public function get_status() {
 		return $this->read_attribute('status');
 	}
+
+	/*
+	-----Note----
+	Status 1: Natal Chart uploaded
+	Status 2: Natal chart requested by user for viewing
+	Status 3: Natal chart ordered to be shipped
+	*/
 
 	/* Public static functions */
 
