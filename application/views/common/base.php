@@ -41,6 +41,7 @@
                     <!-- <li><a href="<?php echo base_url('#');?>">Astrologers</a></li> -->
                     <li><a href="<?php echo base_url('admin/users');?>">Users</a></li>
                     <li><a href="<?php echo base_url('admin/queries');?>">Queries</a></li>
+                    <li><a href="<?php echo base_url('admin/shippings');?>">Shipping</a></li>
                     <li><a href="<?php echo base_url('auth/logout');?>">Sign Out</a></li>
                 </ul>
             </div><!-- /.nav-collapse -->

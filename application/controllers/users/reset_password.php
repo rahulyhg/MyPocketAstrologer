@@ -2,7 +2,7 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class Password_reset extends REST_Controller {
+class Reset_password extends REST_Controller {
 
 	public function index_get() {
 
@@ -11,21 +11,23 @@ class Password_reset extends REST_Controller {
 	public function index_post() {
 		
 		try {
+
+			$params = json_decode(file_get_contents('php://input'),true);
 			
-			$user = User::find_by_id($this->post('user_id'));
+			$user = User::find_by_id($params['user_id']);
 
 			if(!$user)
 				throw new Exception("Invalid User Request");
 
-			$user->reset_password($this->post('password'), $this->post('confirm_password'));
-			$user->password = $this->post('password');
+			$user->reset_password($params['password'], $params['confirm_password']);
+			$user->password = $params['password'];
 
 			$user->save();
 
 			$response = $this->response(array(
 							'status'	=>	'SUCCESS',
 							'message'=>'Password Reset Successfully',
-							'user'=> $params['first_name'],
+							'user'=> $user->first_name,
 							'data' => null
 							));
 			

@@ -12,9 +12,11 @@ class Forgot_password extends REST_Controller {
 		
 		try {
 
-			$date_of_birth = $this->post('date_of_birth').' '.$this->post('time_of_birth');
+			$params = json_decode(file_get_contents('php://input'),true);
 
-			$user = User::find_by_email_and_date_of_birth($this->post('email'), $date_of_birth);
+			$date_of_birth = $params['date_of_birth'].' '.$params['time_of_birth'];
+
+			$user = User::find_by_email_and_date_of_birth($params['email'], $date_of_birth);
 
 			if(!$user)
 				throw new Exception("Invalid Credentials provided");
@@ -22,7 +24,7 @@ class Forgot_password extends REST_Controller {
 			$response = $this->response(array(
 							'status'	=>	'SUCCESS',
 							'message'=>'Verified credentials',
-							'user'=> $params['first_name'],
+							'user'=> $user->first_name,
 							'data' => array('user_id' => $user->id)
 							));
 			

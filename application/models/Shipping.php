@@ -18,6 +18,15 @@ class Shipping extends BaseModel {
         ),
 	);
 
+	static $has_one = array(
+		
+		array(
+            'quotation',
+            'class_name' => 'Quotation',
+            'foreign_key' => 'shipping_id'
+        ),
+	);
+
 	/* Public functions - Setters */
 
 	public function set_user(User $user) {
@@ -93,14 +102,15 @@ class Shipping extends BaseModel {
 	}
 
 	public function set_type($type) {
+
+		if(!$type) {
+			throw new Exception('Type is required.');
+        }
+
 		$this->assign_attribute('type', $type);	
 	}
 
 	/* Public functions - Getters */
-
-	public function get_user() {
-		return $this->read_attribute('user_id');
-	}
 
 	public function get_details() {
 		return $this->read_attribute('details');
@@ -141,6 +151,18 @@ class Shipping extends BaseModel {
 	public function get_device_id() {
 		return $this->read_attribute('device_id');
 	}
+
+	public function get_address() {
+		return $this->country.', '.$this->state.' '.$this->city.', '.$this->street.' '.$this->apt_no.' '.$this->postal_code.', '.$this->phone_number ;
+	}
+
+	/*
+	  ----NOTE----
+	  TYPE_SHIP_NATAL_CHART=1
+	  TYPE_SHIP_GEMSTONE=2
+
+	*/
+	  
 
 	/* Public static functions */
 

@@ -48,14 +48,16 @@ class Pujas extends BaseController {
 
             $gcm_users = $user->gcm_users;
 
+            $data = array(
+                            'information_type' => 1,
+                            'name' => $puja->name,
+                            'push_description' => $puja->details,
+                            'image_urls' => array()
+                            );
+
             $message = json_encode(array(
                             'type' => 3,
-                            'data' => array(
-                                        'id' => $puja->id,
-                                        'name' => $puja->name,
-                                        'details' => $puja->details,
-                                        'date' =>  date("Y-m-d H:i:s", strtotime($puja->date)),
-                                    ),
+                            'data' => $data
                             ));
 
             $this->gcm->setMessage($message);
