@@ -70,18 +70,17 @@ class Queries extends BaseController {
 
             $query->save();
 
-            $registration_ids = array();
             $gcm_users = $query->user->gcm_users;
 
             $message = json_encode(array(
-                            'type' => "5",
+                            'type' => 5,
                             'data' => array(
                                         'id' => $query->id,
                                         'query' => $query->query,
                                         'answer' => $query->answer,
                                         'date' =>  date("Y-m-d H:i:s", strtotime($query->created_at)),
                                     ),
-                            ));  
+                            ));
 
             $this->gcm->setMessage($message);
 
