@@ -98,7 +98,7 @@ class Gemstones extends BaseController {
 
             $this->session->set_flashdata(
                 'alert_success', 
-                "Puja suggested to the user successfully."
+                "Gemstone suggested to the user successfully."
             );
             
             redirect('admin/gemstones/index/'.$user->id);
@@ -179,7 +179,7 @@ class Gemstones extends BaseController {
             $this->gcm->setGroup(false);
             $this->gcm->send();
 
-            $this->session->set_flashdata('alert_success', "Gemstone deleted successfully");
+            $this->session->set_flashdata('alert_success', "Gemstone processed for shipping successfully");
 
             redirect('admin/gemstones/index/'.$user_gemstone->user_id);
 

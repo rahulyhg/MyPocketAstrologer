@@ -20,13 +20,13 @@ class Zodiac extends BaseModel {
 	static $belongs_to = array(
 		
 		array(
-            'color',
+            'colour',
             'class_name' => 'Color',
             'foreign_key' => 'color_id'
         ),
 
         array(
-            'gemstone',
+            'gems',
             'class_name' => 'Gemstone',
             'foreign_key' => 'gemstone_id'
         ),

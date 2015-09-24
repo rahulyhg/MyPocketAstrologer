@@ -25,7 +25,7 @@ class Order_gemstone extends REST_Controller {
 			if(!$current_user)
 				throw new Exception("Invalid User Request");
 				
-			$user_gemstone = UserGemstone::find_by_user_id($current_user_id);
+			$user_gemstone = UserGemstone::find_by_user_id_and_status($current_user_id, 1);
 
 			if(!$user_gemstone)
 				throw new Exception("Gemstone not found");

@@ -40,7 +40,12 @@
 										<tr>
 											<td><?php echo $puja->name;?></td>
 											<td><?php echo $puja->details;?></td>
-											<td><?php echo $puja->status;?></td>
+											<td><?php switch($puja->status) {
+														case 1: echo "Suggested"; break;
+														case 2: echo "Ordered"; break;
+														case 3: echo "Started"; break;
+														case 4: echo "Completed"; break;
+											}?></td>
 											<td><?php echo count($puja->images);?></td>															
 											
 											<td style="text-align:center;width:65px;">

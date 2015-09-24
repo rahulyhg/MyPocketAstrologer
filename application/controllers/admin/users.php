@@ -242,12 +242,12 @@ class Users extends BaseController {
                         'profile_pic' => $user->profile_pic,
                         'left_palm' => $user->left_palm,
                         'right_palm' => $user->right_palm,
-                        'zodiac' => $user->zodiac->zodiac,
-                        'gemstone' => $user->zodiac->gemstone,
-                        'color' => $user->zodiac->color,
-                        'zodiac_description' => $user->zodiac->details,
-                        'gemstone_description' => $user->zodiac->gemstone->details,
-                        'color_description' => $user->zodiac->color->details,
+                        'zodiac' => $zodiac->zodiac,
+                        'gemstone' => $zodiac->gemstone,
+                        'color' => $zodiac->color,
+                        'zodiac_description' => $zodiac->details,
+                        'gemstone_description' => $zodiac->gems->details,
+                        'color_description' => $zodiac->colour->details,
                         );
 
             $message = json_encode(array(
@@ -272,8 +272,8 @@ class Users extends BaseController {
 
             $params = array(
                         'user' => $user,
-                        'gemstone' => $zodiac->gemstone,
-                        'color' => $zodiac->color,
+                        'gemstone' => $zodiac->gems,
+                        'color' => $zodiac->colour,
                         'details' => $zodiac->gemstone->details,
                     );
 

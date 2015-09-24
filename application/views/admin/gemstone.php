@@ -42,7 +42,16 @@
 											<td><?php echo $user_gemstone->details;?></td>														
 											
 											<td style="text-align:center;width:65px;">
-												<a href="<?php echo base_url('admin/gemstones/delete/'.$user_gemstone->id);?>" onclick="return confirm_delete();">Delete</a>
+											<div class="btn-group">
+						  						<a class="btn dropdown-toggle" style="border:1px solid #eee;" data-toggle="dropdown" href="#">
+						    						Actions <span class="caret"></span>
+						  						</a>
+												<ul class="dropdown-menu" style="text-align:left;">
+													<?php if($user_gemstone->status == 2) { ?>
+													<li><a href="<?php echo base_url('admin/gemstones/process_shipping/'.$user_gemstone->id);?>">Confirm Processing of Gemstone</a></li>
+													<?php } ?>
+													<li><a href="<?php echo base_url('admin/gemstones/delete/'.$user_gemstone->id);?>" onclick="return confirm_delete();">Delete</a></li>
+												</ul>
 											</div>
 											</td>
 										</tr>

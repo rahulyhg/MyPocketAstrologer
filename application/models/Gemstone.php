@@ -6,6 +6,17 @@ class Gemstone extends BaseModel {
 
 	static $table_name = 'gemstones';
 
+	/* Associations */
+
+	static $belongs_to = array(
+		
+		array(
+            'color',
+            'class_name' => 'Color',
+            'foreign_key' => 'color_id'
+        ),
+	);
+
 	/* Public functions - Setters */
 
 	public function set_name($name) {
