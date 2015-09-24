@@ -88,7 +88,6 @@ class Pujas extends BaseController {
 			$this->session->set_flashdata('alert_error', $e->getMessage());
             redirect('/admin/users');
 		}
-
 	}
 
     public function start($puja_id) {
@@ -102,6 +101,35 @@ class Pujas extends BaseController {
 
             $puja->status = 3;
             $puja->save();
+
+            $gcm_users = $puja->user->gcm_users;
+
+            $data = array(
+                            'information_type' => 2,
+                            'name' => $puja->name,
+                            'push_description' => $puja->details,
+                            'image_urls' => array()
+                            );
+
+            $message = json_encode(array(
+                            'type' => 3,
+                            'data' => $data
+                            ));
+
+            $this->gcm->setMessage($message);
+
+            foreach ($gcm_users as $gcm_user) {
+                $this->gcm->addRecepient($gcm_user->gcm_regd_id);
+            }
+
+            // set additional data
+            $this->gcm->setData(array(
+                'stat' => 'OK'
+            ));
+
+            $this->gcm->setTtl(false);
+            $this->gcm->setGroup(false);
+            $this->gcm->send();
 
             $this->session->set_flashdata(
                 'alert_success', 
@@ -127,8 +155,74 @@ class Pujas extends BaseController {
             if(!$puja)
                 throw new Exception("Invalid Data");
 
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                return $this->load_view('admin/puja_complete', array('puja' => $puja));
+            }
+
             $puja->status = 4;
-            $puja->save();            
+            $puja->save();
+
+            $allowed_extension = array('jpg','png','gif','JPG','PNG','GIF');
+
+            for($i=1; $i <= 3; $i++) {
+
+                if(isset($_FILES['puja_image_'.$i])) {
+
+                    if(is_uploaded_file($_FILES['puja_image_'.$i]['tmp_name'])) {
+                    
+                        $info = pathinfo($_FILES['puja_image_'.$i]['name']);
+                        $ext = $info['extension'];
+
+                        if(!in_array($ext, $allowed_extension))
+                            throw new Exception("Invalid file uploaded for puja image");
+                            
+                        $filename = 'puja-'.$puja->id.'-'.rand(100, 999).'.'.$ext;
+
+                        if(!move_uploaded_file($_FILES['puja_image_'.$i]['tmp_name'], "./public/puja_images/".$filename))
+                            throw new Exception("Error in Upload");
+
+                        $params = array('puja' => $puja, 'image' => 'public/puja_images/'.$filename, 'details' => $this->input->post('details_'.$i));
+                        
+                        $new_puja_image = new PujaImage;
+                        $puja_image = $new_puja_image->create($params);
+                        $puja_image->save();
+                    }
+                }
+            }
+
+            $gcm_users = $puja->user->gcm_users;
+
+            $image_urls = array();
+            foreach ($puja->images as $image) {
+                $image_urls[] = $image->image;
+            }
+
+            $data = array(
+                            'information_type' => 3,
+                            'name' => $puja->name,
+                            'push_description' => $puja->details,
+                            'image_urls' => $image_urls,
+                            );
+
+            $message = json_encode(array(
+                            'type' => 3,
+                            'data' => $data
+                            ));
+
+            $this->gcm->setMessage($message);
+
+            foreach ($gcm_users as $gcm_user) {
+                $this->gcm->addRecepient($gcm_user->gcm_regd_id);
+            }
+
+            // set additional data
+            $this->gcm->setData(array(
+                'stat' => 'OK'
+            ));
+
+            $this->gcm->setTtl(false);
+            $this->gcm->setGroup(false);
+            $this->gcm->send();
 
             $this->session->set_flashdata(
                 'alert_success', 
@@ -136,6 +230,25 @@ class Pujas extends BaseController {
             );
             
             redirect('admin/pujas/index/'.$puja->user->id);
+        }
+
+        catch(Exception $e) {
+
+            $this->session->set_flashdata('alert_error', $e->getMessage());
+            redirect('/admin/users');
+        }
+    }
+
+    public function view_images($puja_id) {
+
+        try {
+
+            $puja = Puja::find_by_id($puja_id);
+
+            if(!$puja)
+                throw new Exception("Invalid Puja");
+
+            return $this->load_view('admin/puja_images', array('puja' => $puja, 'images' => $puja->images));             
         }
 
         catch(Exception $e) {

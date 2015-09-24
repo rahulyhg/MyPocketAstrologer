@@ -52,6 +52,12 @@ class User extends BaseModel {
             'class_name' => 'NatalChart',
             'foreign_key' => 'user_id'
         ),
+
+        array(
+            'receipts',
+            'class_name' => 'Receipt',
+            'foreign_key' => 'user_id'
+        ),
 	);
 
 	/* Public functions - Setters */

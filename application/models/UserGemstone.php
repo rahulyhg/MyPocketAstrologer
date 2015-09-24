@@ -19,6 +19,12 @@ class UserGemstone extends BaseModel {
             'class_name' => 'Gemstone',
             'foreign_key' => 'gemstone_id'
         ),
+
+        array(
+            'color',
+            'class_name' => 'Color',
+            'foreign_key' => 'color_id'
+        ),
 	);
 
 	/* Public functions - Setters */
@@ -33,33 +39,46 @@ class UserGemstone extends BaseModel {
 		$this->assign_attribute('gemstone_id', $gemstone->id);	
 	}
 
+	public function set_color(Color $color) {
+		$this->assign_attribute('color_id', $color->id);	
+	}
+
 	public function set_details($details) {
 		$this->assign_attribute('details', $details);	
 	}
 
+	public function set_status($status) {
+		$this->assign_attribute('status', $status);	
+	}
+
 	/* Public functions - Getters */
-
-	public function get_user() {
-		return $this->read_attribute('user_id');
-	}
-
-	public function get_gemstone() {
-		return $this->read_attribute('gemstone_id');
-	}
 
 	public function get_details() {
 		return $this->read_attribute('details');
 	}
 
+	public function get_status() {
+		return $this->read_attribute('status');
+	}
+
+	/*
+		---NOTE---
+		status 1: suggested
+		status 2: ordered for shipping
+		status 3: processed for shipping
+	*/
+
 	/* Public static functions */
 
 	public static function create($params) {
 
-		$user_gemstone = new UserGemstome;
+		$user_gemstone = new UserGemstone;
 
 		$user_gemstone->user = array_key_exists('user', $params) ? $params['user'] : null;
 		$user_gemstone->gemstone = array_key_exists('gemstone', $params) ? $params['gemstone'] : null;
+		$user_gemstone->color = array_key_exists('color', $params) ? $params['color'] : null;
 		$user_gemstone->details = array_key_exists('details', $params) ? $params['details'] : null;
+		$user_gemstone->status = 1;
 
 		$user_gemstone->save();
 

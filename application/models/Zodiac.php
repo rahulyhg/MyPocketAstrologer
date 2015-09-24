@@ -17,6 +17,21 @@ class Zodiac extends BaseModel {
         ),
 	);
 
+	static $belongs_to = array(
+		
+		array(
+            'color',
+            'class_name' => 'Color',
+            'foreign_key' => 'color_id'
+        ),
+
+        array(
+            'gemstone',
+            'class_name' => 'Gemstone',
+            'foreign_key' => 'gemstone_id'
+        ),
+	);
+
 	/* Public functions - Setters */
 
 	/* Public functions - Getters */

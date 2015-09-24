@@ -228,6 +228,85 @@ class Users extends BaseController {
             $user->zodiac = $zodiac;
             $user->save();
 
+            $gcm_users = $user->gcm_users;
+
+            $data = array(
+                        'first_name' => $user->first_name,
+                        'last_name' => $user->last_name,
+                        'email' => $user->email,
+                        'gender' => $user->gender,
+                        'date_of_birth' => date('Y-m-d', strtotime($user->date_of_birth)),
+                        'time_of_birth' => date('H:i:s', strtotime($user->date_of_birth)),
+                        'is_accurate' => $user->is_accurate,
+                        'place_of_birth' => $user->place_of_birth,
+                        'profile_pic' => $user->profile_pic,
+                        'left_palm' => $user->left_palm,
+                        'right_palm' => $user->right_palm,
+                        'zodiac' => $user->zodiac->zodiac,
+                        'gemstone' => $user->zodiac->gemstone,
+                        'color' => $user->zodiac->color,
+                        'zodiac_description' => $user->zodiac->details,
+                        'gemstone_description' => $user->zodiac->gemstone->details,
+                        'color_description' => $user->zodiac->color->details,
+                        );
+
+            $message = json_encode(array(
+                            'type' => 7,
+                            'data' => $data
+                            ));
+
+            $this->gcm->setMessage($message);
+
+            foreach ($gcm_users as $gcm_user) {
+                $this->gcm->addRecepient($gcm_user->gcm_regd_id);
+            }
+
+            // set additional data
+            $this->gcm->setData(array(
+                'stat' => 'OK'
+            ));
+
+            $this->gcm->setTtl(false);
+            $this->gcm->setGroup(false);
+            $this->gcm->send();
+
+            $params = array(
+                        'user' => $user,
+                        'gemstone' => $zodiac->gemstone,
+                        'color' => $zodiac->color,
+                        'details' => $zodiac->gemstone->details,
+                    );
+
+            $user_gemstone = new UserGemstone;
+            $user_gemstone = $user_gemstone->create($params);
+            $user_gemstone->save();
+
+            $data = array(
+                            'information_type' => 1,
+                            'gems_description' => $user_gemstone->details,
+                            'gem_stone_type' => $user_gemstone->gemstone_id,
+                            );
+
+            $message = json_encode(array(
+                            'type' => 4,
+                            'data' => $data
+                            ));
+
+            $this->gcm->setMessage($message);
+
+            foreach ($gcm_users as $gcm_user) {
+                $this->gcm->addRecepient($gcm_user->gcm_regd_id);
+            }
+
+            // set additional data
+            $this->gcm->setData(array(
+                'stat' => 'OK'
+            ));
+
+            $this->gcm->setTtl(false);
+            $this->gcm->setGroup(false);
+            $this->gcm->send();
+
             $this->session->set_flashdata('alert_success', "Zodiac sign assigned to the user successfully");
 
             redirect('admin/users');

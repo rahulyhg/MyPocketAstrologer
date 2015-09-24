@@ -56,7 +56,7 @@
 													<li><a href="<?php echo base_url('admin/pujas/complete/'.$puja->id);?>">Confirm Puja Completion</a></li>
 													<?php } ?>
 													<?php if($puja->status == 4) { ?>
-													<li><a href="<?php echo base_url('admin/pujas/add_images/'.$puja->id);?>">Add/View Images</a></li>
+													<li><a href="<?php echo base_url('admin/pujas/view_images/'.$puja->id);?>">View/Add Images</a></li>
 													<?php } ?>
 													<li><a href="<?php echo base_url('admin/pujas/delete/'.$puja->id);?>" onclick="return confirm_delete();">Delete</a></li>
 												</ul>

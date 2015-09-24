@@ -45,7 +45,10 @@ class Get_profile extends REST_Controller {
 
 				$user['zodiac'] = $zodiac->zodiac;
 				$user['gemstone'] = $zodiac->gemstone;
-				$user['color'] = $zodiac->color;				
+				$user['color'] = $zodiac->color;
+				$user['gemstone_description'] = $zodiac->gemstone->details;
+				$user['color_description'] = $zodiac->color->details;
+				$user['zodiac_description'] = $zodiac->details;
 			}
 
 			else {
@@ -53,6 +56,9 @@ class Get_profile extends REST_Controller {
 				$user['zodiac'] = null;
 				$user['gemstone'] = null;
 				$user['color'] = null;
+				$user['gemstone_description'] = null;
+				$user['color_description'] = null;
+				$user['zodiac_description'] = null;
 			}
 
 			$response = $this->response(array(

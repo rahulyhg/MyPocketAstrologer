@@ -54,7 +54,7 @@
 						  						</a>
 												<ul class="dropdown-menu" style="text-align:left;">
 													<?php if(!$shipping->quotation) { ?> 
-													<li><a data-toggle="modal" data-target="#myModal">Add Quotation</a></li>
+													<li><a href="<?php echo base_url('admin/shippings/add_quotation/'.$shipping->id);?>">Add Quotation</a></li>
 													<?php } else { ?>
 													<li><a href="<?php echo base_url('admin/shippings/view_quotation/'.$shipping->id);?>">View Quotation</a></li>
 													<?php } ?>
@@ -79,54 +79,6 @@
 	</div>
 
 </div>
-
-
-<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	        <h4 class="modal-title" id="myModalLabel">Add Quotation</h4>
-	      </div>
-
-	      <form class="form" role="form" method ="POST" action="<?php echo base_url('admin/shippings/add_quotation/'.$shipping->id);?>">
-	      <div class="modal-body">
-	    		<div class="form-group" style="width:80%;">
-
-	    		    <label for="TotalCost">Total Cost</label>
-	    		    <input type="text" name="total_cost" id="total_cost" class="form-control" placeholder="Total Cost" required>
-
-	    		    <label for="Date">Date</label>
-	    		    <input class="form-control" type="date" name="date"  id="date" placeholder="Date" required>
-
-	    		    <label for="ObjectCost">Object Cost</label>
-	    		    <input type="text" name="object_cost" id="object_cost" class="form-control" placeholder="Object Cost" required>
-
-	    		    <label for="ShippingCost">Shipping Cost</label>
-	    		    <input type="text" name="shipping_cost" id="total_cost" class="form-control" placeholder="Shipping Cost" required>
-
-	    		    <label for="CompanyName">Name of Shipping Company</label>
-	    		    <input type="text" name="company_name" class="form-control" placeholder="Shipping Company" required>
-
-	    		    <label for="QuotationNumber">Quotation Number</label>
-	    		    <input type="text" name="quotation_number" class="form-control" placeholder="Quotation Number" required>
-
-	    		    <label for="Days">Number of Days required for shipping</label>
-	    		    <input type="text" name="days" id="days" class="form-control" placeholder="Number of Days" required>
-
-	    		</div>
-
-	      </div>
-	      <div class="modal-footer">
-	   
-	        <button type="button" id="close_modal" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="submit" class="btn btn-primary">Add Quotation</button>
-	      </div>
-	    </form>	
-	</div>
-</div>
-
 
 <?php endblock() ?>
 

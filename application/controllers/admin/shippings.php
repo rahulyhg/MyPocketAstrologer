@@ -26,7 +26,7 @@ class Shippings extends BaseController {
             }
 
             if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-               redirect('admin/shippings');
+               return $this->load_view('admin/quotation', array('shipping' => $shipping));
             }
 
             $params = array(
@@ -51,7 +51,7 @@ class Shippings extends BaseController {
                                         'country' => $shipping->country,
                                         'state' => $shipping->state,
                                         'city' => $shipping->city,
-                                        'street' => $shipping->street,
+                                        'street_address' => $shipping->street,
                                         'apt_no' => $shipping->apt_no,
                                         'postal_code' => $shipping->postal_code,
                                         'phone_number' => $shipping->phone_number,
@@ -105,6 +105,34 @@ class Shippings extends BaseController {
 
             $this->session->set_flashdata('alert_error', $e->getMessage());
             redirect('/admin/shippings');
+        }
+    }
+
+    public function delete($shipping_id) {
+
+        try {
+
+            $shipping = Shipping::find_by_id($shipping_id);
+
+            if(!$shipping)
+                throw new Exception("Shipping Order not found");
+
+            if($shipping->deleted)
+                throw new Exception("Shipping Order already deleted");
+
+            $shipping->delete();
+
+            $this->session->set_flashdata('alert_success', "Shipping order deleted successfully");
+
+            redirect('admin/shippings');
+
+        }
+
+        catch(Exception $e) {
+
+            $this->session->set_flashdata('alert_error', $e->getMessage());
+
+            redirect('admin/shippings');
         }
     }
 }
