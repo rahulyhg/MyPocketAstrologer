@@ -29,11 +29,16 @@ class Add_gcm_user extends REST_Controller {
 			if(!$user)
 				throw new Exception("Invalid User Request");
 
-			$params['user'] = $user;
+			$gcm_user = GcmUser::find_by_user_id_and_device_id_and_gcm_regd_id($params['current_user_id'], $params['device_id'], $params['gcm_regd_id']);
 
-			$gcm_user = new GcmUser;
-			$gcm = $gcm_user->create($params);
-			$gcm->save();
+			if(!$gcm_user) {
+
+				$params['user'] = $user;
+
+				$gcm_user = new GcmUser;
+				$gcm = $gcm_user->create($params);
+				$gcm->save();
+			}
 
 			$response = $this->response(array(
 							'status'	=>	'SUCCESS',

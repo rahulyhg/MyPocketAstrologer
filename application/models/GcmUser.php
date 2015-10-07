@@ -59,7 +59,6 @@ class GcmUser extends BaseModel {
 
 		$gcm_user = new GcmUser;
 
-		$gcm_user->check_if_exists($params['user'], $params['device_id'], $params['gcm_regd_id']);
 		$gcm_user->user = array_key_exists('user', $params) ? $params['user'] : null;
 		$gcm_user->device_id = array_key_exists('device_id', $params) ? $params['device_id'] : null;
 		$gcm_user->gcm_regd_id = array_key_exists('gcm_regd_id', $params) ? $params['gcm_regd_id'] : null;
@@ -67,12 +66,5 @@ class GcmUser extends BaseModel {
 		$gcm_user->save();
 
 		return $gcm_user;
-	}
-
-	private function check_if_exists($user, $device, $gcm) {
-
-		if(self::exists(array('user_id' => $user->id, 'device_id' => $device, 'gcm_regd_id' => $gcm))) { 
-				throw new Exception('GCM User already exists'); 
-			}
 	}
 }

@@ -15,6 +15,11 @@ class Migration_Add_columns_user_gemstones extends CI_Migration {
 			'status' => array(
 				'type' => 'int',
 			),
+
+			'ship_ordered' => array(
+				'type' => 'boolean',
+				'default' => 0,
+			),
 		);
 
 		$this->dbforge->add_column('user_gemstones', $field);
@@ -35,6 +40,7 @@ class Migration_Add_columns_user_gemstones extends CI_Migration {
 		
 		$this->dbforge->drop_column('user_gemstones','color_id');
 		$this->dbforge->drop_column('user_gemstones','status');
+		$this->dbforge->drop_column('user_gemstones','ship_ordered');
 
 		$fields = array(
                         'details' => array(

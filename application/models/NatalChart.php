@@ -43,11 +43,10 @@ class NatalChart extends BaseModel {
 		return $this->read_attribute('status');
 	}
 
+
 	/*
 	-----Note----
 	Status 1: Natal Chart uploaded
-	Status 2: Natal chart requested by user for viewing
-	Status 3: Natal chart ordered to be shipped
 	*/
 
 	/* Public static functions */

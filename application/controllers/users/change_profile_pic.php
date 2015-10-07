@@ -51,8 +51,72 @@ class Change_profile_pic extends REST_Controller {
 
 			else
 				throw new Exception("No picture uploaded!");
+
+			$user_gemstone = UserGemstone::find_by_user_id($user->id);
+			$isGemstoneShipped = ($user_gemstone && $user_gemstone->ship_ordered) ? true : false;
 				
-			$user = User::find_valid_by_id($this->post('current_user_id'));
+			$gcm_users = $user->gcm_users;
+
+            $data = array(
+                        'first_name' => $user->first_name,
+                        'last_name' => $user->last_name,
+                        'email' => $user->email,
+                        'gender' => $user->gender,
+                        'date_of_birth' => date('Y-m-d', strtotime($user->date_of_birth)),
+                        'time_of_birth' => date('H:i:s', strtotime($user->date_of_birth)),
+                        'is_accurate' => $user->is_accurate,
+                        'place_of_birth' => $user->place_of_birth,
+                        'profile_pic' => $user->profile_pic,
+                        'left_palm' => $user->left_palm,
+                        'right_palm' => $user->right_palm,
+                        'isGemstoneShipped' => $isGemstoneShipped,
+						'isNatalShipped' => ($user->natal_chart && $user->natal_chart->ship_ordered) ? true : false,
+						'natalChartUrl' => ($user->natal_chart && $user->natal_chart->view_ordered) ? $user->natal_chart->natal_chart : '',
+                        );
+
+			$zodiac = $user->zodiac;
+
+			if($zodiac) {
+
+				$data['zodiac'] = $zodiac->zodiac;
+				$data['gemstone'] = $zodiac->gemstone;
+				$data['color'] = $zodiac->color;
+				$data['gemstone_description'] = $zodiac->gems->details;
+				$data['color_description'] = $zodiac->colour->details;
+				$data['zodiac_description'] = $zodiac->details;
+			}
+
+			else {
+
+				$data['zodiac'] = null;
+				$data['gemstone'] = null;
+				$data['color'] = null;
+				$data['gemstone_description'] = null;
+				$data['color_description'] = null;
+				$data['zodiac_description'] = null;
+			}
+
+            $message = json_encode(array(
+                            'type' => 7,
+                            'data' => $data
+                            ));
+
+            $this->gcm->setMessage($message);
+
+            foreach ($gcm_users as $gcm_user) {
+                $this->gcm->addRecepient($gcm_user->gcm_regd_id);
+            }
+
+            // set additional data
+            $this->gcm->setData(array(
+                'stat' => 'OK'
+            ));
+
+            $this->gcm->setTtl(false);
+            $this->gcm->setGroup(false);
+            $this->gcm->send();
+
+			
 			$response = $this->response(array(
 							'status'	=>	'SUCCESS',
 							'message'=>'Profile Picture Changed Successfully',

@@ -24,6 +24,9 @@ class Get_profile extends REST_Controller {
 
 			if(!$current_user)
 				throw new Exception("Invalid User Request");
+
+			$user_gemstone = UserGemstone::find_by_user_id($current_user_id);
+			$isGemstoneShipped = ($user_gemstone && $user_gemstone->ship_ordered) ? true : false;
 				
 			$user = array(
 						'first_name' => $current_user->first_name,
@@ -37,6 +40,9 @@ class Get_profile extends REST_Controller {
 						'profile_pic' => $current_user->profile_pic,
 						'left_palm' => $current_user->left_palm,
 						'right_palm' => $current_user->right_palm,
+						'isGemstoneShipped' => $isGemstoneShipped,
+						'isNatalShipped' => ($current_user->natal_chart && $current_user->natal_chart->ship_ordered) ? true : false,
+						'natalChartUrl' => ($current_user->natal_chart && $current_user->natal_chart->view_ordered) ? $current_user->natal_chart->natal_chart : '',
 						);
 
 			$zodiac = $current_user->zodiac;
@@ -46,8 +52,8 @@ class Get_profile extends REST_Controller {
 				$user['zodiac'] = $zodiac->zodiac;
 				$user['gemstone'] = $zodiac->gemstone;
 				$user['color'] = $zodiac->color;
-				$user['gemstone_description'] = $zodiac->gemstone->details;
-				$user['color_description'] = $zodiac->color->details;
+				$user['gemstone_description'] = $zodiac->gems->details;
+				$user['color_description'] = $zodiac->colour->details;
 				$user['zodiac_description'] = $zodiac->details;
 			}
 

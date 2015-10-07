@@ -50,6 +50,7 @@ class Pujas extends BaseController {
 
             $data = array(
                             'information_type' => 1,
+                            'puja_id' => $puja->id,
                             'name' => $puja->name,
                             'push_description' => $puja->details,
                             'image_urls' => array()
@@ -106,6 +107,7 @@ class Pujas extends BaseController {
 
             $data = array(
                             'information_type' => 2,
+                            'puja_id' => $puja->id,
                             'name' => $puja->name,
                             'push_description' => $puja->details,
                             'image_urls' => array()
@@ -199,6 +201,7 @@ class Pujas extends BaseController {
 
             $data = array(
                             'information_type' => 3,
+                            'puja_id' => $puja->id,
                             'name' => $puja->name,
                             'push_description' => $puja->details,
                             'image_urls' => $image_urls,

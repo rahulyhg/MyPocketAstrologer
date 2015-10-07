@@ -42,6 +42,8 @@ class Natal_charts extends BaseController {
                 return $this->load_view('admin/natal', array('user' => $user, 'flag' => 0));
             }
 
+            $natal_chart = NatalChart::find_by_user_id($user_id);
+
             if (array_key_exists('imageData',$_REQUEST)) {
                 
                 $imgData = base64_decode($_REQUEST['imageData']);
@@ -52,15 +54,25 @@ class Natal_charts extends BaseController {
                 fwrite($file, $imgData);
                 fclose($file);
 
-                $params = array(
-                            'user' => $user,
-                            'natal_chart' => $filePath,
-                            'status' => 1,
-                            );
+                if(!$natal_chart) {
 
-                $natal_chart = new NatalChart;
-                $natal_chart = $natal_chart->create($params);
-                $natal_chart->save();
+                    $params = array(
+                                'user' => $user,
+                                'natal_chart' => $filePath,
+                                'status' => 1,
+                                );
+
+                    $natal_chart = new NatalChart;
+                    $natal_chart = $natal_chart->create($params);
+                    $natal_chart->save();
+                }
+
+                else {
+
+                    $natal_chart->natal_chart = $filePath;
+                    $natal_chart->status = 1;
+                    $natal_chart->save();
+                }
 
                 $gcm_users = $user->gcm_users;
 
@@ -68,7 +80,7 @@ class Natal_charts extends BaseController {
                                 'type' => 9,
                                 'data' => array(
                                             'id' => $natal_chart->id,
-                                            'natal_chart' => $natal_chart->natal_chart,
+                                            'natal_chart' => ($natal_chart->view_ordered) ? $natal_chart->natal_chart : '',
                                         ),
                                 ));
 
@@ -85,7 +97,7 @@ class Natal_charts extends BaseController {
 
                 $this->gcm->setTtl(false);
                 $this->gcm->setGroup(false);
-                //$this->gcm->send();
+                $this->gcm->send();
             }
 		}
 
@@ -131,7 +143,7 @@ class Natal_charts extends BaseController {
                                 'type' => 9,
                                 'data' => array(
                                             'id' => $natal_chart->id,
-                                            'natal_chart' => $natal_chart->natal_chart,
+                                            'natal_chart' => ($natal_chart->view_ordered) ? $natal_chart->natal_chart : '',,
                                         ),
                                 ));
 
@@ -148,7 +160,7 @@ class Natal_charts extends BaseController {
 
                 $this->gcm->setTtl(false);
                 $this->gcm->setGroup(false);
-                //$this->gcm->send();
+                $this->gcm->send();
             }
 
         }

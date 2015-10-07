@@ -110,6 +110,10 @@ class Shipping extends BaseModel {
 		$this->assign_attribute('type', $type);	
 	}
 
+	public function set_gemstone_id($gemstone_id) {
+		$this->assign_attribute('gemstone_id', $gemstone_id);	
+	}
+
 	/* Public functions - Getters */
 
 	public function get_details() {
@@ -156,6 +160,10 @@ class Shipping extends BaseModel {
 		return $this->country.', '.$this->state.' '.$this->city.', '.$this->street.' '.$this->apt_no.' '.$this->postal_code.', '.$this->phone_number ;
 	}
 
+	public function get_gemstone_id() {
+		return $this->read_attribute('gemstone_id');
+	}
+
 	/*
 	  ----NOTE----
 	  TYPE_SHIP_NATAL_CHART=1
@@ -181,6 +189,7 @@ class Shipping extends BaseModel {
 		$shipping->phone_number = isset($params['address']['phone_number']) ? $params['address']['phone_number'] : null;
 		$shipping->device_id = array_key_exists('device_id', $params) ? $params['device_id'] : null;
 		$shipping->type = array_key_exists('type', $params) ? $params['type'] : 0;
+		$shipping->gemstone_id = array_key_exists('object_id', $params) ? $params['object_id'] : 0;
 
 		$shipping->save();
 

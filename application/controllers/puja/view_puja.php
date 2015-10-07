@@ -35,14 +35,29 @@ class View_puja extends REST_Controller {
 				$pujas[$i]['id'] = $puja->id;
 				$pujas[$i]['name'] = $puja->name;
 				$pujas[$i]['details'] = $puja->details;
+
+				switch($puja->status) {
+					case 1: $pujas[$i]['status'] = "Suggested"; break;
+					case 2: $pujas[$i]['status'] =  "Ordered"; break;
+					case 3: $pujas[$i]['status'] =  "Started"; break;
+					case 4: $pujas[$i]['status'] =  "Completed"; break;
+				}
+
 				$pujas[$i]['date'] = date("Y-m-d H:i:s", strtotime($puja->date));
+
+				$image_urls = array();
+	            foreach ($puja->images as $image) {
+	                $image_urls[] = $image->image;
+	            }
+
+	            $pujas[$i]['image_urls'] = $image_urls;
 
 				$i++;
 			}
 
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',
-							'message' => 'User profile',
+							'message' => 'View pujas',
 							'user_name' => $current_user->first_name,
 							'data' => $pujas,
 							));

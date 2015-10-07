@@ -33,6 +33,41 @@ class Shipping_order extends REST_Controller {
 		
 			$new_shipping = new Shipping();
 			$shipping = $new_shipping->create($params);
+			$shipping->save();
+
+			if($params['type'] == 1) {
+
+				$natal_chart = NatalChart::find_by_user_id($current_user->id);
+
+				if(!$natal_chart) {
+
+					$params = array(
+                            'user' => $current_user,
+                            );
+
+	                $natal_chart = new NatalChart;
+	                $natal_chart = $natal_chart->create($params);
+	                $natal_chart->save();
+				}
+
+				$natal_chart->shipOrdered = 1;
+				$natal_chart->save();
+			}
+
+			if($params['type'] == 2) {
+
+				$user_gemstone = UserGemstone::find_by_id_and_user_id_and_status_and_deleted($params['object_id'], $current_user->id, 1, 0);
+
+				if(!$user_gemstone)
+					throw new Exception("Gemstone not found");
+
+				$user_gemstone->status = 2;
+				$user_gemstone->shipOrdered = 1;
+				$user_gemstone->save();
+				
+				$current_user->ring_size = $params['size'];
+				$current_user->save();
+			}
 
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',

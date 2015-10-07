@@ -27,22 +27,25 @@ class Get_natal_chart extends REST_Controller {
 			
 			$natal_chart = NatalChart::find_by_user_id($current_user_id);
 
-			if($natal_chart)
-				throw new Exception("Natal Chart already available");				
-			
-			$params = array('user' => $current_user,
-							'status' => 1,
-						);
-			
-			$natal_chart = new NatalChart();
-			$natal_chart->create($params);
+			if(!$natal_chart) {
+
+				$params = array(
+                            'user' => $current_user,
+                            );
+
+                $natal_chart = new NatalChart;
+                $natal_chart = $natal_chart->create($params);
+                $natal_chart->save();
+			}
+
+			$natal_chart->viewOrdered = 1;
 			$natal_chart->save();
 
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',
-							'message' => 'Natal Chart requested successfully',
+							'message' => 'View Natal Chart image',
 							'user_name' => $current_user->first_name,
-							'data' => null,
+							'data' => array("natalChartUrl" => $natal_chart->natal_chart),
 							));
 			
 			$this->response($response);

@@ -72,6 +72,7 @@ class Gemstones extends BaseController {
 
             $data = array(
                             'information_type' => 1,
+                            'gemstone_id' => $user_gemstone->id,
                             'gems_description' => $user_gemstone->details,
                             'gem_stone_type' => $user_gemstone->gemstone_id,
                             );
@@ -155,6 +156,7 @@ class Gemstones extends BaseController {
 
             $data = array(
                             'information_type' => 2,
+                            'gemstone_id' => $user_gemstone->id,
                             'gems_description' => $user_gemstone->details,
                             'gem_stone_type' => $user_gemstone->gemstone_id,
                             );

@@ -47,18 +47,21 @@ class User extends BaseModel {
             'foreign_key' => 'user_id'
         ),
 
-		array(
-            'natal_chart',
-            'class_name' => 'NatalChart',
-            'foreign_key' => 'user_id'
-        ),
-
         array(
             'receipts',
             'class_name' => 'Receipt',
             'foreign_key' => 'user_id'
         ),
 	);
+
+	static $has_one = array(
+
+		array(
+            'natal_chart',
+            'class_name' => 'NatalChart',
+            'foreign_key' => 'user_id'
+        ),
+    );
 
 	/* Public functions - Setters */
 

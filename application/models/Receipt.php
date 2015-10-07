@@ -60,6 +60,10 @@ class Receipt extends BaseModel {
 		$this->assign_attribute('device_id', $device_id);	
 	}
 
+	public function set_gemstone_id($gemstone_id) {
+		$this->assign_attribute('gemstone_id', $gemstone_id);	
+	}
+
 	/* Public functions - Getters */
 
 	public function get_type() {
@@ -78,6 +82,10 @@ class Receipt extends BaseModel {
 		return $this->read_attribute('device_id');
 	}
 
+	public function get_gemstone_id() {
+		return $this->read_attribute('gemstone_id');
+	}
+
 
 	/* Public static functions */
 
@@ -90,6 +98,7 @@ class Receipt extends BaseModel {
 		$receipt->amount = array_key_exists('paid_value', $params) ? $params['paid_value'] : null;
 		$receipt->receipt_number = array_key_exists('receipt_number', $params) ? $params['receipt_number'] : null;
 		$receipt->device_id = array_key_exists('device_id', $params) ? $params['device_id'] : null;
+		$shipping->gemstone_id = array_key_exists('object_id', $params) ? $params['object_id'] : 0;
 
 		$receipt->save();
 

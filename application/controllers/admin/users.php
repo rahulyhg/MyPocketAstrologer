@@ -228,6 +228,9 @@ class Users extends BaseController {
             $user->zodiac = $zodiac;
             $user->save();
 
+            $user_gemstone = UserGemstone::find_by_user_id($user->id);
+            $isGemstoneShipped = ($user_gemstone && $user_gemstone->ship_ordered) ? true : false;
+
             $gcm_users = $user->gcm_users;
 
             $data = array(
@@ -242,6 +245,9 @@ class Users extends BaseController {
                         'profile_pic' => $user->profile_pic,
                         'left_palm' => $user->left_palm,
                         'right_palm' => $user->right_palm,
+                        'isGemstoneShipped' => $isGemstoneShipped,
+                        'isNatalShipped' => ($user->natal_chart && $user->natal_chart->ship_ordered) ? true : false,
+                        'natalChartUrl' => '',
                         'zodiac' => $zodiac->zodiac,
                         'gemstone' => $zodiac->gemstone,
                         'color' => $zodiac->color,
