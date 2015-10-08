@@ -35,8 +35,16 @@ class Change_place_of_birth extends REST_Controller {
 			$user->zodiac_id = 0;
 			$user->save();
 
-			$user_gemstone = UserGemstone::find_by_user_id($user->id);
-			$isGemstoneShipped = ($user_gemstone && $user_gemstone->ship_ordered) ? true : false;
+			$natal_chart = NatalChart::find_by_user_id($user->id);
+
+			if($natal_chart) {
+				
+				$natal_chart->natal_chart = '';
+				$natal_chart->view_ordered = 0;
+				$natal_chart->ship_ordered = 0;
+				$natal_chart->status = 0;
+				$natal_chart->save();
+			}
 
 			$gcm_users = $user->gcm_users;
 
@@ -52,8 +60,8 @@ class Change_place_of_birth extends REST_Controller {
                         'profile_pic' => $user->profile_pic,
                         'left_palm' => $user->left_palm,
                         'right_palm' => $user->right_palm,
-                        'isGemstoneShipped' => $isGemstoneShipped,
-						'isNatalShipped' => ($user->natal_chart && $user->natal_chart->ship_ordered) ? true : false,
+                        'isGemstoneShipped' => false,
+						'isNatalShipped' => false,
 						'natalChartUrl' => '',
                         'zodiac' => null,
                         'gemstone' => null,
