@@ -38,7 +38,7 @@ class Get_natal_chart extends REST_Controller {
                 $natal_chart->save();
 			}
 
-			$natal_chart->viewOrdered = 1;
+			$natal_chart->view_ordered = 1;
 			$natal_chart->save();
 
 			$response = $this->response(array(

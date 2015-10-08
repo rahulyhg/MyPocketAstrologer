@@ -50,7 +50,7 @@ class Shipping_order extends REST_Controller {
 	                $natal_chart->save();
 				}
 
-				$natal_chart->shipOrdered = 1;
+				$natal_chart->ship_ordered = 1;
 				$natal_chart->save();
 			}
 
@@ -62,7 +62,7 @@ class Shipping_order extends REST_Controller {
 					throw new Exception("Gemstone not found");
 
 				$user_gemstone->status = 2;
-				$user_gemstone->shipOrdered = 1;
+				$user_gemstone->ship_ordered = 1;
 				$user_gemstone->save();
 				
 				$current_user->ring_size = $params['size'];
