@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="#">
 
-    <title>My Pocket Astrologer</title>
+    <title>AstroVeda - My Pocket Astrologer</title>
 
     <!-- Bootstrap core CSS -->
     <!-- Bootstrap core CSS -->

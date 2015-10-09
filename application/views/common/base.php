@@ -9,7 +9,7 @@
 
     <link rel="shortcut icon" href="#">
 
-    <title>My Pocket Astrologer</title>
+    <title>AstroVeda - My Pocket Astrologer</title>
 
     <!-- Bootstrap core CSS -->
     <link href="<?php echo base_url('public/css/bootstrap.min.css');?>" rel="stylesheet">
