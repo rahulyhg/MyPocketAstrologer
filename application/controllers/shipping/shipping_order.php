@@ -50,6 +50,9 @@ class Shipping_order extends REST_Controller {
 	                $natal_chart->save();
 				}
 
+				if($natal_chart->ship_ordered)
+					throw new Exception("Natal Chart already ordered for shipping.");
+
 				$natal_chart->ship_ordered = 1;
 				$natal_chart->save();
 			}
@@ -60,6 +63,9 @@ class Shipping_order extends REST_Controller {
 
 				if(!$user_gemstone)
 					throw new Exception("Gemstone not found");
+
+				if($user_gemstone->ship_ordered)
+					throw new Exception("Gemstone already ordered for shipping.");
 
 				$user_gemstone->status = 2;
 				$user_gemstone->ship_ordered = 1;

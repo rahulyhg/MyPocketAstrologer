@@ -38,6 +38,9 @@ class Get_natal_chart extends REST_Controller {
                 $natal_chart->save();
 			}
 
+			if($natal_chart->view_ordered)
+				throw new Exception("you have already paid for viewing Natal Chart.");
+
 			$natal_chart->view_ordered = 1;
 			$natal_chart->save();
 
