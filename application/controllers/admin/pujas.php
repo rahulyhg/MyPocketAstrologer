@@ -11,7 +11,16 @@ class Pujas extends BaseController {
 			if(!$user)
 				throw new Exception("Invalid User");
 
-			return $this->load_view('admin/puja', array('user' => $user, 'pujas' => $user->pujas));				
+            $pujas = Puja::find('all', array(
+                                    'conditions' => array(
+                                        'deleted = ?
+                                        and user_id = ?',
+                                        0,
+                                        $user->id
+                                        ),
+                                ));
+
+			return $this->load_view('admin/puja', array('user' => $user, 'pujas' => $pujas));				
 		}
 
 		catch(Exception $e) {
@@ -258,6 +267,34 @@ class Pujas extends BaseController {
 
             $this->session->set_flashdata('alert_error', $e->getMessage());
             redirect('/admin/users');
+        }
+    }
+
+    public function delete($puja_id) {
+
+        try {
+
+            $puja = Puja::find_by_id($puja_id);
+
+            if(!$puja)
+                throw new Exception("Puja not found");
+
+            if($puja->deleted)
+                throw new Exception("Puja already deleted for the User");
+
+            $puja->delete();
+
+            $this->session->set_flashdata('alert_success', "Puja deleted successfully");
+
+            redirect('admin/pujas/index/'.$puja->user_id);
+
+        }
+
+        catch(Exception $e) {
+
+            $this->session->set_flashdata('alert_error', $e->getMessage());
+
+            redirect('admin/users');
         }
     }
 }

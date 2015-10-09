@@ -40,12 +40,38 @@ class Change_date_of_birth extends REST_Controller {
 			$natal_chart = NatalChart::find_by_user_id($user->id);
 
 			if($natal_chart) {
-				
+
 				$natal_chart->natal_chart = '';
 				$natal_chart->view_ordered = 0;
 				$natal_chart->ship_ordered = 0;
 				$natal_chart->status = 0;
 				$natal_chart->save();
+			}
+
+			$user_gemstones = UserGemstone::find('all', array(
+	                                                'conditions' => array(
+	                                                    'deleted = ?
+	                                                    and user_id = ?',
+	                                                    0,
+	                                                    $user->id
+	                                                    ),
+	                                            ));
+
+			foreach ($user_gemstones as $user_gemstone) {
+				$user_gemstone->delete();
+			}
+
+			$pujas = Puja::find('all', array(
+                                    'conditions' => array(
+                                        'deleted = ?
+                                        and user_id = ?',
+                                        0,
+                                        $user->id
+                                        ),
+                                ));
+
+			foreach ($pujas as $puja) {
+				$puja->delete();
 			}
 
 			$gcm_users = $user->gcm_users;

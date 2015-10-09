@@ -37,7 +37,7 @@ class Order_puja extends REST_Controller {
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',
 							'message' => 'Puja ordered',
-							'user_name' => $current_user->first_name,
+							'user' => $current_user->first_name,
 							'data' => null,
 							));
 			

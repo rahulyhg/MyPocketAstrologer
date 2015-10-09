@@ -46,6 +46,32 @@ class Change_place_of_birth extends REST_Controller {
 				$natal_chart->save();
 			}
 
+			$user_gemstones = UserGemstone::find('all', array(
+	                                                'conditions' => array(
+	                                                    'deleted = ?
+	                                                    and user_id = ?',
+	                                                    0,
+	                                                    $user->id
+	                                                    ),
+	                                            ));
+
+			foreach ($user_gemstones as $user_gemstone) {
+				$user_gemstone->delete();
+			}
+
+			$pujas = Puja::find('all', array(
+                                    'conditions' => array(
+                                        'deleted = ?
+                                        and user_id = ?',
+                                        0,
+                                        $user->id
+                                        ),
+                                ));
+
+			foreach ($pujas as $puja) {
+				$puja->delete();
+			}
+
 			$gcm_users = $user->gcm_users;
 
             $data = array(
