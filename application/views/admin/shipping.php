@@ -33,11 +33,14 @@
 								    <th>Address</th>							    
 								    <th>Date</th> 
 								    <th>Type</th>
+								    <th>Gemstone Name</th>
 								    <th></th>
 								</tr>
 
 								<tbody>
-									<?php foreach ($shippings as $shipping){ ?>
+									<?php foreach ($shippings as $shipping) { 
+											$user_gemstone = UserGemstone::find_by_id($shipping->gemstone_id);
+										?>
 										<tr>
 											<td><?php echo $shipping->user->get_full_name();?></td>
 											<td><?php echo $shipping->details;?></td>
@@ -46,6 +49,7 @@
 											<td><?php if($shipping->type == 1) echo "Natal Chart";
 													  if($shipping->type == 2) echo "Gemstone";?>
 											</td>
+											<td><?php if($user_gemstone) echo $user_gemstone->gemstone->name;?></td>
 											
 											<td style="text-align:center;width:65px;">
 											<div class="btn-group">

@@ -38,6 +38,7 @@ class Shippings extends BaseController {
                         'company_name' => $this->input->post('company_name'),
                         'quotation_number' => $this->input->post('quotation_number'),
                         'days' => $this->input->post('days'),
+                        'gemstone_id' => $shipping->gemstone_id,
                     );
                             
             $quotation = new Quotation;
@@ -65,6 +66,7 @@ class Shippings extends BaseController {
                         'shipping_company_name' => $quotation->company_name,
                         'quotation_number' => $quotation->quotation_number,
                         'days' => $quotation->days,
+                        'object_id' => $quotation->gemstone_id,
                     );
 
             if($shipping->type == 1)

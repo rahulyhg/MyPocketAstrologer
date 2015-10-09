@@ -60,6 +60,7 @@ class Receipt extends BaseModel {
 		$this->assign_attribute('device_id', $device_id);	
 	}
 
+	/*gemstone_id means user_gemstone->id*/
 	public function set_gemstone_id($gemstone_id) {
 		$this->assign_attribute('gemstone_id', $gemstone_id);	
 	}

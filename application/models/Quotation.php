@@ -82,6 +82,11 @@ class Quotation extends BaseModel {
 		$this->assign_attribute('days', $days);	
 	}
 
+	/*gemstone_id means user_gemstone->id*/
+	public function set_gemstone_id($gemstone_id) {
+		$this->assign_attribute('gemstone_id', $gemstone_id);	
+	}
+
 
 	/* Public functions - Getters */
 
@@ -113,6 +118,10 @@ class Quotation extends BaseModel {
 		return $this->read_attribute('days');
 	}
 
+	public function get_gemstone_id() {
+		return $this->read_attribute('gemstone_id');
+	}
+
 	/* Public static functions */
 
 	public static function create($params) {
@@ -127,6 +136,7 @@ class Quotation extends BaseModel {
 		$quotation->company_name = array_key_exists('company_name', $params) ? $params['company_name'] : null;
 		$quotation->quotation_number = array_key_exists('quotation_number', $params) ? $params['quotation_number'] : null;
 		$quotation->days = array_key_exists('days', $params) ? $params['days'] : null;
+		$quotation->gemstone_id = array_key_exists('gemstone_id', $params) ? $params['gemstone_id'] : 0;
 
 		$quotation->save();
 
