@@ -39,6 +39,15 @@ class Shipping extends BaseModel {
 		$this->assign_attribute('details', $details);	
 	}
 
+	public function set_full_name($full_name) {
+
+		if($full_name == '') {
+			throw new Exception('Full Name is required.');
+        }
+
+		$this->assign_attribute('full_name', $full_name);	
+	}
+
 	public function set_country($country) {
 
 		if($country == '') {
@@ -121,6 +130,10 @@ class Shipping extends BaseModel {
 		return $this->read_attribute('details');
 	}
 
+	public function get_full_name() {
+		return $this->read_attribute('full_name');
+	}
+
 	public function get_country() {
 		return $this->read_attribute('country');
 	}
@@ -181,6 +194,7 @@ class Shipping extends BaseModel {
 
 		$shipping->user = array_key_exists('user', $params) ? $params['user'] : null;
 		$shipping->details = array_key_exists('details', $params) ? $params['details'] : null;
+		$shipping->full_name = array_key_exists('full_name', $params) ? $params['full_name'] : null;
 		$shipping->country = isset($params['address']['country']) ? $params['address']['country'] : null;
 		$shipping->state = isset($params['address']['state']) ? $params['address']['state'] : null;
 		$shipping->city = isset($params['address']['city']) ? $params['address']['city'] : null;

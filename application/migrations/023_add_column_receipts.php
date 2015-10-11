@@ -8,7 +8,7 @@ class Migration_Add_column_receipts extends CI_Migration {
 		
 		$field = array(			
 
-			'gemstone_id' => array(
+			'object_id' => array(
 				'type' => 'int',
 			),
 		);
@@ -18,6 +18,6 @@ class Migration_Add_column_receipts extends CI_Migration {
 
 	public function down() {
 		
-		$this->dbforge->drop_column('receipts','gemstone_id');
+		$this->dbforge->drop_column('receipts','object_id');
 	}
 }

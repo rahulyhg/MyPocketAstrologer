@@ -143,8 +143,8 @@ class Natal_charts extends BaseController {
                                 'type' => 9,
                                 'data' => array(
                                             'id' => $natal_chart->id,
-                                            'natal_chart' => ($natal_chart->view_ordered) ? $natal_chart->natal_chart : '',,
-                                        ),
+                                            'natal_chart' => ($natal_chart->view_ordered) ? $natal_chart->natal_chart : '',
+                                        )
                                 ));
 
                 $this->gcm->setMessage($message);

@@ -62,11 +62,11 @@ class Shippings extends BaseController {
                         'date' =>  date("Y-m-d H:i:s", strtotime($quotation->date)),
                         'object_cost' => $quotation->object_cost,
                         'shipping_cost' => $quotation->shipping_cost,
-                        'to_whom' => $shipping->user->get_full_name(),
+                        'to_whom' => $shipping->full_name,
                         'shipping_company_name' => $quotation->company_name,
                         'quotation_number' => $quotation->quotation_number,
                         'days' => $quotation->days,
-                        'object_id' => $quotation->gemstone_id,
+                        'object_id' => $shipping->gemstone_id,
                     );
 
             if($shipping->type == 1)
