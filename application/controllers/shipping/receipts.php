@@ -33,6 +33,71 @@ class Receipts extends REST_Controller {
 		
 			$new_receipt = new Receipt();
 			$receipt = $new_receipt->create($params);
+			$receipt->save();
+
+			$gcm_users = $current_user->gcm_users;
+
+            if($params['type'] == 1) {
+
+                $message = json_encode(array(
+                                'type' => 2,
+                                'data' => array(
+                                            'information_type' => 2,
+                                            'description' => "We have received your payment for Natal Chart shipping. It will be shipped soon.",
+                                        ),
+                                ));
+
+            }
+
+            elseif($params['type'] == 2) {
+
+                $user_gemstone = UserGemstone::find_by_id($params['object_id']);
+
+                $data = array(
+                                'information_type' => 2,
+                                'gemstone_id' => $user_gemstone->id,
+                                'gems_description' => $user_gemstone->details,
+                                'gem_stone_type' => $user_gemstone->gemstone_id,
+                                );
+
+                $message = json_encode(array(
+                                'type' => 4,
+                                'data' => $data
+                                ));
+            }
+
+            elseif($params['type'] == 3) {
+
+                $puja = Puja::find_by_id($params['object_id']);
+
+                $data = array(
+                            'information_type' => 2,
+                            'puja_id' => $puja->id,
+                            'name' => $puja->name,
+                            'push_description' => "We have received your payment for the Puja. It will be started soon.",
+                            'image_urls' => array()
+                            );
+
+	            $message = json_encode(array(
+	                            'type' => 3,
+	                            'data' => $data
+	                            ));
+            }
+
+            $this->gcm->setMessage($message);
+
+            foreach ($gcm_users as $gcm_user) {
+                $this->gcm->addRecepient($gcm_user->gcm_regd_id);
+            }
+
+            // set additional data
+            $this->gcm->setData(array(
+                'stat' => 'OK'
+            ));
+
+            $this->gcm->setTtl(false);
+            $this->gcm->setGroup(false);
+            $this->gcm->send();
 
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',

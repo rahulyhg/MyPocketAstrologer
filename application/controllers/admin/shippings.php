@@ -137,4 +137,76 @@ class Shippings extends BaseController {
             redirect('admin/shippings');
         }
     }
+
+    public function complete($shipping_id) {
+
+        try {
+
+            $shipping = Shipping::find_by_id_and_completed($shipping_id, 0);
+
+            if(!$shipping)
+                throw new Exception("Shipping Order not found");
+
+            $shipping->completed = 1;
+            $shipping->save();
+
+            $gcm_users = $shipping->user->gcm_users;
+
+            if($shipping->type == 1) {
+
+                $message = json_encode(array(
+                                'type' => 2,
+                                'data' => array(
+                                            'information_type' => 3,
+                                            'description' => "Your Natal Chart is shipped now. It will take ".$shipping->quotation->days." days for the delivery.",
+                                        ),
+                                ));
+
+            }
+
+            elseif($shipping->type == 2) {
+
+                $user_gemstone = UserGemstone::find_by_id($shipping->gemstone_id);
+
+                $data = array(
+                                'information_type' => 3,
+                                'gemstone_id' => $user_gemstone->id,
+                                'gems_description' => $user_gemstone->details,
+                                'gem_stone_type' => $user_gemstone->gemstone_id,
+                                );
+
+                $message = json_encode(array(
+                                'type' => 4,
+                                'data' => $data
+                                ));
+            }
+
+            $this->gcm->setMessage($message);
+
+            foreach ($gcm_users as $gcm_user) {
+                $this->gcm->addRecepient($gcm_user->gcm_regd_id);
+            }
+
+            // set additional data
+            $this->gcm->setData(array(
+                'stat' => 'OK'
+            ));
+
+            $this->gcm->setTtl(false);
+            $this->gcm->setGroup(false);
+            $this->gcm->send();
+
+            $this->session->set_flashdata('alert_success', "Shipping order completion confirmed successfully");
+
+            redirect('admin/shippings');
+
+        }
+
+        catch(Exception $e) {
+
+            $this->session->set_flashdata('alert_error', $e->getMessage());
+
+            redirect('admin/shippings');
+        }
+    }
 }

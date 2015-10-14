@@ -60,8 +60,10 @@
 													<?php if(!$shipping->quotation) { ?> 
 													<li><a href="<?php echo base_url('admin/shippings/add_quotation/'.$shipping->id);?>">Add Quotation</a></li>
 													<?php } else { ?>
-													<li><a href="<?php echo base_url('admin/shippings/view_quotation/'.$shipping->id);?>">View Quotation</a></li>
-													<?php } ?>
+													<!-- <li><a href="<?php echo base_url('admin/shippings/view_quotation/'.$shipping->id);?>">View Quotation</a></li> -->
+													<?php if(!$shipping->completed) { ?> 
+													<li><a href="<?php echo base_url('admin/shippings/complete/'.$shipping->id);?>">Confirm shipping completion</a></li>
+													<?php }} ?>
 													<li><a href="<?php echo base_url('admin/shippings/delete/'.$shipping->id);?>" onclick="return confirm_delete();">Delete</a></li>
 												</ul>
 											</div>

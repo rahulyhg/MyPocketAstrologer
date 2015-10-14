@@ -297,6 +297,7 @@ class User extends BaseModel {
 	public static function create($params) {
 
 		$user = new User;
+		$user->check_if_exists($params['date_of_birth'], $params['place_of_birth']);
 
 		$user->first_name = array_key_exists('first_name', $params) ? $params['first_name'] : null;
 		$user->last_name = array_key_exists('last_name', $params) ? $params['last_name'] : null;
@@ -345,6 +346,11 @@ class User extends BaseModel {
 			throw new Exception('Invalid credentials');
 		}
 	}
-}
 
-?>
+	private function check_if_exists($date_of_birth, $place_of_birth) {
+
+		if(self::exists(array('date_of_birth' => $date_of_birth, 'place_of_birth' => $place_of_birth))) { 
+			throw new Exception('User with the provided birth details already exists'); 
+		}
+	}
+}

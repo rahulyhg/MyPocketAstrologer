@@ -40,9 +40,9 @@
                     <li class="active"><a href="<?php echo base_url();?>">Home</a></li>
                     <li><a href="<?php echo base_url('admin/users');?>">Users</a></li>
                     <li><a href="<?php echo base_url('admin/queries');?>">Queries</a></li>
-                    <li><a href="<?php echo base_url('admin/zodiac');?>">Zodiac</a></li>
-                    <li><a href="<?php echo base_url('admin/gemstones');?>">Gemstone</a></li>
-                    <li><a href="<?php echo base_url('admin/colors');?>">Colors</a></li>
+                    <li><a href="#<?php //echo base_url('admin/zodiac');?>">Zodiac</a></li>
+                    <li><a href="#<?php //echo base_url('admin/gemstones');?>">Gemstone</a></li>
+                    <li><a href="#<?php //echo base_url('admin/colors');?>">Colors</a></li>
                     <li><a href="<?php echo base_url('admin/shippings');?>">Shipping</a></li>
                     <li><a href="<?php echo base_url('auth/logout');?>">Sign Out</a></li>
                 </ul>
