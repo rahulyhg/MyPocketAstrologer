@@ -98,6 +98,18 @@ class Natal_charts extends BaseController {
                 $this->gcm->setTtl(false);
                 $this->gcm->setGroup(false);
                 $this->gcm->send();
+
+                $params = array(
+                            'user' => $user,
+                            'object_type' => 1,
+                            'notification_type' => 9,
+                            'information_type' => 0,
+                            'object_id' => $natal_chart->id,
+                            'details' => '',
+                        );
+
+                $push = new PushNotificationLog;
+                $push->create($params);
             }
 		}
 
@@ -126,7 +138,7 @@ class Natal_charts extends BaseController {
             if (array_key_exists('imageData',$_REQUEST)) {
                 
                 $imgData = base64_decode($_REQUEST['imageData']);
-                $filePath = 'public/natal_charts/'.$natal_chart->user->id.'-natal_chart-'.rand(001,999).'png';
+                $filePath = 'public/natal_charts/'.$natal_chart->user_id.'-natal_chart-'.rand(001,999).'png';
                 if (file_exists($filePath)) { unlink($filePath); }
 
                 $file = fopen($filePath, 'w');
@@ -137,7 +149,7 @@ class Natal_charts extends BaseController {
                 $natal_chart->status = 1;
                 $natal_chart->save();
 
-                $gcm_users = $user->gcm_users;
+                $gcm_users = $natal_chart->user->gcm_users;
 
                 $message = json_encode(array(
                                 'type' => 9,
@@ -161,8 +173,19 @@ class Natal_charts extends BaseController {
                 $this->gcm->setTtl(false);
                 $this->gcm->setGroup(false);
                 $this->gcm->send();
-            }
 
+                $params = array(
+                            'user' => $natal_chart->user,
+                            'object_type' => 1,
+                            'notification_type' => 9,
+                            'information_type' => 0,
+                            'object_id' => $natal_chart->id,
+                            'details' => '',
+                        );
+
+                $push = new PushNotificationLog;
+                $push->create($params);
+            }
         }
 
         catch(Exception $e) {

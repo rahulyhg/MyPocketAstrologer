@@ -15,7 +15,7 @@ class Queries extends BaseController {
 		return $this->load_view('admin/query/index', array('queries' => $queries));
 	}
 
-    public function edit($query_id) {
+    public function view($query_id) {
 
         try {
 
@@ -24,22 +24,8 @@ class Queries extends BaseController {
             if(!$query) {
                 throw new Exception("Invalid Query!");                
             }
-
-            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-                return $this->load_view('admin/query/edit', array('query' => $query));
-            }
             
-            $query->query = $this->input->post('query');
-            $query->answer = $this->input->post('answer');            
-
-            $query->save();
-
-            $this->session->set_flashdata(
-                'alert_success', 
-                "Query details edited successfully."
-            );
-
-            redirect('/admin/queries');
+            return $this->load_view('admin/query/view', array('query' => $query));
         }
 
         catch(Exception $e) {
@@ -97,6 +83,18 @@ class Queries extends BaseController {
             $this->gcm->setGroup(false);
             $this->gcm->send();
 
+            $params = array(
+                            'user' => $query->user,
+                            'object_type' => 4,
+                            'notification_type' => 5,
+                            'information_type' => 0,
+                            'object_id' => $query->id,
+                            'details' => '',
+                        );
+
+            $push = new PushNotificationLog;
+            $push->create($params);
+
             $this->session->set_flashdata(
                 'alert_success', 
                 "Answer added to the query successfully."
@@ -140,5 +138,3 @@ class Queries extends BaseController {
         }
     }
 }
-
-?>

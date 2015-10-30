@@ -2,7 +2,7 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class View_gemstone extends REST_Controller {
+class Get_latest_gemstone extends REST_Controller {
 
 	public function index_get() {
 
@@ -24,18 +24,36 @@ class View_gemstone extends REST_Controller {
 
 			if(!$current_user)
 				throw new Exception("Invalid User Request");
-				
-			$user_gemstone = UserGemstone::find_by_user_id($current_user_id);
 			
-			$data = array(
-					'gemstone' => $user_gemstone->gemstone->name,
-					'color' => $user_gemstone->color->color,
-					'details' => $user_gemstone->details,
-					);
+			$latest_push = PushNotificationLog::find('all', array(
+	                                                'conditions' => array(
+	                                                    'object_type = ?
+	                                                    and user_id = ?',
+	                                                    2,
+	                                                    $current_user->id
+	                                                    ),
+	                                                'order' => 'id desc',
+	                                                'limit' => 1
+	                                            ));
+
+			if(!$latest_push)
+				throw new Exception("No gemstone found");				
+
+			foreach ($latest_push as $push) {
+			
+				$user_gemstone = UserGemstone::find_by_id($push->object_id);
+				
+				$data = array(
+						'information_type' => $push->information_type,
+						'gemstone_id' => $user_gemstone->id,
+						'gems_description' => $user_gemstone->details,
+						'gem_stone_type' => $user_gemstone->gemstone_id,
+						);
+			}
 
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',
-							'message' => 'User gemstone',
+							'message' => 'View gemstone',
 							'user' => $current_user->first_name,
 							'data' => $data,
 							));

@@ -31,15 +31,31 @@
 								    <th>Gemstone Name</th>
 								    <th>Color</th> 
 								    <th>Details</th>
+								    <th>Status</th>
 								    <th></th>
 								</tr>
 
 								<tbody>
-									<?php foreach ($user_gemstones as $user_gemstone){ ?>
+									<?php foreach ($user_gemstones as $user_gemstone) { 
+											switch ($user_gemstone->status) {
+												case '1':
+													$status = "Suggested";
+													break;
+												
+												case '2':
+													$status = "Ordered for shipping";
+													break;
+
+												case '2':
+													$status = "Processed for shipping";
+													break;
+											}
+										?>
 										<tr>
 											<td><?php echo $user_gemstone->gemstone->name;?></td>
 											<td><?php echo $user_gemstone->color->color;?></td>
-											<td><?php echo $user_gemstone->details;?></td>														
+											<td><?php echo $user_gemstone->details;?></td>
+											<td><?php echo $status;?></td>
 											
 											<td style="text-align:center;width:65px;">
 											<div class="btn-group">

@@ -46,7 +46,6 @@ class Receipts extends REST_Controller {
                                             'description' => "We have received your payment for Natal Chart shipping. It will be shipped soon.",
                                         ),
                                 ));
-
             }
 
             elseif($params['type'] == 2) {
@@ -98,6 +97,51 @@ class Receipts extends REST_Controller {
             $this->gcm->setTtl(false);
             $this->gcm->setGroup(false);
             $this->gcm->send();
+
+            if($params['type'] == 1) {
+
+                $params = array(
+                            'user' => $current_user,
+                            'object_type' => 1,
+                            'notification_type' => 2,
+                            'information_type' => 2,
+                            'object_id' => $current_user->natal_chart->id,
+                            'details' => 'We have received your payment for Natal Chart shipping. It will be shipped soon.',
+                        );
+
+                $push = new PushNotificationLog;
+                $push->create($params);
+            }
+
+            elseif($params['type'] == 2) {
+
+                $params = array(
+                            'user' => $current_user,
+                            'object_type' => 2,
+                            'notification_type' => 4,
+                            'information_type' => 2,
+                            'object_id' => $user_gemstone->id,
+                            'details' => 'We have received your payment for Gemstone shipping. It will be shipped soon.',
+                        );
+
+                $push = new PushNotificationLog;
+                $push->create($params);
+            }
+
+            elseif($params['type'] == 3) {
+
+                $params = array(
+                            'user' => $current_user,
+                            'object_type' => 3,
+                            'notification_type' => 3,
+                            'information_type' => 2,
+                            'object_id' => $puja->id,
+                            'details' => 'We have received your payment for the Puja. It will be started soon.',
+                        );
+
+                $push = new PushNotificationLog;
+                $push->create($params);
+            }
 
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',

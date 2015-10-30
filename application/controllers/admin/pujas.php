@@ -85,6 +85,18 @@ class Pujas extends BaseController {
             $this->gcm->setGroup(false);
             $this->gcm->send();
 
+            $params = array(
+                            'user' => $user,
+                            'object_type' => 3,
+                            'notification_type' => 3,
+                            'information_type' => 1,
+                            'object_id' => $puja->id,
+                            'details' => $puja->details,
+                        );
+
+            $push = new PushNotificationLog;
+            $push->create($params);
+
             $this->session->set_flashdata(
                 'alert_success', 
                 "Puja suggested to the user successfully."
@@ -141,6 +153,18 @@ class Pujas extends BaseController {
             $this->gcm->setTtl(false);
             $this->gcm->setGroup(false);
             $this->gcm->send();
+
+            $params = array(
+                            'user' => $puja->user,
+                            'object_type' => 3,
+                            'notification_type' => 3,
+                            'information_type' => 2,
+                            'object_id' => $puja->id,
+                            'details' => $puja->details,
+                        );
+
+            $push = new PushNotificationLog;
+            $push->create($params);
 
             $this->session->set_flashdata(
                 'alert_success', 
@@ -235,6 +259,18 @@ class Pujas extends BaseController {
             $this->gcm->setTtl(false);
             $this->gcm->setGroup(false);
             $this->gcm->send();
+
+            $params = array(
+                            'user' => $puja->user,
+                            'object_type' => 3,
+                            'notification_type' => 3,
+                            'information_type' => 3,
+                            'object_id' => $puja->id,
+                            'details' => $puja->details,
+                        );
+
+            $push = new PushNotificationLog;
+            $push->create($params);
 
             $this->session->set_flashdata(
                 'alert_success', 

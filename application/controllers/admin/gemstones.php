@@ -97,6 +97,18 @@ class Gemstones extends BaseController {
             $this->gcm->setGroup(false);
             $this->gcm->send();
 
+            $params = array(
+                            'user' => $user,
+                            'object_type' => 2,
+                            'notification_type' => 4,
+                            'information_type' => 1,
+                            'object_id' => $user_gemstone->id,
+                            'details' => $user_gemstone->details,
+                        );
+
+            $push = new PushNotificationLog;
+            $push->create($params);
+
             $this->session->set_flashdata(
                 'alert_success', 
                 "Gemstone suggested to the user successfully."
@@ -180,6 +192,18 @@ class Gemstones extends BaseController {
             $this->gcm->setTtl(false);
             $this->gcm->setGroup(false);
             $this->gcm->send();
+
+            $params = array(
+                            'user' => $user_gemstone->user,
+                            'object_type' => 2,
+                            'notification_type' => 4,
+                            'information_type' => 2,
+                            'object_id' => $user_gemstone->id,
+                            'details' => $user_gemstone->details,
+                        );
+
+            $push = new PushNotificationLog;
+            $push->create($params);
 
             $this->session->set_flashdata('alert_success', "Gemstone processed for shipping successfully");
 

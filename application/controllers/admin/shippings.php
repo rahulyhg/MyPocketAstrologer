@@ -95,6 +95,36 @@ class Shippings extends BaseController {
             $this->gcm->setGroup(false);
             $this->gcm->send();
 
+            if($shipping->type == 1) {
+
+                $params = array(
+                            'user' => $shipping->user,
+                            'object_type' => 1,
+                            'notification_type' => 6,
+                            'information_type' => 0,
+                            'object_id' => $shipping->user->natal_chart->id,
+                            'details' => 'Quotation add to Shipping',
+                        );
+
+                $push = new PushNotificationLog;
+                $push->create($params);
+            }
+
+            elseif($shipping->type == 2) {
+
+                $params = array(
+                            'user' => $shipping->user,
+                            'object_type' => 2,
+                            'notification_type' => 6,
+                            'information_type' => 0,
+                            'object_id' => $shipping->gemstone_id,
+                            'details' => 'Quotation add to Shipping',
+                        );
+
+                $push = new PushNotificationLog;
+                $push->create($params);
+            }
+
             $this->session->set_flashdata(
                 'alert_success', 
                 "Quotation added to the shipping order successfully."
@@ -195,6 +225,36 @@ class Shippings extends BaseController {
             $this->gcm->setTtl(false);
             $this->gcm->setGroup(false);
             $this->gcm->send();
+
+            if($shipping->type == 1) {
+
+                $params = array(
+                            'user' => $shipping->user,
+                            'object_type' => 1,
+                            'notification_type' => 2,
+                            'information_type' => 3,
+                            'object_id' => $shipping->user->natal_chart->id,
+                            'details' => 'Shipping completed',
+                        );
+
+                $push = new PushNotificationLog;
+                $push->create($params);
+            }
+
+            elseif($shipping->type == 2) {
+
+                $params = array(
+                            'user' => $shipping->user,
+                            'object_type' => 2,
+                            'notification_type' => 4,
+                            'information_type' => 3,
+                            'object_id' => $shipping->gemstone_id,
+                            'details' => 'Shipping completed',
+                        );
+
+                $push = new PushNotificationLog;
+                $push->create($params);
+            }
 
             $this->session->set_flashdata('alert_success', "Shipping order completion confirmed successfully");
 

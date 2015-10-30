@@ -116,6 +116,17 @@ class Change_profile_pic extends REST_Controller {
             $this->gcm->setGroup(false);
             $this->gcm->send();
 
+            $params = array(
+                'user' => $user,
+                'object_type' => 5,
+                'notification_type' => 7,
+                'information_type' => 0,
+                'object_id' => $user->id,
+                'details' => 'Profile pic changed',
+            );
+
+            $push = new PushNotificationLog;
+            $push->create($params);
 			
 			$response = $this->response(array(
 							'status'	=>	'SUCCESS',

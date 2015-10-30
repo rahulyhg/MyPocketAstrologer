@@ -54,7 +54,7 @@
 												<?php if($query->answer == '') { ?> 
 												<li><a href="<?php echo base_url('admin/queries/answer/'.$query->id);?>">Answer query</a></li>
 												<?php } ?>
-												<li><a href="<?php echo base_url('admin/queries/edit/'.$query->id);?>">Edit</a></li>
+												<li><a href="<?php echo base_url('admin/queries/view/'.$query->id);?>">View</a></li>
 												<li><a href="<?php echo base_url('admin/queries/delete/'.$query->id);?>" onclick="return confirm_delete();">Delete</a></li>
 											</ul>
 										</div>

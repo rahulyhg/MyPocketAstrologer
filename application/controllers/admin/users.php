@@ -277,6 +277,18 @@ class Users extends BaseController {
             $this->gcm->send();
 
             $params = array(
+                            'user' => $user,
+                            'object_type' => 5,
+                            'notification_type' => 7,
+                            'information_type' => 0,
+                            'object_id' => $user->id,
+                            'details' => 'Zodiac Assigned',
+                        );
+
+            $push = new PushNotificationLog;
+            $push->create($params);
+
+            $params = array(
                         'user' => $user,
                         'gemstone' => $zodiac->gems,
                         'color' => $zodiac->colour,
@@ -314,10 +326,21 @@ class Users extends BaseController {
             $this->gcm->setGroup(false);
             $this->gcm->send();
 
+            $params = array(
+                            'user' => $user,
+                            'object_type' => 2,
+                            'notification_type' => 4,
+                            'information_type' => 1,
+                            'object_id' => $user_gemstone->id,
+                            'details' => $user_gemstone->details,
+                        );
+
+            $push = new PushNotificationLog;
+            $push->create($params);
+
             $this->session->set_flashdata('alert_success', "Zodiac sign assigned to the user successfully");
 
             redirect('admin/users');
-
         }
 
         catch(Exception $e) {
@@ -328,5 +351,3 @@ class Users extends BaseController {
         }
     }
 }
-
-?>
