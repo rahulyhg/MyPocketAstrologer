@@ -9,8 +9,8 @@ class Migration_Add_column_quotation extends CI_Migration {
 		$field = array(
 
 			'approved' => array(
-				'type' => 'boolean',
-				'default' => 1,
+				'type' => 'int',
+				'default' => 0,
 			),
 		);
 

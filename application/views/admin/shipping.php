@@ -29,11 +29,13 @@
 
 								<tr>
 								    <th>User</th>
-								    <th>Order details</th> 
+								    <!-- <th>Order details</th>  -->
 								    <th>Address</th>							    
 								    <th>Date</th> 
 								    <th>Type</th>
 								    <th>Gemstone Name</th>
+								    <th>Purchased</th>
+								    <th>Processed/Completed</th>
 								    <th></th>
 								</tr>
 
@@ -43,14 +45,21 @@
 										?>
 										<tr>
 											<td><?php echo $shipping->user->get_full_name();?></td>
-											<td><?php echo $shipping->details;?></td>
+											<!-- <td><?php echo $shipping->details;?></td> -->
 											<td><?php echo $shipping->get_address();?></td>
 											<td><?php echo date('M d, Y', strtotime($shipping->created_at));?></td>
 											<td><?php if($shipping->type == 1) echo "Natal Chart";
 													  if($shipping->type == 2) echo "Gemstone";?>
 											</td>
 											<td><?php if($user_gemstone) echo $user_gemstone->gemstone->name;?></td>
-											
+											<td><?php if($shipping->quotation) {
+														if($shipping->quotation->approved == 1)
+															echo "Yes";
+														elseif($shipping->quotation->approved == 2)
+															echo "Canceled";
+											} ?></td>
+											<td><?php echo ($shipping->completed) ? "Yes" : "No"; ?></td>
+
 											<td style="text-align:center;width:65px;">
 											<div class="btn-group">
 						  						<a class="btn dropdown-toggle" style="border:1px solid #eee;" data-toggle="dropdown" href="#">
@@ -60,8 +69,8 @@
 													<?php if(!$shipping->quotation) { ?> 
 													<li><a href="<?php echo base_url('admin/shippings/add_quotation/'.$shipping->id);?>">Add Quotation</a></li>
 													<?php } else { ?>
-													<!-- <li><a href="<?php echo base_url('admin/shippings/view_quotation/'.$shipping->id);?>">View Quotation</a></li> -->
-													<?php if($shipping->quotation->approved && !$shipping->completed) { ?> 
+													<li><a href="<?php echo base_url('admin/shippings/view_quotation/'.$shipping->id);?>">View Quotation</a></li>
+													<?php if($shipping->quotation->approved == 1 && !$shipping->completed) { ?> 
 													<li><a href="<?php echo base_url('admin/shippings/complete/'.$shipping->id);?>">Confirm shipping completion</a></li>
 													<?php }} ?>
 													<li><a href="<?php echo base_url('admin/shippings/delete/'.$shipping->id);?>" onclick="return confirm_delete();">Delete</a></li>

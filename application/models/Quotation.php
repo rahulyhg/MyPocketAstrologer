@@ -17,6 +17,16 @@ class Quotation extends BaseModel {
         ),
 	);
 
+	private function is_quotation_number_available($quotation_number) {
+
+    	if($this->is_new_record()) {
+
+			if(self::exists(array('quotation_number' => $quotation_number, 'deleted' => 0))) { 
+				throw new Exception('The Quotation Number entered already exists.'); 
+			}
+    	}
+    }
+
 	/* Public functions - Setters */
 
 	public function set_shipping(Shipping $shipping) {
@@ -70,7 +80,8 @@ class Quotation extends BaseModel {
 
 		if($quotation_number == '')
 			throw new Exception("Quotation Number is required");
-			
+		
+		$this->is_quotation_number_available($quotation_number);
 		$this->assign_attribute('quotation_number', $quotation_number);	
 	}
 
@@ -81,6 +92,14 @@ class Quotation extends BaseModel {
 			
 		$this->assign_attribute('days', $days);	
 	}
+
+
+	/*
+		---NOTE---
+
+		approved => 1: quotation approved
+					2: cancelled
+	*/
 
 
 	/* Public functions - Getters */

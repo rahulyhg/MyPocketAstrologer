@@ -17,6 +17,16 @@ class Receipt extends BaseModel {
         ),
 	);
 
+	private function is_receipt_number_available($receipt_number) {
+
+    	if($this->is_new_record()) {
+
+			if(self::exists(array('receipt_number' => $receipt_number, 'deleted' => 0))) { 
+				throw new Exception('The Receipt Number entered already exists.'); 
+			}
+    	}
+    }
+
 	/* Public functions - Setters */
 
 	public function set_user(User $user) {
@@ -49,6 +59,7 @@ class Receipt extends BaseModel {
 			throw new Exception('Please enter the Receipt Number.');
         }
 
+        $this->is_receipt_number_available($receipt_number);
 		$this->assign_attribute('receipt_number', $receipt_number);	
 	}
 

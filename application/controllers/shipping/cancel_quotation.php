@@ -34,7 +34,7 @@ class cancel_quotation extends REST_Controller {
 			if(!$quotation)
 				throw new Exception("No such Quotation found");
 				
-			$quotation->approved = 0;
+			$quotation->approved = 2;
 			$quotation->save();
 
 			$response = $this->response(array(

@@ -140,6 +140,113 @@ class Shippings extends BaseController {
         }
     }
 
+    public function send_quotation($quotation_id) {
+
+        try {
+
+            $quotation = Quotation::find_by_id($quotation_id);
+
+            if(!$quotation)
+                throw new Exception("Invalid Quotation!");                
+            
+            if($quotation->approved == 1)
+                throw new Exception("Invalid Quotation!");
+
+            $gcm_users = $quotation->shipping->user->gcm_users;
+
+            $data = array(
+                        'address' => array(
+                                        'country' => $quotation->shipping->country,
+                                        'state' => $quotation->shipping->state,
+                                        'city' => $quotation->shipping->city,
+                                        'street_address' => $quotation->shipping->street,
+                                        'apt_no' => $quotation->shipping->apt_no,
+                                        'postal_code' => $quotation->shipping->postal_code,
+                                        'phone_number' => $quotation->shipping->phone_number,
+                                    ),
+                        'type' => $quotation->shipping->type,
+                        'total_cost' => $quotation->total_cost,                                        
+                        'date' =>  date("Y-m-d H:i:s", strtotime($quotation->date)),
+                        'object_cost' => $quotation->object_cost,
+                        'shipping_cost' => $quotation->shipping_cost,
+                        'to_whom' => $quotation->shipping->full_name,
+                        'shipping_company_name' => $quotation->company_name,
+                        'quotation_number' => $quotation->quotation_number,
+                        'days' => $quotation->days,
+                        'object_id' => $quotation->shipping->gemstone_id,
+                    );
+
+            if($quotation->shipping->type == 1)
+                $data['object'] = 'Natal Chart';
+
+            elseif($quotation->shipping->type == 2)
+                $data['object'] = 'Gemstone';
+
+            $message = json_encode(array(
+                            'type' => 6,
+                            'data' => $data
+                            ));
+
+            $this->gcm->setMessage($message);
+
+            foreach ($gcm_users as $gcm_user) {
+                $this->gcm->addRecepient($gcm_user->gcm_regd_id);
+            }
+
+            // set additional data
+            $this->gcm->setData(array(
+                'stat' => 'OK'
+            ));
+
+            $this->gcm->setTtl(false);
+            $this->gcm->setGroup(false);
+            $this->gcm->send();
+
+            if($quotation->shipping->type == 1) {
+
+                $params = array(
+                            'user' => $quotation->shipping->user,
+                            'object_type' => 1,
+                            'notification_type' => 6,
+                            'information_type' => 0,
+                            'object_id' => $quotation->shipping->user->natal_chart->id,
+                            'details' => 'Quotation sent to the User',
+                        );
+
+                $push = new PushNotificationLog;
+                $push->create($params);
+            }
+
+            elseif($quotation->shipping->type == 2) {
+
+                $params = array(
+                            'user' => $quotation->shipping->user,
+                            'object_type' => 2,
+                            'notification_type' => 6,
+                            'information_type' => 0,
+                            'object_id' => $quotation->shipping->gemstone_id,
+                            'details' => 'Quotation sent to the User',
+                        );
+
+                $push = new PushNotificationLog;
+                $push->create($params);
+            }
+
+            $this->session->set_flashdata(
+                'alert_success', 
+                "Quotation sent to the user successfully."
+            );
+
+            redirect('/admin/shippings');
+        }
+
+        catch(Exception $e) {
+
+            $this->session->set_flashdata('alert_error', $e->getMessage());
+            redirect('/admin/shippings');
+        }
+    }
+
     public function delete($shipping_id) {
 
         try {
@@ -268,5 +375,28 @@ class Shippings extends BaseController {
 
             redirect('admin/shippings');
         }
+    }
+
+    public function view_quotation($shipping_id) {
+
+        try {
+
+            $shipping = Shipping::find_by_id($shipping_id);
+
+            if(!$shipping)
+                throw new Exception("Shipping Order not found");
+
+            if(!$shipping->quotation)
+                throw new Exception("Quotation not found");
+
+            return $this->load_view('admin/view_quotation', array('quotation' => $shipping->quotation));                
+        }
+
+        catch(Exception $e) {
+
+            $this->session->set_flashdata('alert_error', $e->getMessage());
+
+            redirect('admin/shippings');
+        }        
     }
 }

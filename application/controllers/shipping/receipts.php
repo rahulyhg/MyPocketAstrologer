@@ -111,6 +111,10 @@ class Receipts extends REST_Controller {
 
                 $push = new PushNotificationLog;
                 $push->create($params);
+
+                $quotation = Quotation::find_by_quotation_number($receipt_number);
+                $quotation->approved = 1;
+                $quotation->save();
             }
 
             elseif($params['type'] == 2) {
@@ -126,6 +130,10 @@ class Receipts extends REST_Controller {
 
                 $push = new PushNotificationLog;
                 $push->create($params);
+
+                $quotation = Quotation::find_by_quotation_number($receipt_number);
+                $quotation->approved = 1;
+                $quotation->save();
             }
 
             elseif($params['type'] == 3) {
@@ -141,6 +149,9 @@ class Receipts extends REST_Controller {
 
                 $push = new PushNotificationLog;
                 $push->create($params);
+
+                $puja->status = 2;
+                $puja->save();
             }
 
 			$response = $this->response(array(
