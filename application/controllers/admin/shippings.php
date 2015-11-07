@@ -291,6 +291,10 @@ class Shippings extends BaseController {
 
             if($shipping->type == 1) {
 
+                $natal_chart = NatalChart::find_by_user_id($shipping->user_id);
+                $natal_chart->status = 4;
+                $natal_chart->save();
+
                 $message = json_encode(array(
                                 'type' => 2,
                                 'data' => array(
@@ -304,6 +308,8 @@ class Shippings extends BaseController {
             elseif($shipping->type == 2) {
 
                 $user_gemstone = UserGemstone::find_by_id($shipping->gemstone_id);
+                $user_gemstone->status = 3;
+                $user_gemstone->save();
 
                 $data = array(
                                 'information_type' => 3,
