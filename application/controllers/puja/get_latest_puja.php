@@ -32,30 +32,44 @@ class Get_latest_puja extends REST_Controller {
 	                                                    3,
 	                                                    $current_user->id
 	                                                    ),
-	                                                'order' => 'id desc',
-	                                                'limit' => 1
+	                                                'order' => 'id desc'
 	                                            ));
 
-			if(!$latest_push)
-				throw new Exception("No puja found");
+			if($latest_push) {
 
-			foreach ($latest_push as $push) {
-			
-				$puja = Puja::find_by_id($push->object_id);
+				foreach ($latest_push as $push) {
+				
+					$puja = Puja::find_by_id_and_deleted($push->object_id, 0);
 
-				$image_urls = array();
-	            foreach ($puja->images as $image) {
-	                $image_urls[] = $image->image;
-	            }
+					if(!$puja)
+						continue;
 
-	            $data = array(
-	            			'information_type' => $push->information_type,
-	            			'puja_id' => $puja->id,
-	            			'name' => $puja->name,
-	            			'push_description' => $push->details,
-	            			'image_urls' => $image_urls
-	            		);
+					$image_urls = array();
+		            foreach ($puja->images as $image) {
+		                $image_urls[] = $image->image;
+		            }
+
+		            $data = array(
+		            			'information_type' => $push->information_type,
+		            			'puja_id' => $puja->id,
+		            			'name' => $puja->name,
+		            			'push_description' => $push->details,
+		            			'price' => $puja->price,
+		            			'image_urls' => $image_urls
+		            		);
+
+		            break;
+				}
 			}
+
+			else
+				$data = array(
+							'information_type' => '',
+							'puja_id' => '',
+							'name' => '',
+							'push_description' => '',
+							'image_urls' => ''
+						);
 
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',

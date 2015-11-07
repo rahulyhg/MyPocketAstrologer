@@ -35,6 +35,7 @@ class View_puja extends REST_Controller {
 				$pujas[$i]['id'] = $puja->id;
 				$pujas[$i]['name'] = $puja->name;
 				$pujas[$i]['details'] = $puja->details;
+				$pujas[$i]['price'] = $puja->price;
 
 				switch($puja->status) {
 					case 1: $pujas[$i]['status'] = "Suggested"; break;

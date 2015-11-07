@@ -73,6 +73,10 @@ class Puja extends BaseModel {
 		$this->assign_attribute('date', $date);	
 	}
 
+	public function set_price($price) {
+		$this->assign_attribute('price', $price);	
+	}
+
 	/* Public functions - Getters */
 
 	public function get_name() {
@@ -91,6 +95,10 @@ class Puja extends BaseModel {
 		return $this->read_attribute('date');
 	}
 
+	public function get_price() {
+		return $this->read_attribute('price');
+	}
+
 	/* Public static functions */
 
 	public static function create($params) {
@@ -102,6 +110,7 @@ class Puja extends BaseModel {
 		$puja->details = array_key_exists('details', $params) ? $params['details'] : null;
 		$puja->status = array_key_exists('status', $params) ? $params['status'] : 0;
 		$puja->date = array_key_exists('date', $params) ? $params['date'] : null;
+		$puja->price = array_key_exists('price', $params) ? $params['price'] : 0;
 
 		$puja->save();
 

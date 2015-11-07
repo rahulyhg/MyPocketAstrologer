@@ -47,6 +47,7 @@ class Pujas extends BaseController {
             			'user' => $user,
             			'name' => $this->input->post('name'),
             			'details' => $this->input->post('details'),
+                        'price' => $this->input->post('price'),
             			'status' => 1,
             			'date' => date('Y-m-d H:i:s'),
             			);
@@ -62,6 +63,7 @@ class Pujas extends BaseController {
                             'puja_id' => $puja->id,
                             'name' => $puja->name,
                             'push_description' => $puja->details,
+                            'price' => $puja->price,
                             'image_urls' => array()
                             );
 
@@ -131,6 +133,7 @@ class Pujas extends BaseController {
                             'puja_id' => $puja->id,
                             'name' => $puja->name,
                             'push_description' => $puja->details,
+                            'price' => $puja->price,
                             'image_urls' => array()
                             );
 
@@ -237,6 +240,7 @@ class Pujas extends BaseController {
                             'puja_id' => $puja->id,
                             'name' => $puja->name,
                             'push_description' => $puja->details,
+                            'price' => $puja->price,
                             'image_urls' => $image_urls,
                             );
 

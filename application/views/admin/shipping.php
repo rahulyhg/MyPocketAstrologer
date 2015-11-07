@@ -34,7 +34,7 @@
 								    <th>Date</th> 
 								    <th>Type</th>
 								    <th>Gemstone Name</th>
-								    <th>Purchased</th>
+								    <th>Quotation Status</th>
 								    <th>Processed/Completed</th>
 								    <th></th>
 								</tr>
@@ -54,9 +54,11 @@
 											<td><?php if($user_gemstone) echo $user_gemstone->gemstone->name;?></td>
 											<td><?php if($shipping->quotation) {
 														if($shipping->quotation->approved == 1)
-															echo "Yes";
+															echo "Approved";
 														elseif($shipping->quotation->approved == 2)
 															echo "Canceled";
+														else
+															echo "Sent";
 											} ?></td>
 											<td><?php echo ($shipping->completed) ? "Yes" : "No"; ?></td>
 

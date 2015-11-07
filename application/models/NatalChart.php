@@ -47,6 +47,9 @@ class NatalChart extends BaseModel {
 	/*
 	-----Note----
 	Status 1: Natal Chart uploaded
+	Status 2: Ordered for view on app
+	Status 3: Ordered for shipping
+	Status 4: Processed for shipping
 	*/
 
 	/* Public static functions */

@@ -30,10 +30,6 @@ class Shipping_order extends REST_Controller {
 				throw new Exception("Invalid User Request");
 
 			$params['user'] = $current_user;
-		
-			$new_shipping = new Shipping();
-			$shipping = $new_shipping->create($params);
-			$shipping->save();
 
 			if($params['type'] == 1) {
 
@@ -50,22 +46,29 @@ class Shipping_order extends REST_Controller {
 	                $natal_chart->save();
 				}
 
-				if($natal_chart->ship_ordered)
-					throw new Exception("Natal Chart already ordered for shipping.");
+				/*if($natal_chart->ship_ordered)
+					throw new Exception("Natal Chart already ordered for shipping.");*/
+
+				if(!$natal_chart->status == 4)
+					throw new Exception("Your Natal Chart is already processed for shipping");
 
 				$natal_chart->ship_ordered = 1;
+				$natal_chart->status = 3;
 				$natal_chart->save();
 			}
 
 			if($params['type'] == 2) {
 
-				$user_gemstone = UserGemstone::find_by_id_and_user_id_and_status_and_deleted($params['object_id'], $current_user->id, 1, 0);
+				$user_gemstone = UserGemstone::find_by_id_and_user_id_and_deleted($params['object_id'], $current_user->id, 0);
 
 				if(!$user_gemstone)
 					throw new Exception("Gemstone not found");
 
-				if($user_gemstone->ship_ordered)
-					throw new Exception("Gemstone already ordered for shipping.");
+				if(!$user_gemstone->status == 3)
+					throw new Exception("This Gemstone is already processed for shipping");
+
+				/*if($user_gemstone->ship_ordered)
+					throw new Exception("Gemstone already ordered for shipping.");*/
 
 				$user_gemstone->status = 2;
 				$user_gemstone->ship_ordered = 1;
@@ -74,6 +77,10 @@ class Shipping_order extends REST_Controller {
 				$current_user->ring_size = $params['size'];
 				$current_user->save();
 			}
+
+			$new_shipping = new Shipping();
+			$shipping = $new_shipping->create($params);
+			$shipping->save();
 
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',

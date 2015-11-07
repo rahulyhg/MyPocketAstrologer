@@ -30,6 +30,7 @@
 								<tr>
 								    <th>Name</th>
 								    <th>Details</th> 
+								    <th>Price/Charge</th> 
 								    <th>Status</th>  
 								    <th>Images</th>
 								    <th></th>
@@ -40,6 +41,7 @@
 										<tr>
 											<td><?php echo $puja->name;?></td>
 											<td><?php echo $puja->details;?></td>
+											<td><?php echo $puja->price;?></td>
 											<td><?php switch($puja->status) {
 														case 1: echo "Suggested"; break;
 														case 2: echo "Ordered"; break;
@@ -115,6 +117,8 @@
 	    		    <label for="Details">Details</label>
 	    		    <textarea class="form-control" rows="5" name="details"  id="details" placeholder="Details of Puja"></textarea>
 
+	    		    <label for="Price">Charge/Price</label>
+	    		    <input type="text" name="price" id="price" class="form-control" placeholder="Charge to perform Puja" required>
 	    		</div>
 
 	      </div>

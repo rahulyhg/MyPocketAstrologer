@@ -32,24 +32,35 @@ class Get_latest_gemstone extends REST_Controller {
 	                                                    2,
 	                                                    $current_user->id
 	                                                    ),
-	                                                'order' => 'id desc',
-	                                                'limit' => 1
+	                                                'order' => 'id desc'
 	                                            ));
 
-			if(!$latest_push)
-				throw new Exception("No gemstone found");				
+			if($latest_push) {			
 
-			foreach ($latest_push as $push) {
-			
-				$user_gemstone = UserGemstone::find_by_id($push->object_id);
+				foreach ($latest_push as $push) {
 				
-				$data = array(
-						'information_type' => $push->information_type,
-						'gemstone_id' => $user_gemstone->id,
-						'gems_description' => $user_gemstone->details,
-						'gem_stone_type' => $user_gemstone->gemstone_id,
-						);
+					$user_gemstone = UserGemstone::find_by_id_and_deleted($push->object_id, 0);
+
+					if(!$user_gemstone)
+						continue;
+					
+					$data = array(
+							'information_type' => $push->information_type,
+							'gemstone_id' => $user_gemstone->id,
+							'gems_description' => $user_gemstone->details,
+							'gem_stone_type' => $user_gemstone->gemstone_id,
+							);
+					break;
+				}
 			}
+
+			else
+				$data = array(
+							'information_type' => '',
+							'gemstone_id' => '',
+							'gems_description' => '',
+							'gem_stone_type' => ''
+						);
 
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',
