@@ -52,7 +52,9 @@
 											}
 										?>
 										<tr>
-											<td><?php echo $user_gemstone->gemstone->name;?></td>
+											<td><?php if($user_gemstone->from_zodiac) { ?>
+												<span class="label label-success">Z</span>
+											<?php } echo $user_gemstone->gemstone->name;?></td>
 											<td><?php echo $user_gemstone->color->color;?></td>
 											<td><?php echo $user_gemstone->details;?></td>
 											<td><?php echo $status;?></td>
