@@ -77,6 +77,14 @@
 								</tbody>
 							</table>
 						</div>
+
+						<div class="pull-right">
+							<div>
+								<strong><small>Legend</small></strong> &nbsp;
+								<span class="label label-success">Z - Gemstone assigned from Zodiac sign</span>
+							</div>
+						</div>
+
 						<?php } else { ?>
 							<div class="well" style="text-align:center; padding:100px 0;">
 								<p style="font-size:24px;">No Gemstones found.</p>

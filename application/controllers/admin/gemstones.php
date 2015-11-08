@@ -152,7 +152,7 @@ class Gemstones extends BaseController {
         }
     }
 
-    public function process_shipping($user_gemstone_id) {
+    /*public function process_shipping($user_gemstone_id) {
 
         try {
 
@@ -217,5 +217,5 @@ class Gemstones extends BaseController {
 
             redirect('admin/users');
         }
-    }
+    }*/
 }

@@ -25,6 +25,8 @@ class Get_latest_gemstone extends REST_Controller {
 			if(!$current_user)
 				throw new Exception("Invalid User Request");
 			
+			$data = null;
+
 			$latest_push = PushNotificationLog::find('all', array(
 	                                                'conditions' => array(
 	                                                    'object_type = ?
@@ -53,14 +55,6 @@ class Get_latest_gemstone extends REST_Controller {
 					break;
 				}
 			}
-
-			else
-				$data = array(
-							'information_type' => '',
-							'gemstone_id' => '',
-							'gems_description' => '',
-							'gem_stone_type' => ''
-						);
 
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',

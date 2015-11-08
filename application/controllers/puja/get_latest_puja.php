@@ -25,6 +25,8 @@ class Get_latest_puja extends REST_Controller {
 			if(!$current_user)
 				throw new Exception("Invalid User Request");
 			
+			$data = null;
+
 			$latest_push = PushNotificationLog::find('all', array(
 	                                                'conditions' => array(
 	                                                    'object_type = ?
@@ -61,15 +63,6 @@ class Get_latest_puja extends REST_Controller {
 		            break;
 				}
 			}
-
-			else
-				$data = array(
-							'information_type' => '',
-							'puja_id' => '',
-							'name' => '',
-							'push_description' => '',
-							'image_urls' => ''
-						);
 
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',
