@@ -30,7 +30,8 @@
 															echo "Female";?></p>
 				<p style="font-size:14px;">Birth Place: <?php echo $user->place_of_birth;?></p>
 				<p style="font-size:14px;">Date of Birth: <?php echo date('M d, Y', strtotime($user->date_of_birth));?></p>
-				<p style="font-size:14px;">Time of Birth: <?php echo date('H:i:s', strtotime($user->date_of_birth));?></p>			
+				<p style="font-size:14px;">Time of Birth: <?php echo date('H:i:s', strtotime($user->date_of_birth));?></p>
+				<p style="font-size:14px;">Zodiac: <?php if($user->zodiac) echo $user->zodiac->zodiac; else echo "Not assigned";?></p>
 			</div>
 		</div>
 	</div>
