@@ -33,9 +33,14 @@ class cancel_quotation extends REST_Controller {
 
 			if(!$quotation)
 				throw new Exception("No such Quotation found");
+			
+			if($quotation->shipping->user_id != $current_user->id)
+				throw new Exception("Invalid Data sent");
 				
 			$quotation->approved = 2;
 			$quotation->save();
+
+			$quotation->shipping->delete();
 
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',

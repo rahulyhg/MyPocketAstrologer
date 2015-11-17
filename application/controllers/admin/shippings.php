@@ -5,10 +5,10 @@ class Shippings extends BaseController {
 	public function index() {
 
         $shippings = Shipping::find('all', array(
-                                            'conditions' => array(
+                                            /*'conditions' => array(
                                                 'deleted = ?',
                                                 0
-                                                ),
+                                                ),*/
                                             'order' => 'created_at desc'
                                             ));
 
