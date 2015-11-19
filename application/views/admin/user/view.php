@@ -6,13 +6,13 @@
 	
 	<div class="row-fluid">
 		<div class="span12">	
-			<div class="col-xs-6 col-xs-push-4">
+			<div class="col-xs-6 col-xs-push-0">
 				<?php if($user->profile_pic != '') { ?>
-				<img style = "margin-left:2%;" src="<?php echo base_url($user->profile_pic); ?>">
+				<img style="height:100%;width:100%;" src="<?php echo base_url($user->profile_pic);?>">
 				<?php } else { ?>
-				<img style = "margin-left:12%;" src="<?php echo base_url('public/user_images/profile.png'); ?>">
+				<img src="<?php echo base_url('public/user_images/profile.png'); ?>">
 				<?php } ?>
-				<h3 style = "padding-left:90px;;"><?php echo $user->get_full_name();?></h3>
+				<h3><?php echo $user->get_full_name();?></h3>
 			</div>			
 		</div>
 	</div>

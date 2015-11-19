@@ -38,7 +38,7 @@
 								<?php foreach ($users as $user){ ?>
 								<tr>
 									<td><?php echo $user->get_full_name();?></td>
-									<td><?php echo date('M d, Y', strtotime($user->date_of_birth));?></td>
+									<td><?php echo date('M d, Y H:i:s', strtotime($user->date_of_birth));?></td>
 									<td>
 										<?php
 										if($user->gender == 0)
