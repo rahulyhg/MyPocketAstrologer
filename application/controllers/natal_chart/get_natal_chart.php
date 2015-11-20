@@ -48,7 +48,7 @@ class Get_natal_chart extends REST_Controller {
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',
 							'message' => 'View Natal Chart image',
-							'user_name' => $current_user->first_name,
+							'user' => $current_user->first_name,
 							'data' => array("natalChartUrl" => $natal_chart->natal_chart),
 							));
 			

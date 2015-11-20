@@ -35,7 +35,7 @@ class Quotation_asked extends REST_Controller {
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',
 							'message' => 'Quotation Asked',
-							'user_name' => $current_user->first_name,
+							'user' => $current_user->first_name,
 							'data' => $data
 							));
 			

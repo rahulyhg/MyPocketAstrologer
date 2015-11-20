@@ -9,7 +9,7 @@ class Shippings extends BaseController {
                                                 'deleted = ?',
                                                 0
                                                 ),*/
-                                            'order' => 'created_at desc'
+                                            'order' => 'id desc'
                                             ));
 
 		return $this->load_view('admin/shipping', array('shippings' => $shippings));
