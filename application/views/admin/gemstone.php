@@ -24,7 +24,7 @@
 					<div class="span9">
 						<?php if(count($user_gemstones) > 0) { ?>
 
-						<div class="table-container">
+						<div class="table-responsive">
 							<table class="table table-striped table-bordered" style="margin-bottom:85px;">
 
 								<tr>
