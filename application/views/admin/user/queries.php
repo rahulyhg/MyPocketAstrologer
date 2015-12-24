@@ -43,7 +43,7 @@
 										<td><?php echo $query->user->email;?></td>
 										<td><?php echo $query->query;?></td>
 										<td><?php echo $query->answer;?></td>
-										<td><?php echo date('M d, Y', strtotime($query->created_at));?></td>							
+										<td><?php echo date('M d, Y', strtotime($query->asked_on));?></td>							
 										
 										<td style="text-align:center;width:65px;">
 										<div class="btn-group">

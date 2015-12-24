@@ -64,7 +64,7 @@ class Queries extends BaseController {
                                         'id' => $query->id,
                                         'query' => $query->query,
                                         'answer' => $query->answer,
-                                        'date' =>  date("Y-m-d H:i:s", strtotime($query->created_at)),
+                                        'date' =>  date("Y-m-d H:i:s", strtotime($query->asked_on)),
                                     ),
                             ));
 

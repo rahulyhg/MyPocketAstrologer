@@ -34,7 +34,7 @@ class Get_query extends REST_Controller {
 				$queries[$i]['id'] = $query->id;
 				$queries[$i]['query'] = $query->query;
 				$queries[$i]['answer'] = $query->answer;
-				$queries[$i]['date'] = date("Y-m-d H:i:s", strtotime($query->created_at));
+				$queries[$i]['date'] = date("Y-m-d H:i:s", strtotime($query->asked_on));
 
 				$i++;
 			}

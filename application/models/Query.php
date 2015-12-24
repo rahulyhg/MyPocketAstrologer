@@ -47,6 +47,19 @@ class Query extends BaseModel {
 		$this->assign_attribute('answer', $answer);	
 	}
 
+	public function set_asked_on($asked_on) {
+
+		if($asked_on == '') {
+			throw new Exception('Date required.');
+        }
+
+		$this->assign_attribute('asked_on', $asked_on);	
+	}
+
+	public function set_answered_on($answered_on) {
+		$this->assign_attribute('answered_on', $answered_on);	
+	}
+
 	/* Public functions - Getters */
 
 	public function get_device_id() {
@@ -61,6 +74,14 @@ class Query extends BaseModel {
 		return $this->read_attribute('answer');
 	}
 
+	public function get_asked_on() {
+		return $this->read_attribute('asked_on');
+	}
+
+	public function get_answered_on() {
+		return $this->read_attribute('answered_on');
+	}
+
 	/* Public static functions */
 
 	public static function create($params) {
@@ -73,6 +94,7 @@ class Query extends BaseModel {
 		$query->device_id = array_key_exists('device_id', $params) ? $params['device_id'] : null;
 		$query->query = array_key_exists('query', $params) ? $params['query'] : null;
 		$query->answer = array_key_exists('answer', $params) ? $params['answer'] : null;
+		$query->asked_on = date('Y-m-d H:i:s');
 
 		$query->save();
 
