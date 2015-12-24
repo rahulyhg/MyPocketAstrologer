@@ -52,7 +52,8 @@ class Queries extends BaseController {
             if($this->input->post('answer') == '')
                 throw new Exception("Please Enter an answer to the user's query");
                 
-            $query->answer = $this->input->post('answer');            
+            $query->answer = $this->input->post('answer');
+            $query->answered_on = date('Y-m-d H:i:s');
 
             $query->save();
 
