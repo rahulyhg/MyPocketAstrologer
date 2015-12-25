@@ -43,6 +43,7 @@ class Pujas extends BaseController {
                 return $this->load_view('admin/puja', array('user' => $user, 'pujas' => $user->pujas));
             }
 
+            date_default_timezone_set("Asia/Kathmandu");
             $params = array(
             			'user' => $user,
             			'name' => $this->input->post('name'),

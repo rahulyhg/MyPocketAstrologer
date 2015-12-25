@@ -54,6 +54,7 @@ class LoginDevice extends BaseModel {
 
 		$login_device->user = array_key_exists('user', $params) ? $params['user'] : null;
 		$login_device->device_id = array_key_exists('device_id', $params) ? $params['device_id'] : null;
+		date_default_timezone_set("Asia/Kathmandu");
 		$login_device->last_login_date = date('Y-m-d H:i:s');
 
 		$login_device->save();

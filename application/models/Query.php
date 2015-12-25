@@ -94,6 +94,7 @@ class Query extends BaseModel {
 		$query->device_id = array_key_exists('device_id', $params) ? $params['device_id'] : null;
 		$query->query = array_key_exists('query', $params) ? $params['query'] : null;
 		$query->answer = array_key_exists('answer', $params) ? $params['answer'] : null;
+		date_default_timezone_set("Asia/Kathmandu");
 		$query->asked_on = date('Y-m-d H:i:s');
 
 		$query->save();

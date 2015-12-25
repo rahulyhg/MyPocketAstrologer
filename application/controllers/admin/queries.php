@@ -53,6 +53,7 @@ class Queries extends BaseController {
                 throw new Exception("Please Enter an answer to the user's query");
                 
             $query->answer = $this->input->post('answer');
+            date_default_timezone_set("Asia/Kathmandu");
             $query->answered_on = date('Y-m-d H:i:s');
 
             $query->save();
