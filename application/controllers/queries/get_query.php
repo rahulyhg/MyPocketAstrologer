@@ -31,6 +31,9 @@ class Get_query extends REST_Controller {
 
 			foreach($all_queries as $query) {
 
+				if($query->deleted)
+					continue;
+
 				$queries[$i]['id'] = $query->id;
 				$queries[$i]['query'] = $query->query;
 				$queries[$i]['answer'] = $query->answer;
