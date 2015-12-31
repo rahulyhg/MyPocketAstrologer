@@ -42,6 +42,62 @@ class cancel_quotation extends REST_Controller {
 
 			$quotation->shipping->delete();
 
+			$gcm_users = $current_user->gcm_users;
+
+            $data = array(
+                        'quotation_number' => $quotation->quotation_number,
+                    );
+
+            $message = json_encode(array(
+                            'type' => 10,
+                            'data' => $data
+                            ));
+
+            $this->gcm->setMessage($message);
+
+            foreach ($gcm_users as $gcm_user) {
+                $this->gcm->addRecepient($gcm_user->gcm_regd_id);
+            }
+
+            // set additional data
+            $this->gcm->setData(array(
+                'stat' => 'OK'
+            ));
+
+            $this->gcm->setTtl(false);
+            $this->gcm->setGroup(false);
+            $this->gcm->send();
+
+            if($quotation->shipping->type == 1) {
+
+                $params = array(
+                            'user' => $current_user,
+                            'object_type' => 1,
+                            'notification_type' => 10,
+                            'information_type' => 0,
+                            'object_id' => $quotation->shipping->user->natal_chart->id,
+                            'details' => 'Quotation cancelled',
+                        );
+
+                $push = new PushNotificationLog;
+                $push->create($params);
+            }
+
+            elseif($quotation->shipping->type == 2) {
+
+                $params = array(
+                            'user' => $current_user,
+                            'object_type' => 2,
+                            'notification_type' => 10,
+                            'information_type' => 0,
+                            'object_id' => $quotation->shipping->gemstone_id,
+                            'details' => 'Quotation cancelled',
+                        );
+
+                $push = new PushNotificationLog;
+                $push->create($params);
+            }
+
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',
 							'message' => 'Quotation cancelled for the order',
