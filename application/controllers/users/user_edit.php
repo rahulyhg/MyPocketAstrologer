@@ -64,8 +64,8 @@ class User_Edit extends REST_Controller {
 				$data['zodiac'] = $zodiac->zodiac;
 				$data['gemstone'] = $zodiac->gemstone;
 				$data['color'] = $zodiac->color;
-				$data['gemstone_description'] = $zodiac->gems->details;
-				$data['color_description'] = $zodiac->colour->details;
+				$data['gemstone_description'] = $zodiac->gemstone_details;
+				$data['color_description'] = $zodiac->color_details;
 				$data['zodiac_description'] = $zodiac->details;
 			}
 

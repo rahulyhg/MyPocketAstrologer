@@ -52,8 +52,8 @@ class Get_profile extends REST_Controller {
 				$user['zodiac'] = $zodiac->zodiac;
 				$user['gemstone'] = $zodiac->gemstone;
 				$user['color'] = $zodiac->color;
-				$user['gemstone_description'] = $zodiac->gems->details;
-				$user['color_description'] = $zodiac->colour->details;
+				$user['gemstone_description'] = $zodiac->gemstone_details;
+				$user['color_description'] = $zodiac->color_details;
 				$user['zodiac_description'] = $zodiac->details;
 			}
 

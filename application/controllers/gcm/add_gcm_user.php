@@ -29,12 +29,24 @@ class Add_gcm_user extends REST_Controller {
 			if(!$user)
 				throw new Exception("Invalid User Request");
 
-			$existing_gcm_user = GcmUser::find_by_device_id_and_gcm_regd_id($params['device_id'], $params['gcm_regd_id']);
+			$existing_gcm_users = GcmUser::find('all', array(
+                                            'conditions' => array(
+                                                'device_id = ?',
+                                                $params['device_id']
+                                                )
+                                            ));
 
-			if($existing_gcm_user && $existing_gcm_user->user_id != $params['current_user_id']) {
 
-				$this->db->where('id', $existing_gcm_user->id);
-        		$this->db->delete('gcm_users'); 
+			if($existing_gcm_users) {
+
+				foreach ($existing_gcm_users as $existing_gcm_user) {
+
+					if($existing_gcm_user->user_id != $params['current_user_id']) {
+
+						$this->db->where('id', $existing_gcm_user->id);
+		        		$this->db->delete('gcm_users');
+		        	}
+		        }
 			}
 
 			$gcm_user = GcmUser::find_by_user_id_and_device_id_and_gcm_regd_id($params['current_user_id'], $params['device_id'], $params['gcm_regd_id']);

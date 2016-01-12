@@ -249,8 +249,8 @@ class Users extends BaseController {
                         'gemstone' => $zodiac->gemstone,
                         'color' => $zodiac->color,
                         'zodiac_description' => $zodiac->details,
-                        'gemstone_description' => $zodiac->gems->details,
-                        'color_description' => $zodiac->colour->details,
+                        'gemstone_description' => $zodiac->gemstone_details,
+                        'color_description' => $zodiac->color_details,
                         );
 
             $message = json_encode(array(
@@ -288,8 +288,8 @@ class Users extends BaseController {
             $params = array(
                         'user' => $user,
                         'gemstone' => $zodiac->gems,
-                        'color' => $zodiac->colour,
-                        'details' => $zodiac->gemstone->details,
+                        'color' => $zodiac->color,
+                        'details' => $zodiac->gemstone_details,
                     );
 
             $user_gemstone = new UserGemstone;

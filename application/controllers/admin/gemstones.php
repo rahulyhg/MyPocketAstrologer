@@ -60,7 +60,7 @@ class Gemstones extends BaseController {
             $params = array(
                         'user' => $user,
                         'gemstone' => $gemstone,
-                        'color' => $color,
+                        'color' => $color->color,
                         'details' => $this->input->post('details'),
                         );
 

@@ -19,12 +19,6 @@ class UserGemstone extends BaseModel {
             'class_name' => 'Gemstone',
             'foreign_key' => 'gemstone_id'
         ),
-
-        array(
-            'color',
-            'class_name' => 'Color',
-            'foreign_key' => 'color_id'
-        ),
 	);
 
 	/* Public functions - Setters */
@@ -39,8 +33,8 @@ class UserGemstone extends BaseModel {
 		$this->assign_attribute('gemstone_id', $gemstone->id);	
 	}
 
-	public function set_color(Color $color) {
-		$this->assign_attribute('color_id', $color->id);	
+	public function set_color($color) {
+		$this->assign_attribute('color', $color);	
 	}
 
 	public function set_details($details) {

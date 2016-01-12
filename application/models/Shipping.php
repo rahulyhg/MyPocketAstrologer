@@ -119,6 +119,19 @@ class Shipping extends BaseModel {
 		$this->assign_attribute('type', $type);	
 	}
 
+	public function set_ordered_date($ordered_date) {
+
+		if(!$ordered_date) {
+			throw new Exception('Date is required.');
+        }
+
+		$this->assign_attribute('ordered_date', $ordered_date);	
+	}
+
+	public function set_processed_date($processed_date) {
+		$this->assign_attribute('processed_date', $processed_date);	
+	}
+
 	/*gemstone_id means user_gemstone->id*/
 	public function set_gemstone_id($gemstone_id) {
 		$this->assign_attribute('gemstone_id', $gemstone_id);	
@@ -178,6 +191,14 @@ class Shipping extends BaseModel {
 		return $this->read_attribute('gemstone_id');
 	}
 
+	public function get_ordered_date() {
+		return $this->read_attribute('ordered_date');
+	}
+
+	public function get_processed_date() {
+		return $this->read_attribute('processed_date');
+	}
+
 	/*
 	  ----NOTE----
 	  TYPE_SHIP_NATAL_CHART=1
@@ -205,6 +226,8 @@ class Shipping extends BaseModel {
 		$shipping->device_id = array_key_exists('device_id', $params) ? $params['device_id'] : null;
 		$shipping->type = array_key_exists('type', $params) ? $params['type'] : 0;
 		$shipping->gemstone_id = array_key_exists('object_id', $params) ? $params['object_id'] : 0;
+		date_default_timezone_set("Asia/Kathmandu");
+		$shipping->ordered_date = date('Y-m-d H:i:s');
 
 		$shipping->save();
 

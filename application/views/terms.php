@@ -10,11 +10,7 @@
         <div class="pull-left">
           <h2>Terms & Conditions</h2>
         </div>
-
-        <div class="pull-right">
-              <a href="<?php echo base_url('')?>">Back to Home Page</a>
-        </div>
-       </div>
+        <br>
     </div>
 
     <div class="row-fluid" style="margin-top:10px;padding-top:50px;">
@@ -47,14 +43,6 @@ From time to time, we may revise this Policy. We reserve the right to update or 
       </div>
     </div>
   </div>
-
-  <div class="row-fluid">
-      <div class="span12">
-        <div class="pull-right">
-              <a href="<?php echo base_url('')?>">Back to Home Page</a>
-        </div>
-       </div>
-    </div>
 
   </div> <!-- /container -->
 <?php endblock() ?>

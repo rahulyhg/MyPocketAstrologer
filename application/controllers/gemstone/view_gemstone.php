@@ -29,7 +29,7 @@ class View_gemstone extends REST_Controller {
 			
 			$data = array(
 					'gemstone' => $user_gemstone->gemstone->name,
-					'color' => $user_gemstone->color->color,
+					'color' => $user_gemstone->color,
 					'details' => $user_gemstone->details,
 					);
 

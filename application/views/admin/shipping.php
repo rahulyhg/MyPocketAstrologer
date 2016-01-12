@@ -47,7 +47,7 @@
 											<td><?php echo $shipping->user->get_full_name();?></td>
 											<!-- <td><?php echo $shipping->details;?></td> -->
 											<td><?php echo $shipping->get_address();?></td>
-											<td><?php echo date('M d, Y', strtotime($shipping->created_at));?></td>
+											<td><?php echo date('M d, Y', strtotime($shipping->ordered_date));?></td>
 											<td><?php if($shipping->type == 1) echo "Natal Chart";
 													  if($shipping->type == 2) echo "Gemstone";?>
 											</td>
@@ -71,7 +71,7 @@
 						    						Actions <span class="caret"></span>
 						  						</a>
 												<ul class="dropdown-menu" style="text-align:left;">
-													<?php if(!$shipping->quotation) { ?> 
+													<?php if(!$shipping->quotation && !$shipping->deleted) { ?> 
 													<li><a href="<?php echo base_url('admin/shippings/add_quotation/'.$shipping->id);?>">Add Quotation</a></li>
 													<?php } else { ?>
 													<li><a href="<?php echo base_url('admin/shippings/view_quotation/'.$shipping->id);?>">View Quotation</a></li>
