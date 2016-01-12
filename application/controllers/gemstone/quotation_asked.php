@@ -27,10 +27,26 @@ class Quotation_asked extends REST_Controller {
 
 			$data = null;
 
-			$shipping = Shipping::find_by_user_id_and_type_and_deleted($current_user->id, 2, 0);
+			//$shipping = Shipping::find_by_user_id_and_type_and_deleted($current_user->id, 2, 0);
 
-			if($shipping)
-				$data = array('id'=>$shipping->gemstone_id);
+			$shippings = Shipping::find('all', array(
+                                            'conditions' => array(
+                                                'deleted = ? and
+                                                type = ? and
+                                                user_id = ?',
+                                                0,
+                                                2,
+                                                $current_user->id
+                                                ),
+                                            'order' => 'id desc',
+                                            'limit' => 1
+                                            ));
+
+			if($shippings)
+				foreach ($shippings as $shipping) {
+					$data = array('id'=>$shipping->gemstone_id);
+				}
+				
 			
 			$response = $this->response(array(
 							'status' =>	'SUCCESS',
