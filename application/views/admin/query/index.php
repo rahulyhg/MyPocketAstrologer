@@ -41,8 +41,18 @@
 										<tr>
 											<td><?php echo $query->user->get_full_name();?></td>
 											<td><?php echo $query->user->email;?></td>
-											<td><?php echo $query->query;?></td>
-											<td><?php echo $query->answer;?></td>
+											<td><?php 
+												if(strlen($query->query)<=500)
+													echo $query->query;
+												else
+													echo substr($query->query,0,500) . ' ....... ' . '<a href = "'.base_url('admin/queries/view/'.$query->id).'"><b>See more</b></a>';
+											?></td>
+											<td><?php 
+													if(strlen($query->answer)<=500)
+													echo $query->answer;
+												else
+													echo substr($query->answer,0,500) . ' ....... ' . '<a href = "'.base_url('admin/queries/view/'.$query->id).'"><b>See more</b></a>';
+											?></td>
 											<td><?php echo date('M d, Y', strtotime($query->asked_on));?></td>																						
 											
 											<td style="text-align:center;width:65px;">
